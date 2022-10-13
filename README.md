@@ -20,3 +20,5 @@ Potencjalne pomysły:
 
 
 Projekt zostanie wykonany z użyciem Android Studio oraz języka Java.
+
+Autorzy: *Marcin Baranowski, Wojciech Knopp, Cezary Kwella oraz Michał Marcinkowski*.
