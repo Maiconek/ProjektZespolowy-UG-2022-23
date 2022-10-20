@@ -15,7 +15,7 @@ Aplikacja mobilna do zarządzania własnymi/rodzinnymi finansami. Aplikacja będ
 - możliwość zarządzania finansami przez kilku użytkowników (ewentualnie z podziałem na role)
 - planowanie budżetu na wybrany przez użytkownika okres czasu
 - archiwizacja / dodanie konta "bankowego"
-- logika biznesowa: 
+-       logika biznesowa: 
         - użytkownik ma swoje konta (miejsca gdzie są pieniądze) rzeczywiste lub abstrakcyjne 
         - konta mogą być współdzielone (z podziałem na użytkowników pełnych i ograniczonych)
 
