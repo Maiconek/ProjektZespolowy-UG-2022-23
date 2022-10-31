@@ -37,7 +37,9 @@ class User(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField(max_length=150)
     id_currency = models.ForeignKey(Currency, on_delete=models.SET_DEFAULT, default="PLN")
-    User_Account = models.ManyToManyField(Account, through='User_Account')
+    User_Account = models.ManyToManyField(Account, through='User_Account') 
+#https://docs.djangoproject.com/en/dev/topics/db/models/#extra-fields-on-many-to-many-relationships
+#https://docs.djangoproject.com/en/4.1/topics/db/examples/many_to_many/
 
     def __str__(self):
         return "[{}] - {} - {} - {}".format(self.id_user, self.name, self.email, self.User_Account.all())
