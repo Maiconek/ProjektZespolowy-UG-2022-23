@@ -1,16 +1,11 @@
-{%load static%}
+{% extends 'application/base.html' %}
 
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-</head>
-<body>
+{% block title %}Strona domowa{% endblock %}
+{% block content %}
     <h1>Witaj w aplikacji!</h1>
     Jeśli nie pamiętasz jak wejść do konsoli administracyjnej Django to wciśnij <a href="/admin">tutaj</a>
     <br>
     Ale aby tam wejść potrzebujesz stworzyć konto administratora. Jeśli nie pamiętasz jak to wpisz w konsoli:
     <br>
     <code>python manage.py createsuperuser</code>
-</body>
-</html>
+{% endblock  %}

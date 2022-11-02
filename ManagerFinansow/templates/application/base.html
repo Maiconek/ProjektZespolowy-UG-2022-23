@@ -1,0 +1,40 @@
+{% comment %} 
+    HTML zawierający niezmienne rzeczy naszej strony takie jak np paski nawigacyjne czy stopki.
+    Wszystkie inne HTMLe będą dziedziczyć po tym szablonie.
+    Rzeczy pisane w innych plikach będą wstawiane w bloki w tym pliku. jak np {{ block content }}. 
+{% endcomment %}
+
+{%load static%}
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <title>{% block title %}Website{% endblock %}</title>
+</head>
+<body>
+    <nav id="navigation">
+        <div>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="/smth1">Something1</a></li>
+                <li><a href="/smth2">Something2</a></li>
+            </ul>
+        </div>
+        <div>
+            <ul>
+                <li><a href="/login">Login</a></li>
+                <li><a href="/register">Register</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class = "content">
+        {% block content %}
+        {% endblock %}
+    </div>
+    
+</body>
+</html>
