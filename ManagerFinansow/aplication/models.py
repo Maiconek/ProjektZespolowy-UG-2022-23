@@ -38,6 +38,7 @@ class User(models.Model):
     email = models.EmailField(max_length=150)
     id_currency = models.ForeignKey(Currency, on_delete=models.SET_DEFAULT, default="PLN")
     User_Account = models.ManyToManyField(Account, through='User_Account') 
+    image = models.ImageField(null=True, blank=True)
 #https://docs.djangoproject.com/en/dev/topics/db/models/#extra-fields-on-many-to-many-relationships
 #https://docs.djangoproject.com/en/4.1/topics/db/examples/many_to_many/
 

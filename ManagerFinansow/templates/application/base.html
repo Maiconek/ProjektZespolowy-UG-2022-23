@@ -12,17 +12,20 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <title>{% block title %}Website{% endblock %}</title>
 </head>
 <body>
     <nav id="navigation">
         <div>
-            <ul>
-                <li><a href="{% url 'home' %}">Home</a></li>
-                <li><a href="/smth1">Something1</a></li>
-                <li><a href="/smth2">Something2</a></li>
+          {% if user.is_authenticated %}
+            <ul class="nav">
+                <li class="nav-item"><a class="nav-link active" href="{% url 'home' %}">Home</a></li>
+                <li class="nav-item"><a class="nav-link active" href="/smth1">Something1</a></li>
+                <li class="nav-item"><a class="nav-link active" href="/smth2">Something2</a></li>
             </ul>
+          {% endif %}
         </div>
         <div>
             <ul>
