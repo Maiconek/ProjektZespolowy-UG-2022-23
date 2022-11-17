@@ -1,5 +1,7 @@
 from os import access
 from django.db import models
+from django.contrib.auth.models import User
+
 
 # Create your models here.
 class Currency(models.Model):
@@ -32,21 +34,24 @@ class Account(models.Model):
     def __str__(self):
         return self.name
 
-class User(models.Model):
+class Profile(models.Model):
     id_user = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=100)
-    email = models.EmailField(max_length=150)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     id_currency = models.ForeignKey(Currency, on_delete=models.SET_DEFAULT, default="PLN")
-    User_Account = models.ManyToManyField(Account, through='User_Account') 
     image = models.ImageField(null=True, blank=True)
+    User_Account = models.ManyToManyField(Account, through='User_Account') 
+
+    def __str__(self):
+        return self.user.username
 #https://docs.djangoproject.com/en/dev/topics/db/models/#extra-fields-on-many-to-many-relationships
 #https://docs.djangoproject.com/en/4.1/topics/db/examples/many_to_many/
 
     def __str__(self):
-        return "[{}] - {} - {} - {}".format(self.id_user, self.name, self.email, self.User_Account.all())
+        return "[{}] - {} - {} - {}".format(self.id_user, self.user.username, self.user.email, self.User_Account.all())
+
 
 class User_Account(models.Model):
-    id_user = models.ForeignKey(User, on_delete=models.CASCADE)
+    id_user = models.ForeignKey(Profile, on_delete=models.CASCADE)
     id_account = models.ForeignKey(Account, on_delete=models.CASCADE)
     access_level = models.IntegerField(default=0)
 

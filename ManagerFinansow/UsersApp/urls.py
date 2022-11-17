@@ -18,5 +18,8 @@ from UsersApp.views import *
 
 urlpatterns = [
     path('', include('django.contrib.auth.urls')),
-    path('accounts/profile/', profile)
+    path('register', register_user, name='register'),
+    path('register-next', register_profile, name='register-next'),
+    path('accounts/profile/', profile, name='profile'),
+    path('logout', logout_user, name='logout'),
 ]

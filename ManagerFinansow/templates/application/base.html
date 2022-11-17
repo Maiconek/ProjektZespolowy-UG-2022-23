@@ -17,23 +17,31 @@
     <title>{% block title %}Website{% endblock %}</title>
 </head>
 <body>
-    <nav id="navigation">
-        <div>
-          {% if user.is_authenticated %}
-            <ul class="nav">
-                <li class="nav-item"><a class="nav-link active" href="{% url 'home' %}">Home</a></li>
-                <li class="nav-item"><a class="nav-link active" href="/smth1">Something1</a></li>
-                <li class="nav-item"><a class="nav-link active" href="/smth2">Something2</a></li>
-            </ul>
-          {% endif %}
-        </div>
-        <div>
-            <ul>
-                <li><a href="/login">Login</a></li>
-                <li><a href="/register">Register</a></li>
-            </ul>
-        </div>
-    </nav>
+    <nav class="nav">
+        {% if user.is_authenticated %}
+        <ul class="nav justify-content-start">
+            <text id="app-name">Cointrol</text>
+            <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="/smth1">Something1</a></li>
+            <li class="nav-item"><a class="nav-link" href="/smth2">Something2</a></li>
+        </ul>
+        <ul class="nav justify-content-end">
+            {% comment %} logged user image instead of placeholder {% endcomment %}
+            <img src="{% static 'images/rectangle_test_image.png' %}", style="border-radius: 50%; width: 40px;">
+            <li class="nav-item"><a class="nav-link" href="{% url 'profile' %}">{{ user.username }}</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Wyloguj</a></li>
+        </ul>
+        {% else %}
+        <ul class="nav justify-content-start">
+            <p id="app-name">Cointrol</p>
+        </ul>
+        <ul class="nav justify-content-end">
+            <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+        </ul>
+        {% endif %}
+        
+    </nav> 
     <div class = "content">
         {% block content %}
         {% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'application/base.html' %}
+
+{% block title %}Strona domowa{% endblock %}
+{% block content %}
+    <div class="title">
+        <h1>Tytuł strony profilowej</h1>
+    </div>
+    <div class="content">
+        <p class="center">Witaj {{ user.username }} na swojej stronie domowej!</p>
+    </div>
+{% endblock  %}

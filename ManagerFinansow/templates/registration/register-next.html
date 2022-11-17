@@ -1,0 +1,11 @@
+{% extends 'application/base.html' %}
+{% block title %}Register{% endblock  %}
+
+{% block content %}
+to jest register-next.html
+<form method="post">
+    {% csrf_token %}
+    {{ register_form }}
+    <button type="submit">Register</button>
+</form>
+{% endblock  %} 
