@@ -27,7 +27,7 @@
         </ul>
         <ul class="nav justify-content-end">
             {% comment %} logged user image instead of placeholder {% endcomment %}
-            <img src="{% static 'images/rectangle_test_image.png' %}", style="border-radius: 50%; width: 40px;">
+            <img src="{% static 'images/circle_user_image.png' %}", style="border-radius: 50%; width: 40px;">
             <li class="nav-item"><a class="nav-link" href="{% url 'profile' %}">{{ user.username }}</a></li>
             <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Wyloguj</a></li>
         </ul>

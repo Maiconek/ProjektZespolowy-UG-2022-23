@@ -3,10 +3,12 @@ from UsersApp.forms import NewUserForm, NewProfileForm
 from django.contrib.auth import login, logout
 from django.contrib import messages
 from aplication.views import home
+from aplication.models import Profile
 
 # Create your views here.
 def profile(request):
-    return render(request, 'application/profile.html')
+    profile = Profile.objects.all()
+    return render(request, 'application/profile.html', {profile: 'profile'})
 
 def logout_user(request):
     logout(request)
