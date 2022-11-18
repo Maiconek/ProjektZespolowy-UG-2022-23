@@ -6,6 +6,9 @@ from aplication.views import home
 
 # Create your views here.
 def profile(request):
+    #komentarz zeby sprawdzić Gita
+    profile = profile
+    #to nielegalna linijka do usunięcia
     return render(request, 'application/profile.html')
 
 def logout_user(request):
