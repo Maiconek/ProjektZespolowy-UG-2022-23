@@ -20,10 +20,10 @@
     <nav class="nav">
         {% if user.is_authenticated %}
         <ul class="nav justify-content-start">
-            <text id="app-name">Cointrol</text>
-            <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="/smth1">Something1</a></li>
-            <li class="nav-item"><a class="nav-link" href="/smth2">Something2</a></li>
+            <li class="nav-item"><a id="logo-link" class="nav-link" href="{% url 'home' %}"><text id="app-name">Cointrol</text></a>
+            <li class="nav-item"><a class="nav-link" href="#">Konta</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Podsumowania</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Budżet</a></li>
         </ul>
         <ul class="nav justify-content-end">
             {% comment %} logged user image instead of placeholder {% endcomment %}
@@ -33,7 +33,7 @@
         </ul>
         {% else %}
         <ul class="nav justify-content-start">
-            <p id="app-name">Cointrol</p>
+            <li class="nav-item"><a id="logo-link" class="nav-link" href="{% url 'home' %}"><text id="app-name">Cointrol</text></a>
         </ul>
         <ul class="nav justify-content-end">
             <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
