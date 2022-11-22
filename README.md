@@ -1,6 +1,6 @@
 # ProjektZespolowy-UG-2022-23
 
-Aplikacja mobilna do zarządzania własnymi/rodzinnymi finansami. Aplikacja będzie zawierać następujące funkcje:
+Aplikacja webowa do zarządzania własnymi/rodzinnymi finansami. Aplikacja będzie zawierać następujące funkcje:
 - przechowywanie salda na poszczególnych "kontach" (gotówka, karta 1, karta 2...)
 - możliwość dodawania wydatków i przychodów
 - możliwość przydzielenia danych wydatków do konkretnych kategorii/podkategorii np. jedzenie, rozrywka itp.
@@ -29,6 +29,6 @@ Potencjalne pomysły:
 - sprawdzenie kursy walut
 - tutorial po pierwszym włączeniu
 
-Projekt zostanie wykonany z użyciem Android Studio oraz języka Java.
+Projekt zostanie wykonany w środowisku Django przy użyciu języka Python.
 
 Autorzy: *Marcin Baranowski, Wojciech Knopp, Cezary Kwella oraz Michał Marcinkowski*.
