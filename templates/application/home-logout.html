@@ -1,0 +1,19 @@
+{% extends 'application/base.html' %}
+
+{% block title %}Strona domowa{% endblock %}
+
+{% block content %}
+
+{% comment %} Strona startowa aplikacji {% endcomment %}
+    <div class="title">
+            <h1>Witaj w aplikacji!</h1>
+    </div>
+    <div class="content">
+        Jeśli nie pamiętasz jak wejść do konsoli administracyjnej Django to wciśnij <a href="/admin">tutaj</a>
+        <br>
+        Ale aby tam wejść potrzebujesz stworzyć konto administratora. Jeśli nie pamiętasz jak to wpisz w konsoli:
+        <br>
+        <code>python manage.py createsuperuser</code>
+    </div>
+    
+{% endblock  %}

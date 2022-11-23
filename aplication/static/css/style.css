@@ -1,0 +1,40 @@
+body{
+    background-color: white;
+    color: black;
+}
+a.nav-link{
+    color: white;
+    font-size: 20px;
+}
+ul.nav{
+    align-items: center;
+}
+nav.nav{
+    background-color: purple;
+    justify-content: space-between;
+    padding-left: 5ch;
+    padding-right: 5ch;
+}
+#logo-link{
+    padding: 0;
+    margin-right: 4ch;
+}
+#app-name{
+    color: goldenrod;
+    font-size: 40px;
+    font-weight: bold;
+}
+div.title{
+    padding-top: 5vh;
+    display: flex;
+    justify-content: center;
+}
+div.title h1{
+    color: purple;
+    font-size: 40px;
+    font-weight: bold;
+}
+div.content{
+    padding-left: 2ch;
+    padding-right: 2ch;
+}

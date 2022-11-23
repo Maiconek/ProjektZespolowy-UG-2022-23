@@ -1,0 +1,51 @@
+{% comment %} 
+    HTML zawierający niezmienne rzeczy naszej strony takie jak np paski nawigacyjne czy stopki.
+    Wszystkie inne HTMLe będą dziedziczyć po tym szablonie.
+    Rzeczy pisane w innych plikach będą wstawiane w bloki w tym pliku. jak np {{ block content }}. 
+{% endcomment %}
+
+{%load static%}
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <title>{% block title %}Website{% endblock %}</title>
+</head>
+<body>
+    <nav class="nav">
+        {% if user.is_authenticated %}
+        <ul class="nav justify-content-start">
+            <li class="nav-item"><a id="logo-link" class="nav-link" href="{% url 'home' %}"><text id="app-name">Cointrol</text></a>
+            <li class="nav-item"><a class="nav-link" href="#">Konta</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Podsumowania</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Budżet</a></li>
+        </ul>
+        <ul class="nav justify-content-end">
+            {% comment %} logged user image instead of placeholder {% endcomment %}
+            <img src="{% static 'images/circle_user_image.png' %}", style="border-radius: 50%; width: 40px;">
+            <li class="nav-item"><a class="nav-link" href="">{{ user.username }}</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Wyloguj</a></li>
+        </ul>
+        {% else %}
+        <ul class="nav justify-content-start">
+            <li class="nav-item"><a id="logo-link" class="nav-link" href="{% url 'home' %}"><text id="app-name">Cointrol</text></a>
+        </ul>
+        <ul class="nav justify-content-end">
+            <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
+        </ul>
+        {% endif %}
+        
+    </nav> 
+    <div class = "content">
+        {% block content %}
+        {% endblock %}
+    </div>
+    
+</body>
+</html>

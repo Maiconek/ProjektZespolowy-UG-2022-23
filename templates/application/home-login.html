@@ -1,0 +1,16 @@
+{% extends 'application/base.html' %}
+
+{% block title %}Strona domowa{% endblock %}
+
+{% block content %}
+
+{% comment %} Strona Domowa użytkownika {% endcomment %}
+    <div class="title">
+        <h1>Główna strona użytkownika</h1>
+    </div>
+    <div class="content">
+        <p>Witaj {{ user.username }} na swojej stronie domowej!</p>
+        <p>Tutaj znajdziesz swoje saldo ogólne a także ostatnie transakcje ze swoich kont.</p>
+    </div>
+    
+{% endblock  %}
