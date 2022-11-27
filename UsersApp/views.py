@@ -27,7 +27,7 @@ def loginUser(request):
 
         if user is not None:
             login(request, user)
-            return redirect('application/home-login.html')
+            return redirect("home")
         else:
             messages.error(request, 'Username or password is incorrect')
     return render(request, "registration/login.html", {})
@@ -46,7 +46,7 @@ def registerUser(request):
             messages.success(request, 'User account was created')
             
             login(request, user)
-            return redirect("application/home-login.html")
+            return redirect("home")
         else:
             messages.success(request, 'Error')
 
@@ -56,7 +56,7 @@ def registerUser(request):
 def logoutUser(request):
     logout(request)
     messages.info(request, 'User was logout')
-    return redirect('registration/login.html')
+    return redirect("home")
 
 
 # if request.method == 'POST':
