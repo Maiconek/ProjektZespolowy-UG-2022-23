@@ -58,6 +58,18 @@ def logoutUser(request):
     messages.info(request, 'User was logout')
     return redirect("home")
 
+@login_required(login_url='login')
+def profile(request):
+    profile = request.user.profile
+    context = {'profile': profile}
+    return render(request, 'application/profile.html', context)
+
+# @login_required(login_url='login')
+# def allAccounts(request):
+#     accounts = Account.objects.all()
+#     user_accounts = accounts.filter(owner=request.user.profile)
+#     context = {'accounts': user_accounts}
+#     return render(request, 'application/all-accounts.html', context)
 
 # if request.method == 'POST':
 #     form = RegistrationFormTeacher(request.POST)
