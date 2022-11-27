@@ -13,7 +13,8 @@ def home(request):
 @login_required(login_url='login')
 def allAccounts(request):
     accounts = Account.objects.all()
-    context = {'accounts': accounts}
+    user_accounts = accounts.filter(owner=request.user.profile)
+    context = {'accounts': user_accounts}
     return render(request, 'application/all-accounts.html', context)
 
 @login_required(login_url='login')
