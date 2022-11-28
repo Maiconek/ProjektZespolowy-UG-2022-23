@@ -1,45 +1,75 @@
 from django.shortcuts import render, redirect
-from UsersApp.forms import NewUserForm, NewProfileForm
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from aplication.views import home
-from aplication.models import Profile
+from django.contrib.auth.models import User
+
+from .forms import CustomUserCreationForm, ProfileForm
 
 # Create your views here.
-def profile(request):
-    profile = Profile.objects.all()
-    return render(request, 'application/profile.html', {profile: 'profile'})
+def loginUser(request):
+    page = "login"
 
-def logout_user(request):
+    if request.user.is_authenticated:
+        return redirect('application/base.html')
+    
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+
+        try:
+            user = User.objects.get(username=username)
+        except:
+            messages.error(request, 'Username does not exist')
+        
+        user = authenticate(request, username=username, password=password) 
+        #return user instance or none, jezeli hasło się zgadza to zostaniemy zalogowani
+
+        if user is not None:
+            login(request, user)
+            return redirect("home")
+        else:
+            messages.error(request, 'Username or password is incorrect')
+    return render(request, "registration/login.html", {})
+
+def registerUser(request):
+    page = "register"
+    form = CustomUserCreationForm()
+
+    if request.method == "POST":
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.username = user.username.lower()
+            user.save()
+
+            messages.success(request, 'User account was created')
+            
+            login(request, user)
+            return redirect("home")
+        else:
+            messages.success(request, 'Error')
+
+    context = {"page" : page, 'form': form}
+    return render(request, "registration/login.html", context)
+
+def logoutUser(request):
     logout(request)
-    messages.info(request, "Logged out successfully!")
+    messages.info(request, 'User was logout')
     return redirect("home")
 
-def register_profile(request):
-    user = request.user
-    form = NewProfileForm(instance=user)
-    if request.method == 'POST':
-        form = NewProfileForm(request.POST, request.FILES, instance=user)
-        if form.is_valid():
-            profile = form.save()
-            messages.success(request, "Additional data successfuly added." )
-            return redirect(home)
-        messages.error(request, "Unsuccessful addition of data. Invalid information.")
-    form = NewProfileForm
-    return render (request=request, template_name="registration/register-next.html", context={"register_form":form})
+@login_required(login_url='login')
+def profile(request):
+    profile = request.user.profile
+    context = {'profile': profile}
+    return render(request, 'application/profile.html', context)
 
-def register_user(request):
-    if request.method == 'POST':
-        form = NewUserForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            messages.success(request, "Registration successful." )
-            return redirect(register_profile)
-        messages.error(request, "Unsuccessful registration. Invalid information.")
-    form = NewUserForm
-    return render (request=request, template_name="registration/register.html", context={"register_form":form})
-
+# @login_required(login_url='login')
+# def allAccounts(request):
+#     accounts = Account.objects.all()
+#     user_accounts = accounts.filter(owner=request.user.profile)
+#     context = {'accounts': user_accounts}
+#     return render(request, 'application/all-accounts.html', context)
 
 # if request.method == 'POST':
 #     form = RegistrationFormTeacher(request.POST)

@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path, include
 from aplication.views import *
 from UsersApp.views import *
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('aplication.urls')),
