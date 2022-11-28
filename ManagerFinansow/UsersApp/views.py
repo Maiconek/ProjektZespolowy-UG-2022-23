@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 
 from .forms import CustomUserCreationForm, ProfileForm
 
-# Create your views here.
+#Create your views here.
 def loginUser(request):
     page = "login"
 
@@ -26,6 +26,7 @@ def loginUser(request):
         #return user instance or none, jezeli hasło się zgadza to zostaniemy zalogowani
 
         if user is not None:
+            messages.success(request, 'You are logged in')
             login(request, user)
             return redirect("home")
         else:

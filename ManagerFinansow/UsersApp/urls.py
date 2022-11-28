@@ -17,9 +17,9 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
-    path('', include('django.contrib.auth.urls')),
+    # path('', include('django.contrib.auth.urls')),
     path('logout', views.logoutUser, name='logout'),
-    path('login', views.loginUser, name='login'),
+    path('login/', views.loginUser, name='login'),
     path('register', views.registerUser, name='register'),
     path('profile', views.profile, name='profile')
 ]
