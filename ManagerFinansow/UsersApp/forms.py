@@ -8,9 +8,13 @@ from .models import Profile
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ['first_name', 'email', 'username', 'password1', 'password2']
+        fields = ['username', 'first_name', 'email', 'password1', 'password2']
         labels = {
-            'first_name' : 'Name',
+            'username' : 'Nazwa użytkownika',
+            'first_name' : 'Imię',
+            'email' : 'Email',
+            'password1' : 'Hasło',
+            'password2': 'Powtórz hasło'
         }
 
 

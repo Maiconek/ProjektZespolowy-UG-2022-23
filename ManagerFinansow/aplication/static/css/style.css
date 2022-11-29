@@ -60,6 +60,31 @@ div.content{
     padding-right: 1vw;
 }
 
+/* FORMS */
+.site-with-form-content{
+    display: flex;
+    flex-direction: column;
+    /* align-items: flex-start; */
+    align-items: center;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+span.form-field > input{
+    color: green;
+}
+.form-button{
+    margin-top: 5px;
+}
+.mam-niemam{
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 /* FOOTER */
 footer{
     height: 30px;

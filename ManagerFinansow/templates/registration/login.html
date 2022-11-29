@@ -4,54 +4,64 @@
 {% if page == "register" %}
 
 <div class="title">
-  <h3>Register an Account</h3>
+  <h3>Rejestracja</h3>
 </div>
 
-<div class="container">
+<div class="container site-with-form-content">
   <form action="{% url 'register' %}" method="POST">
       {% csrf_token %}
       
-      {% for field in form %}
-      
-      <label>{{field.label}}</label>
-      {{field}}
-
-      {% endfor%}
-      <button type="submit">Register</button>
+      <table>
+        {% for field in form %}
+        <tr>
+          <td>
+            <label>{{field.label}}</label>
+          </td> 
+          <td>
+            <span class="field">{{field}}</span>
+          </td>
+        </tr>
+        {% endfor %}
+      </table> 
+      <button class="form-button" type="submit">Zarejestruj</button> 
   </form>
 
-  <p>Already have an Account?</p>
-  <a href="{% url 'login' %}">Log In</a>
+  <div class="mam-niemam">
+    <span>Masz już konto?</span>
+    <span><a href="{% url 'login' %}">Zaloguj się</a></span>
+  </div>
 </div>
 
 {% else %}
 
 <div class="title">
-  <h3>User Login</h3>
+  <h3>Logowanie</h3>
 </div>
 
-<div class="container">
-  <form method="POST">
+
+<div class="container site-with-form-content">
+  <form action="{% url 'login' %}" method="POST">
       {% csrf_token %}
-
-      {% for field in form %}
       
-      <label>{{field.label}}</label>
-      {{field}}
-
-      {% endfor%}
-      <button type="submit">Login</button>
-      {% comment %} <div class="row g-3">
-          <div class="col">
-            <input type="text" class="form-control" placeholder="First name" aria-label="First name">
-          </div>
-          <div class="col">
-            <input type="text" class="form-control" placeholder="Last name" aria-label="Last name">
-          </div>
-        </div> {% endcomment %}
+      <table>
+        {% for field in form %}
+        <tr>
+          <td>
+            <label>{{field.label}}</label>
+          </td> 
+          <td>
+            <span class="field">{{field}}</span>
+          </td>
+        </tr>
+        {% endfor %}
+      </table> 
+      <button class="form-button" type="submit">Zaloguj</button> 
   </form>
-  <p>No Account?</p>
-  <a href="{% url 'register' %}">Register here</a>
+
+  <div class="mam-niemam">
+    <span>Nie masz konta?</span>
+    <span><a href="{% url 'register' %}">Zarejestruj się</a></span>
+  </div>
 </div>
 {% endif %}
 {% endblock %}
