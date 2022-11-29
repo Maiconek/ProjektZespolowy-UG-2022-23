@@ -1,28 +1,49 @@
+/* BODY */
 body{
     background-color: white;
     color: black;
 }
+
+/* NAV */
 a.nav-link{
     color: white;
     font-size: 20px;
+}
+a.nav-link:hover{
+    color: white;
+    background-color: rgb(176, 0, 176);
 }
 ul.nav{
     align-items: center;
 }
 nav.nav{
+    height: 60px;
     background-color: purple;
     justify-content: space-between;
-    padding-left: 5ch;
-    padding-right: 5ch;
+    padding-left: 4vw;
+    padding-right: 4vw;
 }
 #logo-link{
     padding: 0;
-    margin-right: 4ch;
+    margin-right: 3vw;
 }
 #app-name{
     color: goldenrod;
     font-size: 40px;
     font-weight: bold;
+}
+
+/* CONTENT */
+#site-content{
+    min-height: calc(100vh - 60px - 8vh - 30px); 
+    /* 100vh - nav height - margins - footer height */
+    margin-top: 4vh;
+    margin-bottom: 4vh;
+    margin-left: 4vw;
+    margin-right: 4vw;
+    border: 2px solid purple;
+    border-radius: 10px;
+    background-color: whitesmoke;
 }
 div.title{
     padding-top: 5vh;
@@ -35,6 +56,15 @@ div.title h1{
     font-weight: bold;
 }
 div.content{
-    padding-left: 2ch;
-    padding-right: 2ch;
+    padding-left: 1vw;
+    padding-right: 1vw;
+}
+
+/* FOOTER */
+footer{
+    height: 30px;
+    background-color: purple;
+    justify-content: space-between;
+    padding-left: 4vw;
+    padding-right: 4vw;
 }
