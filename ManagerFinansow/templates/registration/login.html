@@ -11,39 +11,53 @@
 
 <div class="container site-with-form-content">
   <form action="/register" method="POST">
-    <input type="hidden" name="csrfmiddlewaretoken" value="U2XGoVVBAvsGc6HyvzKfQ68OncZCBwBvffCChPvj17safxYKOlLisHqbyxugzBaT">
-    
+    {% csrf_token %}
+    {{ form.non_field_errors }}
     <table>
       <tr>
-        <td><label>Nazwa użytkownika</label></td> 
+        <td>
+          {{ form.username.errors }}
+          <label>Nazwa użytkownika</label>
+        </td> 
         <td>
           <span class="field"><input type="text" name="username" maxlength="150" autofocus required id="id_username"></span>
         </td>
       </tr>
       
       <tr>
-        <td><label>Imię</label></td> 
+        <td>
+          {{ form.first_name.errors }}
+          <label>Imię</label>
+        </td> 
         <td>
           <span class="field"><input type="text" name="first_name" maxlength="150" id="id_first_name"></span>
         </td>
       </tr>
       
       <tr>
-        <td><label>Email</label></td> 
+        <td>
+          {{ form.email.errors }}
+          <label>Email</label>
+        </td> 
         <td>
           <span class="field"><input type="email" name="email" maxlength="254" id="id_email"></span>
         </td>
       </tr>
       
       <tr>
-        <td><label>Hasło</label></td> 
+        <td>
+          {{ form.password1.errors }}
+          <label>Hasło</label>
+        </td> 
         <td>
           <span class="field"><input type="password" name="password1" autocomplete="new-password" required id="id_password1"></span>
         </td>
       </tr>
       
       <tr>
-        <td><label>Potwierdź hasło</label></td> 
+        <td>{{ form.password2.errors }}
+          <label>Potwierdź hasło</label>
+        </td> 
         <td>
           <span class="field"><input type="password" name="password2" autocomplete="new-password" required id="id_password2"></span>
         </td>

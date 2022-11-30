@@ -129,3 +129,16 @@ dmypy.json
 # Pyre type checker
 .pyre/
 *.pyc
+myvenv/pyvenv.cfg
+myvenv/Scripts/activate
+myvenv/Scripts/activate.bat
+myvenv/Scripts/Activate.ps1
+myvenv/Scripts/deactivate.bat
+myvenv/Scripts/django-admin.exe
+myvenv/Scripts/pip.exe
+myvenv/Scripts/pip3.10.exe
+myvenv/Scripts/pip3.11.exe
+myvenv/Scripts/pip3.exe
+myvenv/Scripts/python.exe
+myvenv/Scripts/pythonw.exe
+myvenv/Scripts/sqlformat.exe

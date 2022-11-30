@@ -47,10 +47,13 @@ def registerUser(request):
             messages.success(request, 'User account was created')
             
             login(request, user)
+            print(user)
             return redirect("home")
         else:
-            messages.success(request, 'Error')
-
+            if form.data['password1'] != form.data['password2']: 
+                messages.error(request, 'Hasło powinno być identyczne')
+            if len(form.data['password1']) < 8: 
+                messages.error(request, 'Hasło powinno mieć przynajmniej 8 znaków')
     context = {"page" : page, 'form': form}
     return render(request, "registration/login.html", context)
 
