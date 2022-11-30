@@ -4,6 +4,10 @@ body{
     color: black;
 }
 
+.dark-mode-background{
+    background-color: #2d428f;
+    color: white;
+}
 /* NAV */
 a.nav-link{
     color: white;
