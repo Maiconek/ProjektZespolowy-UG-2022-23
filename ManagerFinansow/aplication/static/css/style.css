@@ -41,7 +41,7 @@ nav.nav{
     margin-bottom: 4vh;
     margin-left: 4vw;
     margin-right: 4vw;
-    border: 2px solid purple;
+    border: 3px solid purple;
     border-radius: 10px;
     background-color: whitesmoke;
 }
@@ -59,6 +59,38 @@ div.title h1{
 div.content{
     padding-left: 1vw;
     padding-right: 1vw;
+}
+div.tiles{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+    /* ACCOUNTS */
+div.account{
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    margin-left: 1vw;
+    margin-right: 1vw;
+    padding: 5px;
+    border: 2px solid purple;
+    border-radius: 5px;
+    background-color: lightgoldenrodyellow;
+    min-width: 150px;
+    display: flex;
+    flex-direction: column;
+}
+div.account:nth-child(even){
+    background-color: lightsalmon;
+}
+div.account > span.name > a{
+    font-weight: bold;
+    font-size: 15px;
+    color: purple;
+    text-decoration: none;
+}
+div.account > span.balance{
+}
+div.account > div.transaction{
 }
 
 /* FORMS */

@@ -42,7 +42,8 @@ class Account(models.Model):
             balance += transaction.converted_amount
         return balance
 
-
+    def transactions(self):
+        return Transaction.objects.filter(id_account=self).order_by('-transaction_date')
 
 
 class User_Account(models.Model):
