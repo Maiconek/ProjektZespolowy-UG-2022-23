@@ -45,3 +45,9 @@ def createAccount(request):
             return redirect('all-accounts')
     context = {'form' : form}
     return render(request, 'application/account-form.html', context)
+
+@login_required(login_url='login')
+def showAccount(request, pk):
+    account = Account.objects.get(id=pk)
+    context = {'account': account}
+    return render(request, 'application/account.html', context)

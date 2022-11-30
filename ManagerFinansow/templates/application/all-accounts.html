@@ -1,11 +1,32 @@
 {% extends 'application/base.html' %}
 
+{% block title %}Wszystkie Konta{% endblock %}
+
 {% block content %}
+{% comment %} Strona z kontami użytkownika {% endcomment %}
 
-<a href="{% url 'create-account' %}">Dodaj nowe konto</a>
+    <div class="title">
+        <h1>Konta</h1>
+    </div>
 
-{% for account in accounts %}
-    <p>Name: {{account.name}} Owner: {{account.owner}}</p>
-{% endfor %}
+    <a href={% url 'create-account' %}>Dodaj nowe konto</a>
 
+    <div class="content tiles">
+        
+        {% for acc in accounts %}
+            <div class="account">
+                <span class="name"><a href={% url 'account' pk=acc.id %}>{{ acc }}</a></span>
+                <span class="balance">{{ acc.calculate_balance }} zł</span>
+                {% for tr in acc.transactions %}
+                    <div class="transaction">
+                        <span class="date">{{ tr.date }}</span>
+                        <span class="name">{{ tr.name }}</span>
+                        <span class="amount">{{ tr.amount }} zł</span>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+    </div>
+    
 {% endblock %}

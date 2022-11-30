@@ -65,7 +65,7 @@ div.tiles{
     flex-wrap: wrap;
     justify-content: space-around;
 }
-    /* ACCOUNTS */
+    /* ACCOUNT LIST */
 div.account{
     margin-top: 1vh;
     margin-bottom: 1vh;
@@ -90,7 +90,17 @@ div.account > span.name > a{
 }
 div.account > span.balance{
 }
-div.account > div.transaction{
+    /* ACCOUNT */
+tr.transaction{
+}
+tr.transaction > td{
+    padding: 5px;
+}
+tr.income{
+    background-color: lightgreen;
+}
+tr.expense{
+    background-color: lightcoral;
 }
 
 /* FORMS */

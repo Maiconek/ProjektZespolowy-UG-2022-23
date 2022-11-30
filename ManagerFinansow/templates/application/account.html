@@ -1,0 +1,35 @@
+{% extends 'application/base.html' %}
+
+{% block title %}{{ account }}{% endblock %}
+
+{% block content %}
+{% comment %} Strona z informacjami o danym koncie {% endcomment %}
+
+    <div class="title">
+        <h1>{{ account }}</h1>
+        <h1>{{ account.calculate_balance }} PLN</h1>
+    </div>
+
+    <div class="content">
+        <h2>Historia</h2>
+        <table>
+            <tr>
+                <th>Data</th>
+                <th>Opis</th>
+                <th>Kwota</th>
+            </tr>
+            {% for transaction in account.transactions %}
+            {% if transaction.converted_amount > 0 %}
+            <tr class="transaction income">
+            {% else %}
+            <tr class="transaction expense">
+            {% endif %}
+                <td>{{ transaction.transaction_date }}</td>
+                <td>{{ transaction.description }}</td>
+                <td>{{ transaction.converted_amount }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    
+{% endblock %}

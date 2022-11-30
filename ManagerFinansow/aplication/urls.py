@@ -19,5 +19,6 @@ from aplication.views import *
 urlpatterns = [
     path('', home, name='home'),
     path('all-accounts', allAccounts, name='all-accounts'),
-    path('create-account', createAccount, name='create-account')
+    path('create-account', createAccount, name='create-account'),
+    path('account/<pk>', showAccount, name='account')
 ]
