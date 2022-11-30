@@ -20,7 +20,9 @@
     <nav class="nav">
         {% if user.is_authenticated %}
         <ul class="nav justify-content-start">
-            <li class="nav-item"><a id="logo-link" class="nav-link" href="{% url 'home' %}"><text id="app-name">Cointrol</text></a>
+            <li class="nav-item"><a id="logo-link" class="nav-link" href="{% url 'home' %}">
+                <img id="app-logo" src="{% static 'images/logo.png' %}">
+            </a>
             <li class="nav-item"><a class="nav-link" href="{% url 'all-accounts' %}">Konta</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Podsumowania</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Budżet</a></li>

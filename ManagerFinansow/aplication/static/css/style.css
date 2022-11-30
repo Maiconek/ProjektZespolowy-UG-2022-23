@@ -25,12 +25,10 @@ nav.nav{
 }
 #logo-link{
     padding: 0;
-    margin-right: 3vw;
+    /* margin-right: 3vw; */
 }
-#app-name{
-    color: goldenrod;
-    font-size: 40px;
-    font-weight: bold;
+#app-logo{
+    width: 250px;
 }
 
 /* CONTENT */
