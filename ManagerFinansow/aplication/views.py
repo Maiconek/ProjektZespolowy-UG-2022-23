@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Account
+from .models import Account, Transaction
 from .forms import AccountForm
 
 # Create your views here.
@@ -10,12 +10,13 @@ def home(request):
     # Zalogowany użytkownik
         balance = 0
         acc = Account.objects.filter(owner=request.user.profile)
+        transactions = Transaction.objects.filter(id_user=request.user.profile).order_by('-transaction_date')
         #Stworzenie słownika z kontami i ich bilansem
         for a in acc:
             balance += a.calculate_balance()
 
         context = {
-            "accounts": acc,
+            "transactions": transactions,
             'profile_balance': balance
         }
         return render(request, 'application/home-login.html', context)

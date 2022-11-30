@@ -9,21 +9,28 @@
         <h1>Saldo</h1>
         <h1>{{ profile_balance }} PLN</h1>
     </div>
-    <div class="content tiles">
+    <div class="content">
         
-        {% for acc in accounts %}
-            <div class="account">
-                <span class="name"><a href="{% url 'account' pk=acc.id %}">{{ acc }}</a></span>
-                <span class="balance">{{ acc.calculate_balance }} zł</span>
-                {% for tr in acc.transactions %}
-                    <div class="transaction">
-                        <span class="date">{{ tr.date }}</span>
-                        <span class="name">{{ tr.name }}</span>
-                        <span class="amount">{{ tr.amount }} zł</span>
-                    </div>
-                {% endfor %}
-            </div>
-        {% endfor %}
+        <table>
+            <tr>
+                <th>Data</th>
+                <th>Nazwa</th>
+                <th>Opis</th>
+                <th>Kwota</th>
+            </tr>
+            {% for tr in transactions %}
+            {% if tr.converted_amount > 0 %}
+            <tr class="transaction income">
+            {% else %}
+            <tr class="transaction expense">
+            {% endif %}
+                <td>{{ tr.transaction_date }}</td>
+                <td>{{ tr.name }}</td>
+                <td>{{ tr.description }}</td>
+                <td>{{ tr.converted_amount }}</td>
+            </tr>
+            {% endfor %}
+        </table>
 
     </div>
     
