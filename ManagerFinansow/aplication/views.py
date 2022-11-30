@@ -4,10 +4,24 @@ from .models import Account
 from .forms import AccountForm
 
 # Create your views here.
+
 def home(request):
     if request.user.is_authenticated:
-        return render(request, 'application/home-login.html')
+    # Zalogowany użytkownik
+        balance = 0
+        acc = Account.objects.filter(owner=request.user.profile)
+        #Stworzenie słownika z kontami i ich bilansem
+        for a in acc:
+            balance += a.calculate_balance()
+
+        context = {
+            "accounts": acc,
+            'profile_balance': balance
+        }
+        return render(request, 'application/home-login.html', context)
+
     else:
+    # Niezalogowany użytkownik
         return render(request, 'application/home-logout.html')
 
 @login_required(login_url='login')

@@ -48,7 +48,8 @@ nav.nav{
 div.title{
     padding-top: 5vh;
     display: flex;
-    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 div.title h1{
     color: purple;
