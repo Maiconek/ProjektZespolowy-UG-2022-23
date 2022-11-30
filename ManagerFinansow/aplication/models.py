@@ -29,6 +29,7 @@ class Account(models.Model):
     owner = models.ForeignKey(Profile, null=True, blank=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
     is_shared = models.BooleanField(default=False)
+    description = models.CharField(max_length=100, null=True, blank=True)
     id = models.UUIDField(default=uuid.uuid4, unique=True, 
                             primary_key=True, editable=False)
     def __str__(self):

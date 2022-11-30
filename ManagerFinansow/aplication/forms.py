@@ -6,4 +6,4 @@ from .models import Account
 class AccountForm(ModelForm):
     class Meta:
         model = Account
-        fields = ['name', 'is_shared']
+        fields = ['name', 'is_shared', 'description']
