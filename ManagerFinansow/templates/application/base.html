@@ -17,7 +17,7 @@
     <title>{% block title %}Website{% endblock %}</title>
     <script src="{% static 'scripts.js' %}"></script>
 </head>
-<body class="bo">
+<body onload="checkColorMode()">
     <nav class="nav">
         {% if user.is_authenticated %}
         <ul class="nav justify-content-start">
