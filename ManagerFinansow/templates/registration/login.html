@@ -10,23 +10,47 @@
 </div>
 
 <div class="container site-with-form-content">
-  <form action="{% url 'register' %}" method="POST">
-      {% csrf_token %}
+  <form action="/register" method="POST">
+    <input type="hidden" name="csrfmiddlewaretoken" value="U2XGoVVBAvsGc6HyvzKfQ68OncZCBwBvffCChPvj17safxYKOlLisHqbyxugzBaT">
+    
+    <table>
+      <tr>
+        <td><label>Nazwa użytkownika</label></td> 
+        <td>
+          <span class="field"><input type="text" name="username" maxlength="150" autofocus required id="id_username"></span>
+        </td>
+      </tr>
       
-      <table>
-        {% for field in form %}
-        <tr>
-          <td>
-            <label>{{field.label}}</label>
-          </td> 
-          <td>
-            <span class="field">{{field}}</span>
-          </td>
-        </tr>
-        {% endfor %}
-      </table> 
-      <button class="form-button" type="submit">Zarejestruj</button> 
-  </form>
+      <tr>
+        <td><label>Imię</label></td> 
+        <td>
+          <span class="field"><input type="text" name="first_name" maxlength="150" id="id_first_name"></span>
+        </td>
+      </tr>
+      
+      <tr>
+        <td><label>Email</label></td> 
+        <td>
+          <span class="field"><input type="email" name="email" maxlength="254" id="id_email"></span>
+        </td>
+      </tr>
+      
+      <tr>
+        <td><label>Hasło</label></td> 
+        <td>
+          <span class="field"><input type="password" name="password1" autocomplete="new-password" required id="id_password1"></span>
+        </td>
+      </tr>
+      
+      <tr>
+        <td><label>Potwierdź hasło</label></td> 
+        <td>
+          <span class="field"><input type="password" name="password2" autocomplete="new-password" required id="id_password2"></span>
+        </td>
+      </tr>
+    </table> 
+    <button class="form-button" type="submit">Zarejestruj</button> 
+</form>
 
   <div class="mam-niemam">
     <span>Masz już konto?</span>
@@ -48,28 +72,33 @@
     <table>
       <tr>
         <td>
-          <label>Username</label>
+          <label>Nazwa użytkownika</label>
         </td> 
         <td>
           <span class="field">
-          <input
-          type="text"
-          name="username"
-          placeholder="Enter your username..."
-          />
-        </span>        
+            <input
+            type="text"
+            name="username"
+            placeholder="Enter your username..."
+            />
+          </span>        
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>Hasło</label>
         </td>
         <td>
-          <label>Password</label>
-          <input
-            type="password"
-            name="password"
-            placeholder="••••••••"
-          />
+          <span>
+            <input
+              type="password"
+              name="password"
+              placeholder="••••••••"
+            />
+          </span>
         </td>
       </tr>
     </table>      
-  </div>
       <button class="form-button" type="submit">Zaloguj</button> 
   </form>
 
@@ -81,27 +110,23 @@
 {% endif %}
 {% endblock %}
 
-<form action="" method="POST" class="form auth__form">
-  {% csrf_token %}
-  <!-- Input:Username -->
-  <div class="form__field">
-    <label for="formInput#text">Username: </label>
-    <input
-      class="input input--text"
-      id="formInput#text"
-      type="text"
-      name="username"
-      placeholder="Enter your username..."
-    />
-  </div>
-
-  <!-- Input:Password -->
-  <div class="form__field">
-    <label for="formInput#password">Password: </label>
-    <input
-      class="input input--password"
-      id="formInput#passowrd"
-      type="password"
-      name="password"
-      placeholder="••••••••"
-    />
+{% comment %}
+  formularz ogólny
+  <form action="{% url 'register' %}" method="POST">
+      {% csrf_token %}
+      
+      <table>
+        {% for field in form %}
+        <tr>
+          <td>
+            <label>{{field.label}}</label>
+          </td> 
+          <td>
+            <span class="field">{{field}}</span>
+          </td>
+        </tr>
+        {% endfor %}
+      </table> 
+      <button class="form-button" type="submit">Zarejestruj</button> 
+  </form>
+{% endcomment %}
