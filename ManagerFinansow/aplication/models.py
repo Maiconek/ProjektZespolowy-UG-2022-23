@@ -34,6 +34,14 @@ class Account(models.Model):
     def __str__(self):
         return self.name
 
+    # Obliczenie bilansu konta
+    def calculate_balance(self):
+        balance = 0
+        transactions = Transaction.objects.filter(id_account=self)
+        for transaction in transactions:
+            balance += transaction.converted_amount
+        return balance
+
 
 
 
@@ -59,4 +67,4 @@ class Transaction(models.Model):
                             primary_key=True, editable=False)
 
     def __str__(self):
-        return "[{}] - {} - {} - {} - {} - {} - {} - {} - {} - {} - {}".format(self.id_transaction, self.id_account.name, self.id_user.name, self.id_subcategory.id_category.name ,self.id_subcategory, self.name, self.is_periodic, self.amount, self.converted_amount, self.transaction_date, self.description)
+        return "[{}] - {} - {} - {} - {} - {} - {} - {} - {} - {}".format(self.name, self.id_account.name, self.id_user.name, self.id_subcategory.id_category.name ,self.id_subcategory, self.is_periodic, self.amount, self.converted_amount, self.transaction_date, self.description)
