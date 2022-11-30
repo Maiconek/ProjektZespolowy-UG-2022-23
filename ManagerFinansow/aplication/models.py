@@ -46,6 +46,13 @@ class Account(models.Model):
     def transactions(self):
         return Transaction.objects.filter(id_account=self).order_by('-transaction_date')
 
+    #wyświetlenie opisu jeśli istnieje
+    def print_description(self):
+        if self.description!=None:
+            return self.description
+        else:
+            return ""
+
 
 class User_Account(models.Model):
     id_user = models.ForeignKey(Profile, on_delete=models.CASCADE)

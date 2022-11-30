@@ -16,7 +16,8 @@
         {% for acc in accounts %}
             <div class="account">
                 <span class="name"><a href={% url 'account' pk=acc.id %}>{{ acc }}</a></span>
-                <span class="balance">{{ acc.calculate_balance }} zł</span>
+                <span class="account-description">{{ acc.print_description }}</span>
+                <span class="balance">Saldo: {{ acc.calculate_balance }} zł</span>
                 {% for tr in acc.transactions %}
                     <div class="transaction">
                         <span class="date">{{ tr.date }}</span>

@@ -87,6 +87,10 @@ div.account > span.name > a{
 }
 div.account > span.balance{
 }
+div.account > span.account-description{
+    font-style: italic;
+    color: rgba(0, 0, 0, 0.6);
+}
     /* ACCOUNT */
 tr.transaction{
 }
