@@ -27,7 +27,7 @@ class Subcategory(models.Model):
 
 class Account(models.Model):
     owner = models.ForeignKey(Profile, null=True, blank=True, on_delete=models.CASCADE)
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=50)
     is_shared = models.BooleanField(default=False)
     id = models.UUIDField(default=uuid.uuid4, unique=True, 
                             primary_key=True, editable=False)
