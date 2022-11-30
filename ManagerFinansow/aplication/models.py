@@ -57,7 +57,7 @@ class Transaction(models.Model):
     id_account = models.ForeignKey(Account, on_delete=models.CASCADE)
     id_user = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True) #konto z którego dokonano transakcji zostało usunięte ale transakcja ma pozostać 
     id_subcategory = models.ForeignKey(Subcategory, on_delete=models.SET_NULL, null=True) #umozliwienie usuniecia kategorii i podkategorii bez usuniecia transakcji
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=50)
     is_periodic = models.BooleanField(default=False)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     converted_amount = models.DecimalField(max_digits=10, decimal_places=2)
