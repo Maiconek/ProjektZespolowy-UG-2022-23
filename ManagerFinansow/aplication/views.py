@@ -50,5 +50,11 @@ def createAccount(request):
 @login_required(login_url='login')
 def showAccount(request, pk):
     account = Account.objects.get(id=pk)
-    context = {'account': account}
-    return render(request, 'application/account.html', context)
+    if account.owner == request.user.profile:
+        context = {'account': account}
+        return render(request, 'application/account.html', context)
+    else:
+        return redirect('forbidden')
+
+def forbidden(request):
+    return render(request, 'application/forbidden.html')

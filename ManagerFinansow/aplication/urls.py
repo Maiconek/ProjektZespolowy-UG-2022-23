@@ -20,5 +20,6 @@ urlpatterns = [
     path('', home, name='home'),
     path('all-accounts', allAccounts, name='all-accounts'),
     path('create-account', createAccount, name='create-account'),
-    path('account/<pk>', showAccount, name='account')
+    path('account/<pk>', showAccount, name='account'),
+    path('forbidden', forbidden, name='forbidden')
 ]
