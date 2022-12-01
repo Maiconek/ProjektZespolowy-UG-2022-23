@@ -54,7 +54,6 @@ def showAccount(request, pk):
     if account.owner == request.user.profile:
         context = {'account': account}
         return render(request, 'application/account.html', context)
-
     else:
         return redirect('forbidden')
 
