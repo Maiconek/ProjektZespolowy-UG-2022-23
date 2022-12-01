@@ -1,0 +1,14 @@
+{% extends 'application/base.html' %}
+
+{% block title %}{{ account }}{% endblock %}
+
+{% block content %}
+{% comment %} Dodanie Transakcji {% endcomment %}
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form }}
+    <button class="form-button" type="submit">Dodaj</button> 
+</form>
+
+{% endblock %}
