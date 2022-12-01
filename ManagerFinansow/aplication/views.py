@@ -20,18 +20,18 @@ def home(request):
             "transactions": transactions,
             'profile_balance': balance
         }
-        return render(request, 'application/home-login.html', context)
+        return render(request, 'application/home/home-login.html', context)
 
     else:
     # Niezalogowany użytkownik
-        return render(request, 'application/home-logout.html')
+        return render(request, 'application/home/home-logout.html')
 
 @login_required(login_url='login')
 def allAccounts(request):
     accounts = Account.objects.all()
     user_accounts = accounts.filter(owner=request.user.profile)
     context = {'accounts': user_accounts}
-    return render(request, 'application/all-accounts.html', context)
+    return render(request, 'application/account/all-accounts.html', context)
 
 @login_required(login_url='login')
 def createAccount(request):
@@ -46,7 +46,7 @@ def createAccount(request):
             form.save()
             return redirect('all-accounts')
     context = {'form' : form}
-    return render(request, 'application/account-form.html', context)
+    return render(request, 'application/account/account-form.html', context)
 
 @login_required(login_url='login')
 def showAccount(request, pk):
@@ -54,7 +54,7 @@ def showAccount(request, pk):
     if account.owner != request.user.profile:
         return redirect('forbidden')
     context = {'account': account}
-    return render(request, 'application/account.html', context)
+    return render(request, 'application/account/account.html', context)
 
 def forbidden(request):
     return render(request, 'application/forbidden.html')
