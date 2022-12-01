@@ -22,7 +22,7 @@
         {% if user.is_authenticated %}
         <ul class="nav justify-content-start">
             <li class="nav-item"><a id="logo-link" class="nav-link" href="{% url 'home' %}">
-                <img id="app-logo" src="{% static 'images/logo.png' %}">
+                <img onmouseover="logoHover()" onmouseout="logoOut()" id="app-logo" src="{% static 'images/logo.png' %}">
             </a>
             <li class="nav-item"><a class="nav-link" href="{% url 'all-accounts' %}">Konta</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Podsumowania</a></li>

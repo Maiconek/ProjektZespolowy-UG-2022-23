@@ -138,3 +138,13 @@ function darkMode() {
         sessionStorage.setItem("darkmode", "false");
     }
  }
+
+ function logoHover(){
+    var logo = document.getElementById("app-logo");
+    logo.src="static/images/logo-on-hover.png";
+ }
+ 
+ function logoOut(){
+    var logo = document.getElementById("app-logo");
+    logo.src="static/images/logo.png";
+ }
