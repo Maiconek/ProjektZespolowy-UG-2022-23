@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Account, Transaction
-from .forms import AccountForm
+from .forms import AccountForm, TransactionForm
+from datetime import datetime
 
 # Create your views here.
 
@@ -52,3 +53,58 @@ def showAccount(request, pk):
     account = Account.objects.get(id=pk)
     context = {'account': account}
     return render(request, 'application/account.html', context)
+
+@login_required(login_url='login')
+def addTransaction(request, pk):
+    account = get_object_or_404(Account, id=pk)
+    form = TransactionForm()
+    context = {'account': account, 'form': form}
+
+    if request.method == "POST":
+        form = TransactionForm(request.POST)
+        if form.is_valid():
+            transaction = Transaction(
+                id_account=account,
+                id_user = request.user.profile,
+                id_subcategory = form.cleaned_data['id_subcategory'],
+                name = form.cleaned_data['name'],
+                is_periodic = form.cleaned_data['is_periodic'],
+                amount = form.cleaned_data['amount'],
+                converted_amount = form.cleaned_data['amount'],
+                transaction_date = datetime.now(),
+                description = form.cleaned_data['description']         
+            )
+            transaction.save()
+            return redirect('account', pk=account.id)
+    return render(request, 'application/transaction/add.html', context)
+
+@login_required(login_url='login')
+def showTransaction(request, pk):
+    transaction = get_object_or_404(Transaction, id=pk)
+    context = {'tr':transaction}
+    return render(request, 'application/transaction/show.html', context)
+
+@login_required(login_url='login')
+def delTransaction(request, pk):
+    transaction = get_object_or_404(Transaction, id=pk)
+    account = transaction.id_account
+    context = {'tr':transaction}
+    if request.method == 'POST':
+        transaction.delete()
+        return redirect('account', pk=account.id)
+    return render(request, 'application/transaction/del.html', context)
+
+@login_required(login_url='login')
+def editTransaction(request, pk):
+    transaction = get_object_or_404(Transaction, id=pk)
+    form = TransactionForm(request.POST or None, instance = transaction)
+    if form.is_valid():
+        transaction.id_subcategory = form.cleaned_data['id_subcategory']
+        transaction.name = form.cleaned_data['name']
+        transaction.is_periodic = form.cleaned_data['is_periodic']
+        transaction.amount = form.cleaned_data['amount']
+        transaction.converted_amount = form.cleaned_data['amount']
+        transaction.description = form.cleaned_data['description']  
+        transaction.save()   
+        return redirect('showTransaction', pk=transaction.id)
+    return render(request, 'application/transaction/edit.html', {'form': form})

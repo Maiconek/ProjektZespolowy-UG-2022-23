@@ -1,0 +1,27 @@
+{% extends 'application/base.html' %}
+
+{% block title %}{{ tr.name }}{% endblock %}
+
+{% block content %}
+{% comment %} Usuwanie Transakcji {% endcomment %}
+
+<div class="title">
+    <h1>{{ tr.name }}</h1>
+</div>
+<div class="content">
+    <p>Data: {{ tr.transaction_date }}</p>
+    <p>Kwota: {{ tr.amount }}</p>
+    <p>Opis: {{ tr.description }}</p>
+    <p>Podkategoria: {{ tr.id_subcategory }}</p>
+    <p>Cykliczna: {{ tr.is_periodic }}</p>
+
+    <p>Czy napewno usunąć?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Usuń</button>
+    </form>
+    <span class="name"><a href="{% url 'showTransaction' tr.id %}">Powrót do Widoku Transakcji</a></span>
+    <br><br>
+</div>
+
+{% endblock  %} 

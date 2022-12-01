@@ -11,13 +11,17 @@
     </div>
 
     <div class="content">
-        <h2>Historia</h2>
         <table>
+            {% if account.transactions %}
             <tr>
                 <th>Data</th>
                 <th>Opis</th>
                 <th>Kwota</th>
             </tr>
+            {% else %}
+            <tr><h3>Wygląda na to, że nie dodałeś jeszcze żadnych transakcji na tym koncie</h3></tr>
+            {% endif %}
+
             {% for transaction in account.transactions %}
             {% if transaction.converted_amount > 0 %}
             <tr class="transaction income">
@@ -27,9 +31,12 @@
                 <td>{{ transaction.transaction_date }}</td>
                 <td>{{ transaction.description }}</td>
                 <td>{{ transaction.converted_amount }}</td>
+                <td><a href="{% url 'showTransaction' transaction.id %}">Szczegóły</a></td>
+                <td><span class="name"><a href="{% url 'delTransaction' transaction.id %}">Usuń</a></span></td>
             </tr>
             {% endfor %}
         </table>
+        <a href="{% url 'addTransaction' account.id %}">Dodaj</a>
     </div>
     
 {% endblock %}
