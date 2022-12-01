@@ -51,11 +51,10 @@ def createAccount(request):
 @login_required(login_url='login')
 def showAccount(request, pk):
     account = Account.objects.get(id=pk)
-    if account.owner == request.user.profile:
-        context = {'account': account}
-        return render(request, 'application/account.html', context)
-    else:
+    if account.owner != request.user.profile:
         return redirect('forbidden')
+    context = {'account': account}
+    return render(request, 'application/account.html', context)
 
 def forbidden(request):
     return render(request, 'application/forbidden.html')
@@ -63,6 +62,8 @@ def forbidden(request):
 @login_required(login_url='login')
 def addTransaction(request, pk):
     account = get_object_or_404(Account, id=pk)
+    if account.owner != request.user.profile:
+        return redirect('forbidden')
     form = TransactionForm()
     context = {'account': account, 'form': form}
 
@@ -87,12 +88,16 @@ def addTransaction(request, pk):
 @login_required(login_url='login')
 def showTransaction(request, pk):
     transaction = get_object_or_404(Transaction, id=pk)
+    if transaction.id_account.owner != request.user.profile:
+        return redirect('forbidden')
     context = {'tr':transaction}
     return render(request, 'application/transaction/show.html', context)
 
 @login_required(login_url='login')
 def delTransaction(request, pk):
     transaction = get_object_or_404(Transaction, id=pk)
+    if transaction.id_account.owner != request.user.profile:
+        return redirect('forbidden')
     account = transaction.id_account
     context = {'tr':transaction}
     if request.method == 'POST':
@@ -103,6 +108,8 @@ def delTransaction(request, pk):
 @login_required(login_url='login')
 def editTransaction(request, pk):
     transaction = get_object_or_404(Transaction, id=pk)
+    if transaction.id_account.owner != request.user.profile:
+        return redirect('forbidden')
     form = TransactionForm(request.POST or None, instance = transaction)
     if form.is_valid():
         transaction.id_subcategory = form.cleaned_data['id_subcategory']
