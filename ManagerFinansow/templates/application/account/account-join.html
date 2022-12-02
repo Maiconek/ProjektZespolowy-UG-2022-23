@@ -17,6 +17,7 @@
         <span>Czy napewno chcesz dołączyć do konta?</span>
         <div id="yes-no">
             <form action="{% url 'joinAccount' pk=account.id %}" method="post">
+                {% csrf_token %}
                 <input type="submit" value="Tak">
             </form>
             <a href="{% url 'home' %}">Nie</a>
