@@ -24,5 +24,6 @@ urlpatterns = [
     path('account/<pk>/transaction-add', addTransaction, name='addTransaction'),
     path('account/transaction/<pk>', showTransaction, name='showTransaction'),
     path('account/transaction-del/<pk>', delTransaction, name='delTransaction'),
-    path('account/transaction-edit/<pk>', editTransaction, name='editTransaction')
+    path('account/transaction-edit/<pk>', editTransaction, name='editTransaction'),
+    path('account/<pk>/join', joinAccount, name='joinAccount'),
 ]

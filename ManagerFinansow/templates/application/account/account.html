@@ -21,7 +21,15 @@
             {% else %}
             <tr><h3>Wygląda na to, że nie dodałeś jeszcze żadnych transakcji na tym koncie</h3></tr>
             {% endif %}
-
+            {% if account.is_shared %}
+            <div>
+                <span>To konto jest ustawione jako współdzielone.<span>
+                <br/>
+                <span>Aby zaprosić innego użytkownika do współdzielenia konta, przekaż mu ten URL:<span>
+                <br/>
+                <code class="url">{{ request.build_absolute_uri }}/join</code>
+            </div>
+            {% endif %}
             {% for transaction in account.transactions %}
             {% if transaction.converted_amount > 0 %}
             <tr class="transaction income">

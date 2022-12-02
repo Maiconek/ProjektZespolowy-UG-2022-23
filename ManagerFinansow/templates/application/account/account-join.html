@@ -1,0 +1,25 @@
+{% extends 'application/base.html' %}
+
+{% block title %}Dołącz do konta{% endblock %}
+{% block content %}
+    <div class="title">
+        <h1>Dołączanie do konta</h1>
+    </div>
+    <div class="content">
+        <span>Konto do którego chcesz dołączyć:</span>
+        <div>
+            <span class="name">{{ account.name }}</span>
+            </br>
+            <span class="account-description">{{ account.description }}</span>
+            </br>
+            <span>{{ account.owner }}</span>
+        </div>
+        <span>Czy napewno chcesz dołączyć do konta?</span>
+        <div id="yes-no">
+            <form action="{% url 'joinAccount' pk=account.id %}" method="post">
+                <input type="submit" value="Tak">
+            </form>
+            <a href="{% url 'home' %}">Nie</a>
+        </div>
+    </div>
+{% endblock  %} 

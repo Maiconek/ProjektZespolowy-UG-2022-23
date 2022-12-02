@@ -120,5 +120,19 @@ def editTransaction(request, pk):
         return redirect('showTransaction', pk=transaction.id)
     return render(request, 'application/transaction/edit.html', {'form': form})
 
+@login_required(login_url='login')
+def joinAccount(request, pk):
+    account = get_object_or_404(Account, id=pk)
+    if account.is_shared == False:
+        raise Http404
+    #if nie powinieneś mieć dostępu
+    #raise Http404
+    context = {'account': account}
+    if request.method == 'POST':
+        #Dodaj do konta użytkownika
+        account.save()
+        return redirect('account', pk=account.id)
+    return render(request, 'application/account/account-join.html', context)
+
 def error404(request, exception):
     return render(request, 'application/error/404.html')
