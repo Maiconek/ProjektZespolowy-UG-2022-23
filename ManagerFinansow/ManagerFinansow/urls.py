@@ -24,3 +24,5 @@ urlpatterns = [
     path('', include('aplication.urls')),
     path('', include('UsersApp.urls')),
 ]
+
+handler404 = 'aplication.views.error404'

@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Account, Transaction
 from .forms import AccountForm, TransactionForm
 from datetime import datetime
+from django.http import Http404  
 
 # Create your views here.
 
@@ -52,18 +53,15 @@ def createAccount(request):
 def showAccount(request, pk):
     account = Account.objects.get(id=pk)
     if account.owner != request.user.profile:
-        return redirect('forbidden')
+        raise Http404
     context = {'account': account}
     return render(request, 'application/account/account.html', context)
-
-def forbidden(request):
-    return render(request, 'application/forbidden.html')
 
 @login_required(login_url='login')
 def addTransaction(request, pk):
     account = get_object_or_404(Account, id=pk)
     if account.owner != request.user.profile:
-        return redirect('forbidden')
+        raise Http404
     form = TransactionForm()
     context = {'account': account, 'form': form}
 
@@ -89,7 +87,7 @@ def addTransaction(request, pk):
 def showTransaction(request, pk):
     transaction = get_object_or_404(Transaction, id=pk)
     if transaction.id_account.owner != request.user.profile:
-        return redirect('forbidden')
+        raise Http404
     context = {'tr':transaction}
     return render(request, 'application/transaction/show.html', context)
 
@@ -97,7 +95,7 @@ def showTransaction(request, pk):
 def delTransaction(request, pk):
     transaction = get_object_or_404(Transaction, id=pk)
     if transaction.id_account.owner != request.user.profile:
-        return redirect('forbidden')
+        raise Http404
     account = transaction.id_account
     context = {'tr':transaction}
     if request.method == 'POST':
@@ -109,7 +107,7 @@ def delTransaction(request, pk):
 def editTransaction(request, pk):
     transaction = get_object_or_404(Transaction, id=pk)
     if transaction.id_account.owner != request.user.profile:
-        return redirect('forbidden')
+        raise Http404
     form = TransactionForm(request.POST or None, instance = transaction)
     if form.is_valid():
         transaction.id_subcategory = form.cleaned_data['id_subcategory']
@@ -121,3 +119,6 @@ def editTransaction(request, pk):
         transaction.save()   
         return redirect('showTransaction', pk=transaction.id)
     return render(request, 'application/transaction/edit.html', {'form': form})
+
+def error404(request, exception):
+    return render(request, 'application/error/404.html')
