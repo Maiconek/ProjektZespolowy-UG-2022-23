@@ -30,10 +30,12 @@ class Subcategory(models.Model):
 class Account(models.Model):
     owner = models.ForeignKey(Profile, null=True, blank=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
+    currency = models.ForeignKey(Currency, on_delete=models.SET_NULL, null=True)
     is_shared = models.BooleanField(default=False)
     description = models.CharField(max_length=100, null=True, blank=True)
     id = models.UUIDField(default=uuid.uuid4, unique=True, 
                             primary_key=True, editable=False)
+
     def __str__(self):
         return self.name
 
@@ -70,6 +72,7 @@ class Transaction(models.Model):
     # kategoria
     id_subcategory = models.ForeignKey(Subcategory, on_delete=models.SET_NULL, null=True, blank=True) #umozliwienie usuniecia kategorii i podkategorii bez usuniecia transakcji
     name = models.CharField(max_length=50)
+    # currency = models.ForeignKey('Currency', on_delete=models.SET_DEFAULT, null=True)
     is_periodic = models.BooleanField(default=False)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     converted_amount = models.DecimalField(max_digits=10, decimal_places=2)
