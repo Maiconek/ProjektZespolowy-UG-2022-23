@@ -73,9 +73,10 @@ def addTransaction(request, pk):
         form = TransactionForm(request.POST)
         if form.is_valid():
             transaction = form.save(commit=False)
-            transaction.id_account=account,
-            transaction.id_user = request.user.profile,
-            transaction.transaction_date = datetime.now(),      
+            transaction.id_account=account
+            transaction.id_user = request.user.profile
+            transaction.transaction_date = datetime.now()
+            transaction.converted_amount = form.cleaned_data['amount']      
             transaction.save()
             return redirect('account', pk=account.id)
     return render(request, 'application/transaction/add.html', context)
