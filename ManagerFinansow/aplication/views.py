@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Account, Transaction
+from .models import *
 from .forms import AccountForm, TransactionForm
 from datetime import datetime
 from django.http import Http404  
@@ -11,11 +11,11 @@ def home(request):
     if request.user.is_authenticated:
     # Zalogowany użytkownik
         balance = 0
-        acc = Account.objects.filter(owner=request.user.profile)
+        user_accounts = User_Account.objects.filter(id_user = request.user.profile.id)
         transactions = Transaction.objects.filter(id_user=request.user.profile).order_by('-transaction_date')
         #Stworzenie słownika z kontami i ich bilansem
-        for a in acc:
-            balance += a.calculate_balance()
+        for ua in user_accounts:
+            balance += ua.id_account.calculate_balance()
 
         context = {
             "transactions": transactions,
@@ -29,9 +29,11 @@ def home(request):
 
 @login_required(login_url='login')
 def allAccounts(request):
-    accounts = Account.objects.all()
-    user_accounts = accounts.filter(owner=request.user.profile)
-    context = {'accounts': user_accounts}
+    user_accounts = User_Account.objects.filter(id_user = request.user.profile.id)
+    accounts = []
+    for ua in user_accounts:
+        accounts.append(Account.objects.get(id=ua.id_account.id))
+    context = {'accounts': accounts}
     return render(request, 'application/account/all-accounts.html', context)
 
 @login_required(login_url='login')
@@ -44,7 +46,9 @@ def createAccount(request):
         if form.is_valid():
             account = form.save(commit=False)
             account.owner = profile
-            form.save()
+            account.save()
+            account_user = User_Account(profile.id, account.id, 0)
+            account_user.save()
             return redirect('all-accounts')
     context = {'form' : form}
     return render(request, 'application/account/account-form.html', context)
@@ -68,17 +72,10 @@ def addTransaction(request, pk):
     if request.method == "POST":
         form = TransactionForm(request.POST)
         if form.is_valid():
-            transaction = Transaction(
-                id_account=account,
-                id_user = request.user.profile,
-                id_subcategory = form.cleaned_data['id_subcategory'],
-                name = form.cleaned_data['name'],
-                is_periodic = form.cleaned_data['is_periodic'],
-                amount = form.cleaned_data['amount'],
-                converted_amount = form.cleaned_data['amount'],
-                transaction_date = datetime.now(),
-                description = form.cleaned_data['description']         
-            )
+            transaction = form.save(commit=False)
+            transaction.id_account=account,
+            transaction.id_user = request.user.profile,
+            transaction.transaction_date = datetime.now(),      
             transaction.save()
             return redirect('account', pk=account.id)
     return render(request, 'application/transaction/add.html', context)
@@ -110,12 +107,7 @@ def editTransaction(request, pk):
         raise Http404
     form = TransactionForm(request.POST or None, instance = transaction)
     if form.is_valid():
-        transaction.id_subcategory = form.cleaned_data['id_subcategory']
-        transaction.name = form.cleaned_data['name']
-        transaction.is_periodic = form.cleaned_data['is_periodic']
-        transaction.amount = form.cleaned_data['amount']
-        transaction.converted_amount = form.cleaned_data['amount']
-        transaction.description = form.cleaned_data['description']  
+        transaction = form.save(commit=False)
         transaction.save()   
         return redirect('showTransaction', pk=transaction.id)
     return render(request, 'application/transaction/edit.html', {'form': form})
