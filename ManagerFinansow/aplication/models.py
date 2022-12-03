@@ -10,10 +10,10 @@ from UsersApp.models import *
 # 1. kategorie podczepione do użytkownika (n-1), współdzielone dziedziczą po założycielu
 
 class Category(models.Model):
-    name = models.CharField(max_length=255) 
+    name = models.CharField(max_length=255)
+    owner = models.ForeignKey(Profile, null=True, blank=True, on_delete=models.CASCADE)
     id = models.UUIDField(default=uuid.uuid4, unique=True, 
                             primary_key=True, editable=False)
-    owner = models.ForeignKey(Profile, null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -69,7 +69,7 @@ class User_Account(models.Model):
 class Transaction(models.Model):
     id_account = models.ForeignKey(Account, on_delete=models.CASCADE)
     id_user = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True) #konto z którego dokonano transakcji zostało usunięte ale transakcja ma pozostać 
-    id_category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
+    id_category = models.ForeignKey(Category, on_delete=models.CASCADE)
     id_subcategory = models.ForeignKey(Subcategory, on_delete=models.SET_NULL, null=True, blank=True)
     name = models.CharField(max_length=50)
     currency = models.ForeignKey(Currency, on_delete=models.SET_NULL, null=True)
@@ -83,5 +83,5 @@ class Transaction(models.Model):
 
     def __str__(self):
         return (f"{self.name} - {self.id_account.name} - {self.id_user.name} - "
-                f"{self.id_subcategory} - {self.id_subcategory} - {self.is_periodic} - "
+                f"{self.id_category} - {self.id_subcategory} - {self.is_periodic} - "
                 f"{self.amount} - {self.converted_amount} - {self.transaction_date} - {self.description}")
