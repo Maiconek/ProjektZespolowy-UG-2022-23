@@ -64,7 +64,7 @@ class User_Account(models.Model):
     access_level = models.IntegerField(default=0)
 
     def __str__(self):
-        return "[{}] - [{}] - {}".format(self.id_user, self.id_account, self.access_level)
+        return "f[{self.id_user}] - [{self.id_account}] - self.access_level)"
 
 class Transaction(models.Model):
     id_account = models.ForeignKey(Account, on_delete=models.CASCADE)
@@ -82,4 +82,6 @@ class Transaction(models.Model):
                             primary_key=True, editable=False)
 
     def __str__(self):
-        return "[{}] - {} - {} - {} - {} - {} - {} - {} - {} - {}".format(self.name, self.id_account.name, self.id_user.name, self.id_subcategory, self.id_subcategory, self.is_periodic, self.amount, self.converted_amount, self.transaction_date, self.description)
+        return ("f{self.name} - {self.id_account.name} - {self.id_user.name} - "
+                "f{self.id_subcategory} - {self.id_subcategory} - {self.is_periodic} - "
+                "f{self.amount} - {self.converted_amount} - {self.transaction_date} - {self.description}")
