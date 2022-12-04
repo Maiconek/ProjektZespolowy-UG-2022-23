@@ -1,0 +1,25 @@
+{% extends 'application/base.html' %}
+
+{% block content %}
+<h1>Kategorie</h1>
+
+<a href="{% url 'create-category' %}">Dodaj nową kategorie</a> <br />
+
+{% for dc in defaultCategory %}
+    {{dc.name}}
+    <!--<a href="{% url 'edit-category' dc.id %}">Edit</a> 
+    <a href="{% url 'delete-category' dc.id %}" onclick=
+    "return confirm('Are you sure you want to delete {{dc.name}}?')">Delete</a>--> 
+    <br />
+{% endfor %}
+
+{% for uc in userCategory %}
+    {{uc.name}} Owner: {{uc.owner.username}}
+    <a href="{% url 'edit-category' uc.id %}">Edit</a>
+    <a href="{% url 'delete-category' uc.id %}" onclick=
+    "return confirm('Are you sure you want to delete {{uc.name}}?')">Delete</a>
+    <br />  
+{% endfor %}
+
+
+{% endblock %}

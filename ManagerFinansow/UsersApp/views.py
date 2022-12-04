@@ -4,7 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
 
-from .forms import CustomUserCreationForm, ProfileForm
+from .forms import CustomUserCreationForm, ProfileForm, CategoryForm
+from .models import *
 
 #Create your views here.
 def loginUser(request):
@@ -67,6 +68,50 @@ def profile(request):
     profile = request.user.profile
     context = {'profile': profile}
     return render(request, 'application/profile.html', context)
+
+
+@login_required(login_url='login')
+def showCategories(request):
+    defaultCategory = Category.objects.filter(owner__isnull=True)
+    userCategory = Category.objects.filter(owner=request.user.profile)
+
+    context = {'defaultCategory' : defaultCategory, 'userCategory' : userCategory}
+    return render(request, 'application/all-categories.html', context)
+
+@login_required(login_url='login')
+def createCategory(request):
+    page = "create"
+    form = CategoryForm()
+
+    if request.method == "POST":
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            category = form.save(commit=False)
+            category.owner = request.user.profile
+            category.save()
+            return redirect('all-categories')
+    context = {'form' : form, 'page' : page}
+    return render(request, 'application/categoryForm.html', context)
+
+@login_required(login_url='login')
+def editCategory(request, pk):
+    category = Category.objects.get(id=pk)
+    form = CategoryForm(instance=category)
+    if request.method == "POST":
+        form = CategoryForm(request.POST, request.FILES, instance=category)
+        if form.is_valid():
+            category.save()
+            return redirect('all-categories')
+    context = {'form' : form}
+    return render(request, 'application/categoryForm.html', context)
+
+@login_required(login_url='login')
+def deleteCategory(request, pk):
+    category = Category.objects.get(id=pk)
+    category.delete()
+    return redirect('all-categories')
+
+
 
 # @login_required(login_url='login')
 # def allAccounts(request):

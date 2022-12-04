@@ -16,5 +16,6 @@
         <p>Email: {{ profile.email }}</p>
         <p>Data utworzenia: {{ profile.created }}</p>
         <p>Profilowe: <img src={{ profile.image }}, style="border-radius: 50%; width: 40px;"></p>
+        <a href="{% url 'all-categories' %}">Zarządzaj kategoriami</a>
     </div>
 {% endblock  %} 

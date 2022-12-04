@@ -30,3 +30,21 @@ class Currency(models.Model):
 
     def __str__(self):
         return "[{}] - {} - {}".format(self.name, self.sign, self.access_name)
+
+class Category(models.Model):
+    name = models.CharField(max_length=255)
+    owner = models.ForeignKey(Profile, null=True, blank=True, on_delete=models.CASCADE)
+    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
+
+    def __str__(self):
+        return self.name
+
+class Subcategory(models.Model):
+    name = models.CharField(max_length=255)
+    id_category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
+
+    def __str__(self):
+        return self.name
+
+

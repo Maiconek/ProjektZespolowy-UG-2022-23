@@ -21,5 +21,9 @@ urlpatterns = [
     path('logout', views.logoutUser, name='logout'),
     path('login/', views.loginUser, name='login'),
     path('register', views.registerUser, name='register'),
-    path('profile', views.profile, name='profile')
+    path('profile', views.profile, name='profile'),
+    path('profile/categories', views.showCategories, name='all-categories'),
+    path('profile/categories/create', views.createCategory, name='create-category'),
+    path('profile/categories/edit/<str:pk>', views.editCategory, name='edit-category'),
+    path('profile/categories/delete/<str:pk>', views.deleteCategory, name='delete-category')
 ]

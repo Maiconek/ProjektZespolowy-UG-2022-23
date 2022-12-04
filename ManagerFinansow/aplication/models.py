@@ -8,23 +8,6 @@ from UsersApp.models import *
 # Create your models here.
 
 # 1. kategorie podczepione do użytkownika (n-1), współdzielone dziedziczą po założycielu
-
-class Category(models.Model):
-    name = models.CharField(max_length=255)
-    owner = models.ForeignKey(Profile, null=True, blank=True, on_delete=models.CASCADE)
-    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
-
-    def __str__(self):
-        return self.name
-
-class Subcategory(models.Model):
-    name = models.CharField(max_length=255)
-    id_category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
-
-    def __str__(self):
-        return self.name
-
 class Account(models.Model):
     owner = models.ForeignKey(Profile, null=True, blank=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
@@ -67,7 +50,7 @@ class User_Account(models.Model):
 class Transaction(models.Model):
     id_account = models.ForeignKey(Account, on_delete=models.CASCADE)
     id_user = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True) #konto z którego dokonano transakcji zostało usunięte ale transakcja ma pozostać 
-    id_category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    id_category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True)
     id_subcategory = models.ForeignKey(Subcategory, on_delete=models.SET_NULL, null=True, blank=True)
     name = models.CharField(max_length=50)
     currency = models.ForeignKey(Currency, on_delete=models.SET_NULL, null=True)
