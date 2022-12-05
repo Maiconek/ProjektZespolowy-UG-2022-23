@@ -13,8 +13,6 @@
     <label>Nazwa</label>
     <input type="text" name="name" maxlength="255" required id="id_name">
     
-    
-    
     <label>Rodzaj</label>
     <select type="text" name="scope">
         <option value="income">Przychód</option>
@@ -29,13 +27,32 @@
 <h1>Edytuj kategorie</h1>
 
 <form method="POST">
-    {% csrf_token %}
-    {% for field in form %}
+    <input type="hidden" name="csrfmiddlewaretoken" value="eFjE125KBEL91EohDRASj5ASiHF2TPRHZ13dgQXtxfe5I8plge9drRBZJWYlAMIp">
     
-    <label>{{field.label}}</label>
-    {{field}}
     
-    {% endfor %}
+    <label>Nazwa</label>
+    <input type="text" name="name" value={{ category.name }} maxlength="255" required id="id_name">
+    
+    
+    {% if category.scope == 'INCOME' %}
+    <label>Rodzaj</label>
+    <select name="scope" required id="id_scope">
+
+        <option value="INCOME" selected>przychód</option>
+        <option value="EXPENSE">wydatek</option>
+
+    </select>
+    {% else %}
+    <label>Rodzaj</label>
+    <select name="scope" required id="id_scope">
+        
+        <option value="">---------</option>
+        <option value="INCOME">przychód</option>
+        <option value="EXPENSE" selected>wydatek</option>
+
+    </select>
+    {% endif %}
+    
     <button type="submit">Edit</button>
 </form>
 {% endif %}

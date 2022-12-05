@@ -102,7 +102,7 @@ def editCategory(request, pk):
         if form.is_valid():
             category.save()
             return redirect('all-categories')
-    context = {'form' : form}
+    context = {'form' : form, 'category' : category}
     return render(request, 'application/categoryForm.html', context)
 
 @login_required(login_url='login')
