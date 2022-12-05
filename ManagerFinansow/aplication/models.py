@@ -7,7 +7,6 @@ from UsersApp.models import *
 
 # Create your models here.
 
-# 1. kategorie podczepione do użytkownika (n-1), współdzielone dziedziczą po założycielu
 class Account(models.Model):
     owner = models.ForeignKey(Profile, null=True, blank=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
