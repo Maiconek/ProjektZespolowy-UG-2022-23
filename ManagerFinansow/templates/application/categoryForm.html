@@ -13,13 +13,15 @@
     <input type="text" name="name" maxlength="255" required id="id_name">
     
     <label>Rodzaj</label>
-    <select type="text" name="scope">
+    <select name="scope" required id="id_scope">
+
         <option value="income">Przychód</option>
         <option value="expense">Wydatek</option>
+
     </select>
     
     
-    <button type="submit">Create</button>
+    <button type="submit">Stwórz</button>
 </form>
 
 {% else %}
@@ -50,7 +52,7 @@
     </select>
     {% endif %}
     
-    <button type="submit">Edit</button>
+    <button type="submit">Zapisz zmiany</button>
 </form>
 {% endif %}
 
