@@ -88,15 +88,11 @@ a.account-link > span.name{
     font-size: 15px;
     color: purple;
 }
-div.account > span.balance{
-}
-div.account > span.account-description{
+a.account-link > span.account-description{
     font-style: italic;
     color: rgba(0, 0, 0, 0.6);
 }
     /* ACCOUNT */
-tr.transaction{
-}
 tr.transaction > td{
     padding: 5px;
 }

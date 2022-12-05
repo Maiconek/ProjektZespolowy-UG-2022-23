@@ -7,7 +7,7 @@
 {% comment %} Strona Domowa użytkownika {% endcomment %}
     <div class="title">
         <h1>Saldo</h1>
-        <h1>{{ profile_balance }} PLN</h1>
+        <h1>{{ profile_balance }} {{ profile.currency.sign }}</h1>
     </div>
     <div class="content">
         
@@ -18,17 +18,24 @@
                 <th>Opis</th>
                 <th>Kwota</th>
             </tr>
-            {% for tr in transactions %}
-            {% if tr.converted_amount > 0 %}
-            <tr class="transaction income">
-            {% else %}
-            <tr class="transaction expense">
-            {% endif %}
-                <td>{{ tr.transaction_date }}</td>
-                <td>{{ tr.name }}</td>
-                <td>{{ tr.description }}</td>
-                <td>{{ tr.converted_amount }}</td>
-            </tr>
+            {% for date in dates %}
+                <tr class="date">
+                    <td colspan="4">{{ date }}</td>
+                </tr>
+                {% for tr in transactions %}
+                    {% if tr.transaction_date == date %}
+                        {% if tr.converted_amount > 0 %}
+                        <tr class="transaction income">
+                        {% else %}
+                        <tr class="transaction expense">
+                        {% endif %}
+                            <td>{{ tr.transaction_date }}</td>
+                            <td>{{ tr.name }}</td>
+                            <td>{{ tr.description }}</td>
+                            <td>{{ tr.converted_amount }} {{ tr.currency.sign }}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
             {% endfor %}
         </table>
 

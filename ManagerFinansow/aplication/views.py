@@ -17,10 +17,16 @@ def home(request):
             if ua.id_account.owner == request.user.profile:
                 accounts.append(ua.id_account)
         transactions = Transaction.objects.filter(id_user=request.user.profile).order_by('-transaction_date')
+        dates = []
+        for t in transactions:
+            if t.transaction_date not in dates:
+                dates.append(t.transaction_date)
         for acc in accounts:
             balance += acc.calculate_balance()
 
         context = {
+            'profile': request.user.profile,
+            'dates': dates,
             "transactions": transactions,
             'profile_balance': balance
         }
@@ -61,7 +67,12 @@ def showAccount(request, pk):
     account = Account.objects.get(id=pk)
     if account.owner != request.user.profile:
         raise Http404
-    context = {'account': account}
+    transactions = Transaction.objects.filter(id_account=account).order_by('-transaction_date')
+    dates = []
+    for t in transactions:
+        if t.transaction_date not in dates:
+            dates.append(t.transaction_date)
+    context = {'account': account, 'transactions': transactions, 'dates': dates}
     return render(request, 'application/account/account.html', context)
 
 @login_required(login_url='login')

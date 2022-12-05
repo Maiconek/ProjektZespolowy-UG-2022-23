@@ -7,44 +7,71 @@
 
     <div class="title">
         <h1>{{ account }}</h1>
-        <h1>{{ account.calculate_balance }} PLN</h1>
+        <h1>{{ account.calculate_balance }} {{ account.currency.sign }}</h1>
     </div>
 
     <div class="content">
         <table>
             {% if account.transactions %}
-            <tr>
-                <th>Data</th>
-                <th>Opis</th>
-                <th>Kwota</th>
-            </tr>
+                <tr>
+                    <th>Data</th>
+                    <th>Opis</th>
+                    <th>Kwota</th>
+                </tr>
             {% else %}
-            <tr><h3>Wygląda na to, że nie dodałeś jeszcze żadnych transakcji na tym koncie</h3></tr>
+                <tr><h3>Wygląda na to, że nie dodałeś jeszcze żadnych transakcji na tym koncie</h3></tr>
             {% endif %}
             {% if account.is_shared %}
-            <div>
-                <span>To konto jest ustawione jako współdzielone.<span>
-                <br/>
-                <span>Aby zaprosić innego użytkownika do współdzielenia konta, przekaż mu ten URL:<span>
-                <br/>
-                <code class="url">{{ request.build_absolute_uri }}/join</code>
-            </div>
+                <div>
+                    <span>To konto jest ustawione jako współdzielone.<span>
+                    <br/>
+                    <span>Aby zaprosić innego użytkownika do współdzielenia konta, przekaż mu ten URL:<span>
+                    <br/>
+                    <code class="url">{{ request.build_absolute_uri }}/join</code>
+                </div>
             {% endif %}
-            {% for transaction in account.transactions %}
-            {% if transaction.converted_amount > 0 %}
-            <tr class="transaction income">
-            {% else %}
-            <tr class="transaction expense">
-            {% endif %}
-                <td>{{ transaction.transaction_date }}</td>
-                <td>{{ transaction.description }}</td>
-                <td>{{ transaction.converted_amount }}</td>
-                <td><a href="{% url 'showTransaction' transaction.id %}">Szczegóły</a></td>
-                <td><span class="name"><a href="{% url 'delTransaction' transaction.id %}">Usuń</a></span></td>
-            </tr>
+            {% for date in dates %}
+                <tr class="date">
+                    <td colspan="3">{{ date }}</td>
+                </tr>
+                {% for transaction in account.transactions %}
+                    {% if transaction.transaction_date == date %}
+                        {% if transaction.converted_amount > 0 %}
+                            <tr class="transaction income">
+                        {% else %}
+                            <tr class="transaction expense">
+                        {% endif %}
+                        <td>{{ transaction.transaction_date }}</td>
+                        <td>{{ transaction.description }}</td>
+                        <td>{{ transaction.converted_amount }} {{ transaction.currency.sign }}</td>
+                        <td><a href="{% url 'showTransaction' transaction.id %}">Szczegóły</a></td>
+                        <td><span class="name"><a href="{% url 'delTransaction' transaction.id %}">Usuń</a></span></td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
             {% endfor %}
         </table>
         <a href="{% url 'addTransaction' account.id %}">Dodaj</a>
     </div>
     
 {% endblock %}
+
+{% for date in dates %}
+                <tr class="date">
+                    <td colspan="4">{{ date }}</td>
+                </tr>
+                {% for tr in transactions %}
+                    {% if tr.transaction_date == date %}
+                        {% if tr.converted_amount > 0 %}
+                        <tr class="transaction income">
+                        {% else %}
+                        <tr class="transaction expense">
+                        {% endif %}
+                            <td>{{ tr.transaction_date }}</td>
+                            <td>{{ tr.name }}</td>
+                            <td>{{ tr.description }}</td>
+                            <td>{{ tr.converted_amount }}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
