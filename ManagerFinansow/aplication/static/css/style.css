@@ -72,17 +72,21 @@ div.account{
     border-radius: 5px;
     background-color: lightgoldenrodyellow;
     min-width: 150px;
-    display: flex;
-    flex-direction: column;
 }
 div.account:nth-child(even){
     background-color: lightsalmon;
 }
-div.account > span.name > a{
+a.account-link{
+    min-width: 150px;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: black;
+}
+a.account-link > span.name{
     font-weight: bold;
     font-size: 15px;
     color: purple;
-    text-decoration: none;
 }
 div.account > span.balance{
 }

@@ -12,10 +12,13 @@ def home(request):
     # Zalogowany użytkownik
         balance = 0
         user_accounts = User_Account.objects.filter(id_user = request.user.profile.id)
-        transactions = Transaction.objects.filter(id_user=request.user.profile).order_by('-transaction_date')
-        #Stworzenie słownika z kontami i ich bilansem
+        accounts = []
         for ua in user_accounts:
-            balance += ua.id_account.calculate_balance()
+            if ua.id_account.owner == request.user.profile:
+                accounts.append(ua.id_account)
+        transactions = Transaction.objects.filter(id_user=request.user.profile).order_by('-transaction_date')
+        for acc in accounts:
+            balance += acc.calculate_balance()
 
         context = {
             "transactions": transactions,
