@@ -7,13 +7,21 @@
 <h1>Utwórz nową kategorie</h1>
 
 <form method="POST">
-    {% csrf_token %}
-    {% for field in form %}
+    <input type="hidden" name="csrfmiddlewaretoken" value="SfqabNILF8SmhDysCCSF1YNEJu7SRyPxDBaJqBAuBJliY7zwfZr09KOLaJqbyvGf">
     
-    <label>{{field.label}}</label>
-    {{field}}
     
-    {% endfor %}
+    <label>Nazwa</label>
+    <input type="text" name="name" maxlength="255" required id="id_name">
+    
+    
+    
+    <label>Rodzaj</label>
+    <select type="text" name="scope">
+        <option value="income">Przychód</option>
+        <option value="expense">Wydatek</option>
+    </select>
+    
+    
     <button type="submit">Create</button>
 </form>
 
