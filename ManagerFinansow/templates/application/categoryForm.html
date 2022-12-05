@@ -10,13 +10,13 @@
     {% csrf_token %}
     
     <label>Nazwa</label>
-    <input type="text" name="name" maxlength="255" required id="id_name">
+    <input type="text" name="name" value="{{ category.name }}" maxlength="255" required id="id_name">
     
     <label>Rodzaj</label>
     <select name="scope" required id="id_scope">
 
-        <option value="income">Przychód</option>
-        <option value="expense">Wydatek</option>
+        <option value="INCOME">Przychód</option>
+        <option value="EXPENSE">Wydatek</option>
 
     </select>
     
@@ -31,7 +31,7 @@
     {% csrf_token %}    
     
     <label>Nazwa</label>
-    <input type="text" name="name" value={{ category.name }} maxlength="255" required id="id_name">
+    <input type="text" name="name" value="{{ category.name }}" maxlength="255" required id="id_name">
     
     
     {% if category.scope == 'INCOME' %}
