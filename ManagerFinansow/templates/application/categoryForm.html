@@ -7,8 +7,7 @@
 <h1>Utwórz nową kategorie</h1>
 
 <form method="POST">
-    <input type="hidden" name="csrfmiddlewaretoken" value="SfqabNILF8SmhDysCCSF1YNEJu7SRyPxDBaJqBAuBJliY7zwfZr09KOLaJqbyvGf">
-    
+    {% csrf_token %}
     
     <label>Nazwa</label>
     <input type="text" name="name" maxlength="255" required id="id_name">
@@ -27,8 +26,7 @@
 <h1>Edytuj kategorie</h1>
 
 <form method="POST">
-    <input type="hidden" name="csrfmiddlewaretoken" value="eFjE125KBEL91EohDRASj5ASiHF2TPRHZ13dgQXtxfe5I8plge9drRBZJWYlAMIp">
-    
+    {% csrf_token %}    
     
     <label>Nazwa</label>
     <input type="text" name="name" value={{ category.name }} maxlength="255" required id="id_name">
@@ -46,7 +44,6 @@
     <label>Rodzaj</label>
     <select name="scope" required id="id_scope">
         
-        <option value="">---------</option>
         <option value="INCOME">przychód</option>
         <option value="EXPENSE" selected>wydatek</option>
 
