@@ -14,13 +14,16 @@ def home(request):
         user_accounts = User_Account.objects.filter(id_user = request.user.profile.id)
         accounts = []
         for ua in user_accounts:
-            if ua.id_account.owner == request.user.profile:
+            if ua.id_account.owner == request.user.profile and ua.id_account.is_shared == False:
                 accounts.append(ua.id_account)
-        transactions = Transaction.objects.filter(id_user=request.user.profile).order_by('-transaction_date')
+        all_transactions = Transaction.objects.filter(id_user=request.user.profile).order_by('-transaction_date')
         dates = []
-        for t in transactions:
-            if t.transaction_date not in dates:
-                dates.append(t.transaction_date)
+        transactions = []
+        for t in all_transactions:
+            if t.id_account.is_shared == False:
+                transactions.append(t)
+                if t.transaction_date not in dates:
+                    dates.append(t.transaction_date)
         for acc in accounts:
             balance += acc.calculate_balance()
 

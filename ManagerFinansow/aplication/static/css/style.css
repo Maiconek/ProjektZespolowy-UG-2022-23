@@ -93,15 +93,30 @@ a.account-link > span.account-description{
     color: rgba(0, 0, 0, 0.6);
 }
     /* ACCOUNT */
+tr.transaction{
+    border: 1px solid purple;
+    background-color: lightpink
+}
 tr.transaction > td{
     padding: 5px;
 }
-tr.income{
-    background-color: lightgreen;
+#transaction-name{
+    font-weight: bold;
 }
-tr.expense{
-    background-color: lightcoral;
+#transaction-description{
+    font-style: italic;
+    color: rgba(0, 0, 0, 0.6);
 }
+#transaction-amount{
+    font-weight: bold;
+}
+#transaction-amount.income{
+    color: green;
+}
+#transaction-amount.expense{
+    color: red;
+}
+
 
 /* FORMS */
 .site-with-form-content{
