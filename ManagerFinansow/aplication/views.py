@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404, get_list_or_40
 from django.contrib.auth.decorators import login_required
 from .models import *
 from .forms import AccountForm, TransactionForm
-from datetime import datetime
+from datetime import datetime, date
 from django.http import Http404  
 
 # Create your views here.
@@ -71,7 +71,7 @@ def editAccount(request, pk):
         if form.is_valid():
             account = form.save(commit=False)
             account.save()
-            return redirect('all-accounts')
+            return redirect('account', pk=account.id)
     context = {'form' : form, 'option': "edit"}
     return render(request, 'application/account/account-form.html', context)
 
@@ -102,7 +102,7 @@ def addExpense(request, pk):
     if account.owner != request.user.profile:
         raise Http404
     form = TransactionForm()
-    context = {'account': account, 'form': form, 'option': "add"}
+    context = {'account': account, 'form': form, 'option': "add", 'today': date.today().strftime("%Y-%m-%d")}
 
     if request.method == "POST":
         form = TransactionForm(request.POST)
@@ -113,8 +113,8 @@ def addExpense(request, pk):
             transaction.transaction_date = datetime.now()
             transaction.amount = -form.cleaned_data['amount']
             transaction.converted_amount = -form.cleaned_data['amount']    
-            date = request.POST['date']
-            #transaction.transaction_date = date   
+            _date = request.POST['date']
+            transaction.transaction_date = _date   
             transaction.save()
             return redirect('account', pk=account.id)
     return render(request, 'application/transaction/form.html', context)
@@ -125,7 +125,7 @@ def addIncome(request, pk):
     if account.owner != request.user.profile:
         raise Http404
     form = TransactionForm()
-    context = {'account': account, 'form': form, 'option': "add"}
+    context = {'account': account, 'form': form, 'option': "add", 'today': date.today().strftime("%Y-%m-%d")}
 
     if request.method == "POST":
         form = TransactionForm(request.POST)
@@ -135,8 +135,8 @@ def addIncome(request, pk):
             transaction.id_user = request.user.profile
             transaction.transaction_date = datetime.now()
             transaction.converted_amount = form.cleaned_data['amount']     
-            date = request.POST['date']
-            #transaction.transaction_date = date 
+            _date = request.POST['date']
+            transaction.transaction_date = _date 
             transaction.save()
             return redirect('account', pk=account.id)
     return render(request, 'application/transaction/form.html', context)
@@ -166,11 +166,15 @@ def editTransaction(request, pk):
     form = TransactionForm(request.POST or None, instance = transaction)
     if form.is_valid():
         transaction = form.save(commit=False)
-        date = request.POST['date']
-        #transaction.transaction_date = date
+        _date = request.POST['date']
+        transaction.transaction_date = _date
         transaction.save()   
         return redirect('showTransaction', pk=transaction.id)
-    return render(request, 'application/transaction/form.html', {'form': form, 'account': transaction.id_account, 'option': "edit", 'transaction': transaction})
+    return render(request, 'application/transaction/form.html', {
+                                                                'form': form, 
+                                                                'account': transaction.id_account, 
+                                                                'option': "edit", 
+                                                                'transaction': transaction})
 
 @login_required(login_url='login')
 def joinAccount(request, pk):

@@ -10,7 +10,7 @@
         {% csrf_token %}
         {{ form.as_table }}
         <label>Date:</label>
-        <input type="date" name="date">
+        <input type="date" name="date", value="{{ today }}">
         <button class="form-button" type="submit">Dodaj</button> 
     </form>
 {% elif option == "edit" %}
@@ -18,7 +18,7 @@
         {% csrf_token %}
         {{ form.as_table }}
         <label>Date:</label>
-        <input type="date" name="date" value="{{transaction.date|date:'Y-m-d' }}">
+        <input type="date" name="date" value="{{ transaction.transaction_date|date:'Y-m-d' }}">
         <button class="form-button" type="submit">Zapisz</button> 
     </form>
 {% endif %}
