@@ -2,6 +2,7 @@
 
 {% block content %}
 
+{% if option == "add" %}
 <form method="POST">
     {% csrf_token %}
     {% for field in form %}
@@ -9,7 +10,21 @@
     <label>{{field.label}}</label>
     {{field}}
     {% endfor %}
-    <button type="submit">Create</button>
+    <button type="submit">Utwórz</button>
 </form>
+
+{% elif option == "edit" %}
+
+<form method="POST">
+    {% csrf_token %}
+    {% for field in form %}
+    
+    <label>{{field.label}}</label>
+    {{field}}
+    {% endfor %}
+    <button type="submit">Zapisz</button>
+</form>
+
+{% endif %}
 
 {% endblock %}

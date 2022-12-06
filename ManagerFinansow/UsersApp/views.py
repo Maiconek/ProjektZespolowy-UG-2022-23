@@ -76,7 +76,7 @@ def showCategories(request):
     userCategory = Category.objects.filter(owner=request.user.profile)
 
     context = {'defaultCategory' : defaultCategory, 'userCategory' : userCategory}
-    return render(request, 'application/all-categories.html', context)
+    return render(request, 'application/categories/all-categories.html', context)
 
 @login_required(login_url='login')
 def createCategory(request):
@@ -91,7 +91,7 @@ def createCategory(request):
             category.save()
             return redirect('all-categories')
     context = {'form' : form, 'page' : page}
-    return render(request, 'application/categoryForm.html', context)
+    return render(request, 'application/categories/categoryForm.html', context)
 
 @login_required(login_url='login')
 def editCategory(request, pk):
@@ -103,7 +103,7 @@ def editCategory(request, pk):
             category.save()
             return redirect('all-categories')
     context = {'form' : form, 'category' : category}
-    return render(request, 'application/categoryForm.html', context)
+    return render(request, 'application/categories/categoryForm.html', context)
 
 @login_required(login_url='login')
 def deleteCategory(request, pk):
