@@ -55,6 +55,7 @@
                         {% endif %}
                         <td>{{ transaction.converted_amount }} {{ transaction.currency.sign }}</td>
                         <td><a href="{% url 'showTransaction' transaction.id %}">Szczegóły</a></td>
+                        <td><a href="{% url 'duplicateTransaction' transaction.id %}">Duplikuj</a></td>
                         <td><span class="name"><a href="{% url 'delTransaction' transaction.id %}" onclick=
                             "return confirm('Czy napewno chcesz usunąć tę transakcję?')">Usuń</a></span></td>
                         </tr>

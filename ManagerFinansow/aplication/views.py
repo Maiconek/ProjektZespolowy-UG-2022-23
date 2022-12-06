@@ -101,11 +101,11 @@ def addExpense(request, pk):
     account = get_object_or_404(Account, id=pk)
     if account.owner != request.user.profile:
         raise Http404
-    form = TransactionForm()
+    form = TransactionForm(scope="EXPENSE", initial={'currency': account.currency})
     context = {'account': account, 'form': form, 'option': "add", 'today': date.today().strftime("%Y-%m-%d")}
 
     if request.method == "POST":
-        form = TransactionForm(request.POST)
+        form = TransactionForm(data=request.POST or None)
         if form.is_valid():
             transaction = form.save(commit=False)
             transaction.id_account=account
@@ -124,11 +124,11 @@ def addIncome(request, pk):
     account = get_object_or_404(Account, id=pk)
     if account.owner != request.user.profile:
         raise Http404
-    form = TransactionForm()
+    form = TransactionForm(scope = "INCOME", initial={'currency': account.currency})
     context = {'account': account, 'form': form, 'option': "add", 'today': date.today().strftime("%Y-%m-%d")}
 
     if request.method == "POST":
-        form = TransactionForm(request.POST)
+        form = TransactionForm(data=request.POST or None, scope="INCOME")
         if form.is_valid():
             transaction = form.save(commit=False)
             transaction.id_account=account
@@ -147,8 +147,9 @@ def duplicate(request, pk):
     if transaction.id_account.owner != request.user.profile:
         raise Http404
     transaction.id = None
-    form = TransactionForm(request.POST or None, instance=transaction)
+    form = TransactionForm(data=request.POST or None, scope = transaction.id_category.scope, instance=transaction)
     if form.is_valid():
+        transaction.converted_amount = form.cleaned_data['amount']
         _date = request.POST['date']
         transaction.transaction_date = _date 
         transaction.save()
@@ -182,9 +183,10 @@ def editTransaction(request, pk):
     transaction = get_object_or_404(Transaction, id=pk)
     if transaction.id_account.owner != request.user.profile:
         raise Http404
-    form = TransactionForm(request.POST or None, instance = transaction)
+    form = TransactionForm(data=request.POST or None, scope = transaction.id_category.scope, instance = transaction)
     if form.is_valid():
         transaction = form.save(commit=False)
+        transaction.converted_amount = form.cleaned_data['amount']
         _date = request.POST['date']
         transaction.transaction_date = _date
         transaction.save()   
