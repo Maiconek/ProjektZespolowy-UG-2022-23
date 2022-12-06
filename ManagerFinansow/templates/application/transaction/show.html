@@ -26,6 +26,7 @@
     <span class="name"><a href="{% url 'editTransaction' tr.id %}">Edytuj</a></span><br>
     <span class="name"><a href="{% url 'delTransaction' tr.id %}" onclick=
         "return confirm('Czy napewno chcesz usunąć tę transakcję?')">Usuń</a></span><br>
+    <span class="name"><a href="{% url 'duplicateTransaction' tr.id %}">Duplikuj</a></span><br>
     <span class="name"><a href="{% url 'account' tr.id_account.id %}">Powrót do konta</a></span>
     <br><br>
 </div>

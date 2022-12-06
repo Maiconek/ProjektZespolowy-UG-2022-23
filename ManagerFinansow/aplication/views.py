@@ -142,6 +142,25 @@ def addIncome(request, pk):
     return render(request, 'application/transaction/form.html', context)
 
 @login_required(login_url='login')
+def duplicate(request, pk):
+    transaction = get_object_or_404(Transaction, id=pk)
+    if transaction.id_account.owner != request.user.profile:
+        raise Http404
+    transaction.id = None
+    form = TransactionForm(request.POST or None, instance=transaction)
+    if form.is_valid():
+        _date = request.POST['date']
+        transaction.transaction_date = _date 
+        transaction.save()
+        return  redirect('account', pk=transaction.id_account.id)
+    return render(request, 'application/transaction/form.html', {
+                                                                'form': form, 
+                                                                'account': transaction.id_account, 
+                                                                'option': "add", 
+                                                                'transaction': transaction,
+                                                                'today': date.today().strftime("%Y-%m-%d")})
+
+@login_required(login_url='login')
 def showTransaction(request, pk):
     transaction = get_object_or_404(Transaction, id=pk)
     if transaction.id_account.owner != request.user.profile:
