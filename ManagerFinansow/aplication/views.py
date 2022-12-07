@@ -107,7 +107,7 @@ def addExpense(request, pk):
     context = {'account': account, 'form': form, 'option': "add", 'today': date.today().strftime("%Y-%m-%d")}
 
     if request.method == "POST":
-        form = TransactionForm(data=request.POST or None)
+        form = TransactionForm(data=request.POST or None, owner=account.owner)
         if form.is_valid():
             transaction = form.save(commit=False)
             transaction.id_account=account
@@ -130,7 +130,7 @@ def addIncome(request, pk):
     context = {'account': account, 'form': form, 'option': "add", 'today': date.today().strftime("%Y-%m-%d")}
 
     if request.method == "POST":
-        form = TransactionForm(data=request.POST or None, scope="INCOME")
+        form = TransactionForm(data=request.POST or None, scope="INCOME", owner=account.owner)
         if form.is_valid():
             transaction = form.save(commit=False)
             transaction.id_account=account
