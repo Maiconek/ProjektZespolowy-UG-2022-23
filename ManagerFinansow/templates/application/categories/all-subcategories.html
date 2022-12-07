@@ -1,0 +1,14 @@
+{% extends 'application/base.html' %}
+
+{% block content %}
+<h1>Podkategorie dla kategorii {{category.name}}</h1> 
+<a href="{% url 'create-subcategory' category.id %}">Utwórz nową podkategorie</a> <br/>
+{% for sc in subcategory %}
+    {{sc.name}} Kategoria {{sc.id_category.name}}
+    <a href="{% url 'edit-subcategory' category.id sc.id %}">Edit</a>
+    <a href="{% url 'delete-subcategory' category.id sc.id %}" onclick=
+    "return confirm('Are you sure you want to delete {{sc.name}}?')">Delete</a>
+    <br />
+{% endfor %}
+
+{% endblock %}

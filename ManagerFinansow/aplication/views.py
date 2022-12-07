@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404, get_list_or_40
 from django.contrib.auth.decorators import login_required
 from .models import *
 from .forms import AccountForm, TransactionForm
-from datetime import datetime
+from datetime import datetime, date
 from django.http import Http404  
 
 # Create your views here.
@@ -62,7 +62,20 @@ def createAccount(request):
             account_user = User_Account(profile.id, account.id, 0)
             account_user.save()
             return redirect('all-accounts')
-    context = {'form' : form}
+    context = {'form' : form, 'option': "add"}
+    return render(request, 'application/account/account-form.html', context)
+
+@login_required(login_url='login')
+def editAccount(request, pk):
+    account = get_object_or_404(Account, id=pk)
+    form = AccountForm(request.POST or None, instance=account)
+    if request.method == "POST":
+        
+        if form.is_valid():
+            account = form.save(commit=False)
+            account.save()
+            return redirect('account', pk=account.id)
+    context = {'form' : form, 'option': "edit"}
     return render(request, 'application/account/account-form.html', context)
 
 @login_required(login_url='login')
@@ -79,24 +92,77 @@ def showAccount(request, pk):
     return render(request, 'application/account/account.html', context)
 
 @login_required(login_url='login')
-def addTransaction(request, pk):
+def delAccount(request, pk):
+    account = get_object_or_404(Account, id=pk)
+    if account.owner == request.user.profile:
+        account.delete()
+    return redirect('all-accounts')
+
+
+@login_required(login_url='login')
+def addExpense(request, pk):
     account = get_object_or_404(Account, id=pk)
     if account.owner != request.user.profile:
         raise Http404
-    form = TransactionForm()
-    context = {'account': account, 'form': form}
+    form = TransactionForm(scope="EXPENSE", initial={'currency': account.currency})
+    context = {'account': account, 'form': form, 'option': "add", 'today': date.today().strftime("%Y-%m-%d")}
 
     if request.method == "POST":
-        form = TransactionForm(request.POST)
+        form = TransactionForm(data=request.POST or None)
         if form.is_valid():
             transaction = form.save(commit=False)
             transaction.id_account=account
             transaction.id_user = request.user.profile
             transaction.transaction_date = datetime.now()
-            transaction.converted_amount = form.cleaned_data['amount']      
+            transaction.amount = -form.cleaned_data['amount']
+            transaction.converted_amount = -form.cleaned_data['amount']    
+            _date = request.POST['date']
+            transaction.transaction_date = _date   
             transaction.save()
             return redirect('account', pk=account.id)
-    return render(request, 'application/transaction/add.html', context)
+    return render(request, 'application/transaction/form.html', context)
+
+@login_required(login_url='login')
+def addIncome(request, pk):
+    account = get_object_or_404(Account, id=pk)
+    if account.owner != request.user.profile:
+        raise Http404
+    form = TransactionForm(scope = "INCOME", initial={'currency': account.currency})
+    context = {'account': account, 'form': form, 'option': "add", 'today': date.today().strftime("%Y-%m-%d")}
+
+    if request.method == "POST":
+        form = TransactionForm(data=request.POST or None, scope="INCOME")
+        if form.is_valid():
+            transaction = form.save(commit=False)
+            transaction.id_account=account
+            transaction.id_user = request.user.profile
+            transaction.transaction_date = datetime.now()
+            transaction.converted_amount = form.cleaned_data['amount']     
+            _date = request.POST['date']
+            transaction.transaction_date = _date 
+            transaction.save()
+            return redirect('account', pk=account.id)
+    return render(request, 'application/transaction/form.html', context)
+
+@login_required(login_url='login')
+def duplicate(request, pk):
+    transaction = get_object_or_404(Transaction, id=pk)
+    if transaction.id_account.owner != request.user.profile:
+        raise Http404
+    transaction.id = None
+    form = TransactionForm(data=request.POST or None, scope = transaction.id_category.scope, instance=transaction)
+    if form.is_valid():
+        transaction.converted_amount = form.cleaned_data['amount']
+        _date = request.POST['date']
+        transaction.transaction_date = _date 
+        transaction.save()
+        return  redirect('account', pk=transaction.id_account.id)
+    return render(request, 'application/transaction/form.html', {
+                                                                'form': form, 
+                                                                'account': transaction.id_account, 
+                                                                'option': "add", 
+                                                                'transaction': transaction,
+                                                                'today': date.today().strftime("%Y-%m-%d")})
 
 @login_required(login_url='login')
 def showTransaction(request, pk):
@@ -112,23 +178,27 @@ def delTransaction(request, pk):
     if transaction.id_account.owner != request.user.profile:
         raise Http404
     account = transaction.id_account
-    context = {'tr':transaction}
-    if request.method == 'POST':
-        transaction.delete()
-        return redirect('account', pk=account.id)
-    return render(request, 'application/transaction/del.html', context)
+    transaction.delete()
+    return redirect('account', pk=account.id)
 
 @login_required(login_url='login')
 def editTransaction(request, pk):
     transaction = get_object_or_404(Transaction, id=pk)
     if transaction.id_account.owner != request.user.profile:
         raise Http404
-    form = TransactionForm(request.POST or None, instance = transaction)
+    form = TransactionForm(data=request.POST or None, scope = transaction.id_category.scope, instance = transaction)
     if form.is_valid():
         transaction = form.save(commit=False)
+        transaction.converted_amount = form.cleaned_data['amount']
+        _date = request.POST['date']
+        transaction.transaction_date = _date
         transaction.save()   
         return redirect('showTransaction', pk=transaction.id)
-    return render(request, 'application/transaction/edit.html', {'form': form})
+    return render(request, 'application/transaction/form.html', {
+                                                                'form': form, 
+                                                                'account': transaction.id_account, 
+                                                                'option': "edit", 
+                                                                'transaction': transaction})
 
 @login_required(login_url='login')
 def joinAccount(request, pk):

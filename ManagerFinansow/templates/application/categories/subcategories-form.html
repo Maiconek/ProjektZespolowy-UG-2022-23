@@ -2,27 +2,28 @@
 
 {% block content %}
 
-{% if option == "add" %}
+{% if page == "create" %}
+
+<h1>Utwórz nową podkategorie dla {{category.name}}</h1>
+
 <form method="POST">
     {% csrf_token %}
     {% for field in form %}
-    
     <label>{{field.label}}</label>
     {{field}}
     {% endfor %}
-    <button type="submit">Utwórz</button>
+    <button type="submit">Create</button>
 </form>
 
-{% elif option == "edit" %}
-
+{% else %}
+<h1>Edytuj podkategorie dla {{category.name}}</h1>
 <form method="POST">
     {% csrf_token %}
     {% for field in form %}
-    
     <label>{{field.label}}</label>
     {{field}}
     {% endfor %}
-    <button type="submit">Zapisz</button>
+    <button type="submit">Edit</button>
 </form>
 
 {% endif %}

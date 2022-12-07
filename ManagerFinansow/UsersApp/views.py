@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
 
-from .forms import CustomUserCreationForm, ProfileForm, CategoryForm
+from .forms import CustomUserCreationForm, ProfileForm, CategoryForm, SubCategoryForm
 from .models import *
 
 #Create your views here.
@@ -76,7 +76,7 @@ def showCategories(request):
     userCategory = Category.objects.filter(owner=request.user.profile)
 
     context = {'defaultCategory' : defaultCategory, 'userCategory' : userCategory}
-    return render(request, 'application/all-categories.html', context)
+    return render(request, 'application/categories/all-categories.html', context)
 
 @login_required(login_url='login')
 def createCategory(request):
@@ -91,7 +91,7 @@ def createCategory(request):
             category.save()
             return redirect('all-categories')
     context = {'form' : form, 'page' : page}
-    return render(request, 'application/categoryForm.html', context)
+    return render(request, 'application/categories/categoryForm.html', context)
 
 @login_required(login_url='login')
 def editCategory(request, pk):
@@ -103,7 +103,7 @@ def editCategory(request, pk):
             category.save()
             return redirect('all-categories')
     context = {'form' : form, 'category' : category}
-    return render(request, 'application/categoryForm.html', context)
+    return render(request, 'application/categories/categoryForm.html', context)
 
 @login_required(login_url='login')
 def deleteCategory(request, pk):
@@ -111,6 +111,50 @@ def deleteCategory(request, pk):
     category.delete()
     return redirect('all-categories')
 
+@login_required(login_url='login')
+def allSubcategories(request, pk):
+    category = Category.objects.get(id=pk)
+    subcategory = Subcategory.objects.filter(id_category=pk)
+
+    context = {"category" : category, "subcategory" : subcategory}
+    return render(request, "application/categories/all-subcategories.html", context)
+
+@login_required(login_url='login')
+def createSubcategory(request, pk):
+    page = "create"
+    form = SubCategoryForm()
+    category = Category.objects.get(id=pk)
+
+    if request.method == "POST":
+        form = SubCategoryForm(request.POST)
+        if form.is_valid():
+            subcategory = form.save(commit=False)
+            subcategory.id_category = category
+            subcategory.save()
+            return redirect('all-subcategories', pk=str(category.id))
+    context = {'form': form, 'category': category, 'page' : page}
+    return render(request, "application/categories/subcategories-form.html", context)
+
+@login_required(login_url='login')
+def editSubcategory(request, pk, pk2):
+    category = Category.objects.get(id=pk)
+    subcategory = Subcategory.objects.get(id=pk2)
+    form = SubCategoryForm(instance=subcategory)
+
+    if request.method == "POST":
+        form = SubCategoryForm(request.POST, request.FILES, instance=subcategory)
+        if form.is_valid():
+            subcategory.save()
+            return redirect('all-subcategories', pk=str(category.id))
+    context = {'form': form, 'category': category, 'subcategory' : subcategory}
+    return render(request, "application/categories/subcategories-form.html", context)
+
+@login_required(login_url='login')
+def deleteSubcategory(request, pk, pk2):
+    category = Category.objects.get(id=pk)
+    subcategory = Subcategory.objects.get(id=pk2)
+    subcategory.delete()
+    return redirect('all-subcategories', pk=str(category.id))
 
 
 # @login_required(login_url='login')

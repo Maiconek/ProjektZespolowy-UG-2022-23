@@ -1,0 +1,28 @@
+{% extends 'application/base.html' %}
+
+{% block title %}{{ account }}{% endblock %}
+
+{% block content %}
+{% comment %} Formularz Transakcji {% endcomment %}
+
+{% if option == "add" %}
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_table }}
+        <label>Date:</label>
+        <input type="date" name="date", value="{{ today }}">
+        <button class="form-button" type="submit">Dodaj</button> 
+    </form>
+{% elif option == "edit" %}
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_table }}
+        <label>Date:</label>
+        <input type="date" name="date" value="{{ transaction.transaction_date|date:'Y-m-d' }}">
+        <button class="form-button" type="submit">Zapisz</button> 
+    </form>
+{% endif %}
+
+    <a href={% url 'account' pk=account.id %}>Powrót do Konta</a>
+
+{% endblock %}

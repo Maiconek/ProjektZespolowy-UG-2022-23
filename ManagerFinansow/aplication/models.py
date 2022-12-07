@@ -49,9 +49,9 @@ class User_Account(models.Model):
 class Transaction(models.Model):
     id_account = models.ForeignKey(Account, on_delete=models.CASCADE)
     id_user = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True) #konto z którego dokonano transakcji zostało usunięte ale transakcja ma pozostać 
-    id_category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True)
+    id_category = models.ForeignKey(Category, on_delete=models.CASCADE)
     id_subcategory = models.ForeignKey(Subcategory, on_delete=models.SET_NULL, null=True, blank=True)
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, null=True, blank=True)
     currency = models.ForeignKey(Currency, on_delete=models.SET_NULL, null=True)
     is_periodic = models.BooleanField(default=False)
     amount = models.DecimalField(max_digits=10, decimal_places=2)

@@ -18,10 +18,17 @@
                 <span class="name">{{ acc }}</span>
                 <span class="account-description">{{ acc.print_description }}</span>
                 <span class="balance">Saldo: {{ acc.calculate_balance }} zł</span>
+                <span class="balance">Waluta: {{ acc.currency }} zł</span>
                 {% for tr in acc.transactions %}
                     <div class="transaction">
                         <span class="date">{{ tr.date }}</span>
-                        <span class="name">{{ tr.name }}</span>
+                        <span class="date">{{ tr.id_category }}</span>
+                        {% if tr.id_subcategory is not None %}
+                            <span class="date">{{ tr.id_subcategory }}</span>
+                        {% endif %}
+                        {% if tr.name %}
+                            <span class="name">{{ tr.name }}</span>
+                        {% endif %}
                         <span class="amount">{{ tr.amount }} zł</span>
                     </div>
                 {% endfor %}

@@ -25,5 +25,12 @@ urlpatterns = [
     path('profile/categories', views.showCategories, name='all-categories'),
     path('profile/categories/create', views.createCategory, name='create-category'),
     path('profile/categories/edit/<str:pk>', views.editCategory, name='edit-category'),
-    path('profile/categories/delete/<str:pk>', views.deleteCategory, name='delete-category')
+    path('profile/categories/delete/<str:pk>', views.deleteCategory, name='delete-category'),
+    path('profile/categories/subcategories/<str:pk>', views.allSubcategories, name='all-subcategories'),
+    path('profile/categories/subcategories/<str:pk>/create-subcategory', 
+    views.createSubcategory, name='create-subcategory'),
+    path('profile/categories/subcategories/<str:pk>/edit-subcategory/<str:pk2>', 
+    views.editSubcategory, name='edit-subcategory'),
+    path('profile/categories/subcategories/<str:pk>/delete-subcategory/<str:pk2>', 
+    views.deleteSubcategory, name='delete-subcategory')
 ]
