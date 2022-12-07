@@ -44,6 +44,11 @@ nav.nav{
     border: 3px solid purple;
     border-radius: 10px;
     background-color: whitesmoke;
+    position: relative;
+}
+#dark-mode-button{
+    position: absolute;
+    top: 20px;
 }
 div.title{
     padding-top: 5vh;
@@ -129,7 +134,20 @@ tr.transaction > td{
 #tr-acc-link{
     color: purple;
 }
-
+/* CATEGORIES */
+#cat-list{
+    display: flex;
+    list-style: none;
+}
+#category{
+    margin: 5px;
+    padding: 5px;
+    border: 2px solid purple;
+    border-radius: 5px;
+    background-color: lightgoldenrodyellow;
+    width: 150px;
+    text-align: center;
+}
 
 /* FORMS */
 .site-with-form-content{
@@ -157,6 +175,9 @@ form{
 p.buttons{
     margin: 10px 0px 10px 0px;
 }
+p.buttons-close{
+    margin: 5px 0px 5px 0px;
+}
 a.button {
     background-color: whitesmoke;
     padding: 2px 4px;
@@ -170,6 +191,9 @@ a.button {
 }
 .center{
     text-align: center;
+}
+.bold{
+    font-weight: bold;
 }
 
 /* FOOTER */

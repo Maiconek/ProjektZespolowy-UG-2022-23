@@ -69,7 +69,6 @@ def profile(request):
     context = {'profile': profile}
     return render(request, 'application/profile.html', context)
 
-
 @login_required(login_url='login')
 def showCategories(request):
     defaultCategory = Category.objects.filter(owner__isnull=True)
@@ -156,20 +155,3 @@ def deleteSubcategory(request, pk, pk2):
     subcategory.delete()
     return redirect('all-subcategories', pk=str(category.id))
 
-
-# @login_required(login_url='login')
-# def allAccounts(request):
-#     accounts = Account.objects.all()
-#     user_accounts = accounts.filter(owner=request.user.profile)
-#     context = {'accounts': user_accounts}
-#     return render(request, 'application/all-accounts.html', context)
-
-# if request.method == 'POST':
-#     form = RegistrationFormTeacher(request.POST)
-#     if form.is_valid():
-#         new_teacher = form.save(commit=False)
-#         new_teacher.user = request.user #get the user object however you want - you 
-#             #can pass the user ID to the view as a parameter and do 
-#             #User.objects.get(pk=id) or some such, too. 
-#         new_teacher.save()
-#         form.save_m2m()

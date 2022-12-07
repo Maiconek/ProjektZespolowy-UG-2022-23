@@ -1,14 +1,27 @@
 {% extends 'application/base.html' %}
 
 {% block content %}
-<h1>Podkategorie dla kategorii {{category.name}}</h1> 
-<a href="{% url 'create-subcategory' category.id %}">Utwórz nową podkategorie</a> <br/>
-{% for sc in subcategory %}
-    {{sc.name}} Kategoria {{sc.id_category.name}}
-    <a href="{% url 'edit-subcategory' category.id sc.id %}">Edit</a>
-    <a href="{% url 'delete-subcategory' category.id sc.id %}" onclick=
-    "return confirm('Are you sure you want to delete {{sc.name}}?')">Delete</a>
-    <br />
-{% endfor %}
+<div class="title">
+    <h1>{{category.name}}</h1> 
+</div>
+<div class="content">
+    <div id="custom-cat">
+        <h3 class="link">Podkategorie</h3>
+        <ul id="cat-list">
+            {% for sc in subcategory %}
+                <li id="category">
+                    <span class="bold">{{sc.name}}</span>
+                    <p class="buttons-close">
+                        <a class="button" href="{% url 'edit-subcategory' category.id sc.id %}">Edytuj</a>
+                        <a class="button" href="{% url 'delete-subcategory' category.id sc.id %}" onclick=
+                        "return confirm('Are you sure you want to delete {{sc.name}}?')">Usuń</a>
+                    </p>
+                </li>
+            {% endfor %}
+        </ul>
+        <p class="buttons-close"><a class="button" href="{% url 'create-subcategory' category.id %}">Dodaj nową podkategorie</a></p>
+        <p class="buttons-close"><a class="button" href="{% url 'all-categories' %}">Wróć do kategorii</a></p>
+    </div>
+</div>
 
 {% endblock %}

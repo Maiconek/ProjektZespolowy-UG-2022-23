@@ -98,7 +98,6 @@ def delAccount(request, pk):
         account.delete()
     return redirect('all-accounts')
 
-
 @login_required(login_url='login')
 def addExpense(request, pk):
     account = get_object_or_404(Account, id=pk)
