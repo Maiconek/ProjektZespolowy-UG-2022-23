@@ -3,7 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 import uuid
 
-from UsersApp.models import *
+from UsersApp.models import Profile, Currency, Category, Subcategory
 
 # Create your models here.
 
