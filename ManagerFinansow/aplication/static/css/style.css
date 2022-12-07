@@ -166,6 +166,9 @@ form{
     flex-direction: column;
     align-items: center;
 }
+form > table{
+    margin-bottom: 5px;
+}
 span.field{
     margin-left: 5px;
 }

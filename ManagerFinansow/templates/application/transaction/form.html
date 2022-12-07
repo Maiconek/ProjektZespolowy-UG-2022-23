@@ -6,23 +6,56 @@
 {% comment %} Formularz Transakcji {% endcomment %}
 
 {% if option == "add" %}
+<div class="title">
+    <h1>Dodaj transakcję</h1>
+</div>
+<div class="content">
     <form method="POST">
         {% csrf_token %}
-        {{ form.as_table }}
-        <label>Date:</label>
-        <input type="date" name="date", value="{{ today }}">
-        <button class="form-button" type="submit">Dodaj</button> 
+        <table>
+            {% for f in form %}
+                <tr>
+                    <td><label>{{f.label}}</label></td>
+                    <td><span class="field">{{f}}</span></td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td><label>Date:</label></td>
+                <td><span class="field"><input type="date" name="date", value="{{ today }}"></span></td>
+            </tr>
+        </table>
+        <div class="center">
+            <button class="form-button" type="submit">Dodaj</button> 
+            <button><a class="account-link" href={% url 'account' pk=account.id %}>Anuluj</a></button>
+        </div>
     </form>
-{% elif option == "edit" %}
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_table }}
-        <label>Date:</label>
-        <input type="date" name="date" value="{{ transaction.transaction_date|date:'Y-m-d' }}">
-        <button class="form-button" type="submit">Zapisz</button> 
-    </form>
-{% endif %}
+</div>
 
-    <a href={% url 'account' pk=account.id %}>Powrót do Konta</a>
+{% elif option == "edit" %}
+<div class="title">
+    <h1>Dodaj transakcję</h1>
+</div>
+<div class="content">
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+            {% for f in form %}
+                <tr>
+                    <td><label>{{f.label}}</label></td>
+                    <td><span class="field">{{f}}</span></td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td><label>Date:</label></td>
+                <td><span class="field"><input type="date" name="date" value="{{ transaction.transaction_date|date:'Y-m-d' }}"></span></td>
+            </tr>
+        </table>
+        <div class="center">
+            <button class="form-button" type="submit">Zapisz</button> 
+            <button><a class="account-link" href={% url 'account' pk=account.id %}>Anuluj</a></button>
+        </div>
+    </form>
+</div>
+{% endif %}
 
 {% endblock %}

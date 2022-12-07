@@ -3,27 +3,49 @@
 {% block content %}
 
 {% if option == "add" %}
-<form method="POST">
-    {% csrf_token %}
-    {% for field in form %}
-    
-    <label>{{field.label}}</label>
-    {{field}}
-    {% endfor %}
-    <button type="submit">Utwórz</button>
-</form>
+<div class="title">
+    <h1>Utwórz konto</h1>
+</div>
+<div class="content">
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+        {% for field in form %}
+        <tr>
+            <td>{{field.label}}</td>
+            <td><span class="field">{{field}}</span></td>
+        </tr>
+        {% endfor %}
+        </table>
+        <div>
+            <button type="submit">Utwórz</button>
+            <button><a class="account-link" href="{% url 'all-accounts' %}">Anuluj</a></button>
+        </div>
+        
+    </form>
+</div>
 
 {% elif option == "edit" %}
-
-<form method="POST">
-    {% csrf_token %}
-    {% for field in form %}
-    
-    <label>{{field.label}}</label>
-    {{field}}
-    {% endfor %}
-    <button type="submit">Zapisz</button>
-</form>
+<div class="title">
+    <h1>Edytuj konto</h1>
+</div>
+<div class="content">
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+            {% for field in form %}
+            <tr>
+                <td>{{field.label}}</td>
+                <td><span class="field">{{field}}</span></td>
+            </tr>
+            {% endfor %}
+            </table>
+        <div>
+            <button type="submit">Zapisz</button>
+            <button><a class="account-link" href="{% url 'account' account.id %}">Anuluj</a></button>
+        </div>
+    </form>
+</div>
 
 {% endif %}
 

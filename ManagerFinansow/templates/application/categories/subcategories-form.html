@@ -3,28 +3,49 @@
 {% block content %}
 
 {% if page == "create" %}
+<div class="title">
+    <h1>Utwórz nową podkategorie dla {{category.name}}</h1>
+</div>
+<div class="content">
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+            {% for field in form %}
+            <tr>
+                <td><label>{{field.label}}</label></td>
+                <td><span class="field">{{field}}</span></td>
+            </tr>
+            {% endfor %}
+        </table>
+        <div class="center">
+            <button type="submit">Stwórz</button>
+            <button><a class="account-link" href="{% url 'all-subcategories' category.id %}">Anuluj</a></button>
+        </div>
+    </form>
+</div>
 
-<h1>Utwórz nową podkategorie dla {{category.name}}</h1>
-
-<form method="POST">
-    {% csrf_token %}
-    {% for field in form %}
-    <label>{{field.label}}</label>
-    {{field}}
-    {% endfor %}
-    <button type="submit">Create</button>
-</form>
 
 {% else %}
-<h1>Edytuj podkategorie dla {{category.name}}</h1>
-<form method="POST">
-    {% csrf_token %}
-    {% for field in form %}
-    <label>{{field.label}}</label>
-    {{field}}
-    {% endfor %}
-    <button type="submit">Edit</button>
-</form>
+<div class="title">
+    <h1>Edytuj podkategorie dla {{category.name}}</h1>
+</div>
+<div class="content">
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+            {% for field in form %}
+            <tr>
+                <td><label>{{field.label}}</label></td>
+                <td><span class="field">{{field}}</span></td>
+            </tr>
+            {% endfor %}
+        </table>
+        <div class="center">
+            <button type="submit">Edytuj</button>
+            <button><a class="account-link" href="{% url 'all-subcategories' category.id %}">Anuluj</a></button>
+        </div>
+    </form>
+</div>
 
 {% endif %}
 

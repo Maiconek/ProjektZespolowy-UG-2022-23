@@ -75,7 +75,7 @@ def editAccount(request, pk):
             account = form.save(commit=False)
             account.save()
             return redirect('account', pk=account.id)
-    context = {'form' : form, 'option': "edit"}
+    context = {'form' : form, 'option': "edit", 'account': account}
     return render(request, 'application/account/account-form.html', context)
 
 @login_required(login_url='login')

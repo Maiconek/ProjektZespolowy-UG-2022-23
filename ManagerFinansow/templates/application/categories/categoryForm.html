@@ -3,57 +3,71 @@
 {% block content %}
 
 {% if page == "create" %}
+<div class="title">
+    <h1>Utwórz nową kategorie</h1>
+</div>
+<div class="content">
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+        <tr>
+            <td><label>Nazwa</label></td>
+            <td><span class="field"><input type="text" name="name" maxlength="255" required id="id_name"></span></td>
+        </tr>
+        <tr>
+            <td><label>Rodzaj</label></td>
+            <td><span class="field">
+                <select name="scope" required id="id_scope">
 
-<h1>Utwórz nową kategorie</h1>
-
-<form method="POST">
-    {% csrf_token %}
+                    <option value="INCOME">Przychód</option>
+                    <option value="EXPENSE">Wydatek</option>
     
-    <label>Nazwa</label>
-    <input type="text" name="name" maxlength="255" required id="id_name">
-    
-    <label>Rodzaj</label>
-    <select name="scope" required id="id_scope">
-
-        <option value="INCOME">Przychód</option>
-        <option value="EXPENSE">Wydatek</option>
-
-    </select>
-    
-    
-    <button type="submit">Stwórz</button>
-</form>
+                </select>
+            </span></td>
+        </tr>
+        </table>
+        <div class="center">
+            <button type="submit">Stwórz</button>
+            <button><a class="account-link" href="{% url 'all-categories' %}">Anuluj</a></button>
+        </div>
+        
+    </form>
+</div>
 
 {% else %}
-<h1>Edytuj kategorie</h1>
+<div class="title">
+    <h1>Edytuj kategorie</h1>
+</div>
 
-<form method="POST">
-    {% csrf_token %}    
-    
-    <label>Nazwa</label>
-    <input type="text" name="name" value="{{ category.name }}" maxlength="255" required id="id_name">
-    
-    
-    {% if category.scope == 'INCOME' %}
-    <label>Rodzaj</label>
-    <select name="scope" required id="id_scope">
-
-        <option value="INCOME" selected>przychód</option>
-        <option value="EXPENSE">wydatek</option>
-
-    </select>
-    {% else %}
-    <label>Rodzaj</label>
-    <select name="scope" required id="id_scope">
-        
-        <option value="INCOME">przychód</option>
-        <option value="EXPENSE" selected>wydatek</option>
-
-    </select>
-    {% endif %}
-    
-    <button type="submit">Zapisz zmiany</button>
-</form>
+<div class="content">
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+        <tr>
+            <td><label>Nazwa</label></td>
+            <td><span class="field"><input type="text" name="name" value="{{ category.name }}" maxlength="255" required id="id_name"></span></td>
+        </tr>
+        <tr>
+            <td><label>Rodzaj</label></td>
+            <td><span class="field">
+                <select name="scope" required id="id_scope">
+                    {% if category.scope == 'INCOME' %}
+                        <option value="INCOME" selected>Przychód</option>
+                        <option value="EXPENSE">Wydatek</option>
+                    {% else %}
+                        <option value="INCOME">Przychód</option>
+                        <option value="EXPENSE" selected>Wydatek</option>
+                    {% endif %}
+                </select>
+            </span></td>
+        </tr>
+        </table>
+        <div class="center">
+            <button type="submit">Zapisz zmiany</button>
+            <button><a class="account-link" href="{% url 'all-categories' %}">Anuluj</a></button>
+        </div>
+    </form>
+</div>
 {% endif %}
 
 {% endblock %}
