@@ -57,9 +57,13 @@ def duplicate(request, pk):
         raise Http404
     transaction.id = None
     form = TransactionForm(data=request.POST or None, scope = transaction.id_category.scope, 
-                            owner=transaction.id_account.owner, instance=transaction)
+                            owner=transaction.id_account.owner, instance=transaction, 
+                            initial={'amount': -transaction.amount if transaction.id_category.scope=="EXPENSE" else transaction.amount})
     if form.is_valid():
-        transaction.converted_amount = form.cleaned_data['amount']
+        form.save(commit=False)
+        amnt = form.cleaned_data['amount']
+        transaction.amount = -amnt if transaction.id_category.scope=="EXPENSE" else amnt
+        transaction.converted_amount = -amnt if transaction.id_category.scope=="EXPENSE" else amnt
         _date = request.POST['date']
         transaction.transaction_date = _date 
         transaction.save()
@@ -94,10 +98,13 @@ def editTransaction(request, pk):
     if transaction.id_account.owner != request.user.profile:
         raise Http404
     form = TransactionForm(data=request.POST or None, scope = transaction.id_category.scope, 
-                            owner=transaction.id_account.owner, instance = transaction)
+                            owner=transaction.id_account.owner, instance = transaction,
+                            initial={'amount': -transaction.amount if transaction.id_category.scope=="EXPENSE" else transaction.amount})
     if form.is_valid():
         transaction = form.save(commit=False)
-        transaction.converted_amount = form.cleaned_data['amount']
+        amnt = form.cleaned_data['amount']
+        transaction.amount = -amnt if transaction.id_category.scope=="EXPENSE" else amnt
+        transaction.converted_amount = -amnt if transaction.id_category.scope=="EXPENSE" else amnt
         _date = request.POST['date']
         transaction.transaction_date = _date
         transaction.save()   
