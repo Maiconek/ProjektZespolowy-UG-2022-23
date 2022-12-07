@@ -36,27 +36,25 @@
                 <tr class="date">
                     <td colspan="3">{{ date }}</td>
                 </tr>
-                {% for transaction in account.transactions %}
-                    {% if transaction.transaction_date == date %}
+                {% for tr in account.transactions %}
+                    {% if tr.transaction_date == date %}
                         <tr class="transaction">                        
-                        <td id="transaction-category">{{ transaction.id_category }}</td>
-                        {% if transaction.name is not None %}
-                        <td id="transaction-name">{{ transaction.name }}</td>
-                        {% endif %}
-                        {% if transaction.description is not None %}
-                            <td id="transaction-description">{{ transaction.description }}</td>
-                        {% endif %}
-                        {% if transaction.subcategory is not None %}
-                            <td id="transaction-subcategory">{{ transaction.subcategory }}</td>
-                        {% endif %}
-                        {% if transaction.converted_amount >= 0 %}
-                            <td id="transaction-amount" class="income">{{ transaction.converted_amount }} {{ transaction.currency.sign }}</td>
+                        <td id="transaction-category">{{ tr.id_category }}</td>
+                        <td id="transaction-name">{{ tr.name }}</td>
+                        {% if tr.description %}
+                            <td id="transaction-description">{{ tr.description }}</td>
+                            {% else %}
+                            <td id="transaction-description"></td>
+                            {% endif %}
+                        <td id="transaction-subcategory">{{ tr.subcategory }}</td>
+                        {% if tr.converted_amount >= 0 %}
+                            <td id="transaction-amount" class="income">{{ tr.converted_amount }} {{ tr.currency.sign }}</td>
                         {% else %}
-                            <td id="transaction-amount" class="expense">{{ transaction.converted_amount }} {{ transaction.currency.sign }}</td>
+                            <td id="transaction-amount" class="expense">{{ tr.converted_amount }} {{ tr.currency.sign }}</td>
                         {% endif %}
-                        <td><a href="{% url 'showTransaction' transaction.id %}">Szczegóły</a></td>
-                        <td><a href="{% url 'duplicateTransaction' transaction.id %}">Duplikuj</a></td>
-                        <td><span class="name"><a href="{% url 'delTransaction' transaction.id %}" onclick=
+                        <td><a href="{% url 'showTransaction' tr.id %}">Szczegóły</a></td>
+                        <td><a href="{% url 'duplicateTransaction' tr.id %}">Duplikuj</a></td>
+                        <td><span class="name"><a href="{% url 'delTransaction' tr.id %}" onclick=
                             "return confirm('Czy napewno chcesz usunąć tę transakcję?')">Usuń</a></span></td>
                         </tr>
                     {% endif %}
