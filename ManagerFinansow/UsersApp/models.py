@@ -29,7 +29,7 @@ class Currency(models.Model):
                             primary_key=True, editable=False)
 
     def __str__(self):
-        return "[{}] - {} - {}".format(self.name, self.sign, self.access_name)
+        return "{}".format(self.name)
 
 # 1. kategorie podczepione do użytkownika (n-1), współdzielone dziedziczą po założycielu
 class Category(models.Model):
