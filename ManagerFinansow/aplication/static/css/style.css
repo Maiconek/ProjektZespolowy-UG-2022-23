@@ -123,6 +123,9 @@ tr.transaction > td{
 #transaction-amount.expense{
     color: red;
 }
+#tr-acc-link{
+    color: purple;
+}
 
 
 /* FORMS */

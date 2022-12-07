@@ -8,14 +8,8 @@
     <div class="content">
         <p>Witaj {{ user.username }} na swojej stronie profilu</p>
         <p>Tutaj możesz zarządzać swoim profilem</p>
-        <br/>
-        <p>Dane o profilu:</p>
-        <p>ID: {{ profile.id }}</p>
-        <p>Imię: {{ profile.name }}</p>
-        <p>Username: {{ profile.username }}</p>
-        <p>Email: {{ profile.email }}</p>
-        <p>Data utworzenia: {{ profile.created }}</p>
-        <p>Profilowe: <img src={{ profile.image }}, style="border-radius: 50%; width: 40px;"></p>
-        <a href="{% url 'all-categories' %}">Zarządzaj kategoriami</a>
+        <a href="{% url 'all-categories' %}">
+            <button id="category-button">Zarządzaj kategoriami</button>
+        </a>
     </div>
 {% endblock  %} 

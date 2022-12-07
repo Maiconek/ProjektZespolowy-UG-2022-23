@@ -13,7 +13,7 @@
         
         <table>
             <tr id="table-header">
-                <th>Data</th>
+                <th>Kategoria</th>
                 <th>Nazwa</th>
                 <th>Opis</th>
                 <th>Kwota</th>
@@ -25,8 +25,8 @@
                 </tr>
                 {% for tr in transactions %}
                     {% if tr.transaction_date == date %}
-                        <tr class="transaction">                        
-                            <td id="transaction-date">{{ tr.transaction_date }}</td>
+                        <tr class="transaction">
+                            <td id="transaction-category">{{ tr.id_category }}</td>                    
                             <td id="transaction-name">{{ tr.name }}</td>
                             {% if tr.description %}
                             <td id="transaction-description">{{ tr.description }}</td>
@@ -38,7 +38,9 @@
                             {% else %}
                                 <td id="transaction-amount" class="expense">{{ tr.converted_amount }} {{ tr.currency.sign }}</td>
                             {% endif %}
-                            <td id="transaction-account">{{ tr.id_account.name }}</td>
+                            <td id="transaction-account">
+                                <a id="tr-acc-link" href="{% url 'account' pk=tr.id_account.id %}">{{ tr.id_account.name }}</a>
+                            </td>
                         </tr>
                     {% endif %}
                 {% endfor %}
