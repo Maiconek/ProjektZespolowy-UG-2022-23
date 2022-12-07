@@ -57,7 +57,7 @@ div.title h1{
     font-weight: bold;
 }
 div.content{
-    
+    margin-top: 15px;
 }
 div.tiles{
     display: flex;
@@ -96,6 +96,9 @@ a.account-link > span.account-description{
     color: rgba(0, 0, 0, 0.6);
 }
     /* ACCOUNT */
+#date{
+    text-align: center;
+}
 tr.transaction{
     border: 1px solid purple;
     background-color: lightpink
@@ -117,10 +120,10 @@ tr.transaction > td{
     text-align: end;
     font-weight: bold;
 }
-#transaction-amount.income{
+.income{
     color: green;
 }
-#transaction-amount.expense{
+.expense{
     color: red;
 }
 #tr-acc-link{
@@ -148,6 +151,25 @@ form{
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+/* OTHER */
+p.buttons{
+    margin: 10px 0px 10px 0px;
+}
+a.button {
+    background-color: whitesmoke;
+    padding: 2px 4px;
+    border: 2px solid;
+    border-color: grey black black grey; 
+    text-decoration: none;
+    color: black;
+}
+.link{
+    color: purple;
+}
+.center{
+    text-align: center;
 }
 
 /* FOOTER */
