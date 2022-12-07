@@ -29,7 +29,7 @@
                             <td id="transaction-date">{{ tr.transaction_date }}</td>
                             <td id="transaction-name">{{ tr.name }}</td>
                             <td id="transaction-description">{{ tr.description }}</td>
-                            {% if tr.converted_amount > 0 %}
+                            {% if tr.converted_amount >= 0 %}
                                 <td id="transaction-amount" class="income">{{ tr.converted_amount }} {{ tr.currency.sign }}</td>
                             {% else %}
                                 <td id="transaction-amount" class="expense">{{ tr.converted_amount }} {{ tr.currency.sign }}</td>

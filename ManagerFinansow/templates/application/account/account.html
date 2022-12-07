@@ -38,22 +38,22 @@
                 </tr>
                 {% for transaction in account.transactions %}
                     {% if transaction.transaction_date == date %}
-                        {% if transaction.converted_amount > 0 %}
-                            <tr class="transaction income">
-                        {% else %}
-                            <tr class="transaction expense">
-                        {% endif %}
-                        <td>{{ transaction.id_category }}</td>
+                        <tr class="transaction">                        
+                        <td id="transaction-category">{{ transaction.id_category }}</td>
                         {% if transaction.name is not None %}
-                        <td>({{ transaction.name }})</td>
+                        <td id="transaction-name">{{ transaction.name }}</td>
                         {% endif %}
                         {% if transaction.description is not None %}
-                            <td>{{ transaction.description }}</td>
+                            <td id="transaction-description">{{ transaction.description }}</td>
                         {% endif %}
                         {% if transaction.subcategory is not None %}
-                            <td>{{ transaction.subcategory }}</td>
+                            <td id="transaction-subcategory">{{ transaction.subcategory }}</td>
                         {% endif %}
-                        <td>{{ transaction.converted_amount }} {{ transaction.currency.sign }}</td>
+                        {% if transaction.converted_amount >= 0 %}
+                            <td id="transaction-amount" class="income">{{ transaction.converted_amount }} {{ transaction.currency.sign }}</td>
+                        {% else %}
+                            <td id="transaction-amount" class="expense">{{ transaction.converted_amount }} {{ transaction.currency.sign }}</td>
+                        {% endif %}
                         <td><a href="{% url 'showTransaction' transaction.id %}">Szczegóły</a></td>
                         <td><a href="{% url 'duplicateTransaction' transaction.id %}">Duplikuj</a></td>
                         <td><span class="name"><a href="{% url 'delTransaction' transaction.id %}" onclick=
