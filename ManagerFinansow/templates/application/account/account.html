@@ -8,22 +8,23 @@
     <div class="title">
         <h1>{{ account }}</h1>
         <h1>{{ account.calculate_balance }} {{ account.currency.sign }}</h1>
+        <h4>{{ account.description }}</h4>
     </div>
-
-    <p class="buttons">
-        <a class="button" href="{% url 'addExpense' account.id %}">Nowy Wydatek</a>
-        <a class="button" href="{% url 'addIncome' account.id %}">Nowy Przychód</a>
-    </p>
-    <p class="buttons">
-        <a class="button" href="{% url 'editAccount' account.id %}">Edytuj informacje o koncie</a>
-        <a class="button" href="{% url 'delAccount' account.id %}" onclick=
-        "return confirm('Czy napewno chcesz usunąć konto {{account}}?')">Usuń to konto</a>
-    </p>
-    <p class="buttons">
-    <a class="button" href="{% url 'all-accounts' %}">Wszystkie Konta</a>
-    </p>
     
     <div class="content">
+        <p class="buttons">
+            <a class="button" href="{% url 'addExpense' account.id %}">Nowy Wydatek</a>
+            <a class="button" href="{% url 'addIncome' account.id %}">Nowy Przychód</a>
+        </p>
+        <p class="buttons">
+            <a class="button" href="{% url 'editAccount' account.id %}">Edytuj informacje o koncie</a>
+            <a class="button" href="{% url 'delAccount' account.id %}" onclick=
+            "return confirm('Czy napewno chcesz usunąć konto {{account}}?')">Usuń to konto</a>
+        </p>
+        <p class="buttons">
+        <a class="button" href="{% url 'all-accounts' %}">Wszystkie Konta</a>
+        </p>
+    
         <table>
             {% if account.transactions %}
             {% else %}
@@ -35,7 +36,7 @@
                     <br/>
                     <span>Aby zaprosić innego użytkownika do współdzielenia konta, przekaż mu ten URL:<span>
                     <br/>
-                    <code class="url">{{ request.build_absolute_uri }}/join</code>
+                    <code id="url">{{ request.build_absolute_uri }}/join</code>
                 </div>
             {% endif %}
             {% for date in dates %}
@@ -46,21 +47,26 @@
                     {% if tr.transaction_date == date %}
                         <tr class="transaction">                        
                         <td id="transaction-category">{{ tr.id_category }}</td>
+                        {% if tr.id_subcategory %}
+                            <td id="transaction-subcategory">{{ tr.id_subcategory }}</td>
+                        {% else %}
+                            <td id="transaction-subcategory"></td>
+                        {% endif %}
                         <td id="transaction-name">{{ tr.name }}</td>
                         {% if tr.description %}
                             <td id="transaction-description">{{ tr.description }}</td>
-                            {% else %}
+                        {% else %}
                             <td id="transaction-description"></td>
-                            {% endif %}
+                        {% endif %}
                         <td id="transaction-subcategory">{{ tr.subcategory }}</td>
                         {% if tr.converted_amount >= 0 %}
                             <td id="transaction-amount" class="income">{{ tr.converted_amount }} {{ tr.currency.sign }}</td>
                         {% else %}
                             <td id="transaction-amount" class="expense">{{ tr.converted_amount }} {{ tr.currency.sign }}</td>
                         {% endif %}
-                        <td><a class="link" href="{% url 'showTransaction' tr.id %}">Szczegóły</a></td>
-                        <td><a class="link" href="{% url 'duplicateTransaction' tr.id %}">Duplikuj</a></td>
-                        <td><span class="name"><a class="link" href="{% url 'delTransaction' tr.id %}" onclick=
+                        <td><a class="purple" href="{% url 'showTransaction' tr.id %}">Szczegóły</a></td>
+                        <td><a class="purple" href="{% url 'duplicateTransaction' tr.id %}">Duplikuj</a></td>
+                        <td><span class="name"><a class="purple" href="{% url 'delTransaction' tr.id %}" onclick=
                             "return confirm('Czy napewno chcesz usunąć tę transakcję?')">Usuń</a></span></td>
                         </tr>
                     {% endif %}

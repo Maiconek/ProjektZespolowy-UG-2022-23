@@ -6,10 +6,10 @@
 {% comment %} Strona Rejestracji {% endcomment %}
 
 <div class="title">
-  <h3>Rejestracja</h3>
+  <h1>Rejestracja</h1>
 </div>
 
-<div class="container site-with-form-content">
+<div class="content site-with-form-content">
   <form action="/register" method="POST">
     {% csrf_token %}
     {{ form.non_field_errors }}
@@ -78,9 +78,9 @@
 {% comment %} Strona Logowania {% endcomment %}
 
 <div class="title">
-  <h3>Logowanie</h3>
+  <h1>Logowanie</h1>
 </div>
-<div class="container site-with-form-content">
+<div class="content site-with-form-content">
   <form action="{% url 'login' %}" method="POST">
     {% csrf_token %}
     <table>
@@ -103,7 +103,7 @@
           <label>Hasło</label>
         </td>
         <td>
-          <span>
+          <span class="field">
             <input
               type="password"
               name="password"

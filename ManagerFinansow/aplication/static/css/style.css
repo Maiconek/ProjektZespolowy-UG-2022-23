@@ -72,20 +72,20 @@ div.tiles{
     /* ACCOUNT LIST */
 div.account{
     margin-top: 1vh;
-    margin-bottom: 1vh;
-    margin-left: 1vw;
-    margin-right: 1vw;
+    margin-bottom: 2vh;
+    margin-left: 2vw;
+    margin-right: 2vw;
     padding: 5px;
     border: 2px solid purple;
     border-radius: 5px;
     background-color: lightgoldenrodyellow;
-    min-width: 150px;
+    width: 300px;
 }
 div.account:nth-child(even){
     background-color: lightsalmon;
 }
 a.account-link{
-    min-width: 150px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     text-decoration: none;
@@ -106,13 +106,18 @@ a.account-link > span.account-description{
 }
 tr.transaction{
     border: 1px solid purple;
-    background-color: lightpink
+    background-color: lightgoldenrodyellow;
 }
 #table-header > th{
     text-align: center;
 }
 tr.transaction > td{
     padding: 5px;
+}
+#transaction-category{}
+#transaction-subcategory{
+    font-style: italic;
+    color: rgba(0, 0, 0, 0.8);
 }
 #transaction-name{
     font-weight: bold;
@@ -161,6 +166,9 @@ form{
     flex-direction: column;
     align-items: center;
 }
+span.field{
+    margin-left: 5px;
+}
 .form-button{
     margin-top: 5px;
 }
@@ -186,7 +194,10 @@ a.button {
     text-decoration: none;
     color: black;
 }
-.link{
+.purple{
+    color: purple;
+}
+.purple:hover{
     color: purple;
 }
 .center{
