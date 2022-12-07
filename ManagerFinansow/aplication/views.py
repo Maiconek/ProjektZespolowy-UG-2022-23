@@ -104,7 +104,7 @@ def addExpense(request, pk):
     account = get_object_or_404(Account, id=pk)
     if account.owner != request.user.profile:
         raise Http404
-    form = TransactionForm(scope="EXPENSE", initial={'currency': account.currency})
+    form = TransactionForm(scope="EXPENSE", owner=account.owner, initial={'currency': account.currency})
     context = {'account': account, 'form': form, 'option': "add", 'today': date.today().strftime("%Y-%m-%d")}
 
     if request.method == "POST":
@@ -127,7 +127,7 @@ def addIncome(request, pk):
     account = get_object_or_404(Account, id=pk)
     if account.owner != request.user.profile:
         raise Http404
-    form = TransactionForm(scope = "INCOME", initial={'currency': account.currency})
+    form = TransactionForm(scope = "INCOME", owner=account.owner, initial={'currency': account.currency})
     context = {'account': account, 'form': form, 'option': "add", 'today': date.today().strftime("%Y-%m-%d")}
 
     if request.method == "POST":
@@ -150,7 +150,8 @@ def duplicate(request, pk):
     if transaction.id_account.owner != request.user.profile:
         raise Http404
     transaction.id = None
-    form = TransactionForm(data=request.POST or None, scope = transaction.id_category.scope, instance=transaction)
+    form = TransactionForm(data=request.POST or None, scope = transaction.id_category.scope, 
+                            owner=transaction.id_account.owner, instance=transaction)
     if form.is_valid():
         transaction.converted_amount = form.cleaned_data['amount']
         _date = request.POST['date']
@@ -186,7 +187,8 @@ def editTransaction(request, pk):
     transaction = get_object_or_404(Transaction, id=pk)
     if transaction.id_account.owner != request.user.profile:
         raise Http404
-    form = TransactionForm(data=request.POST or None, scope = transaction.id_category.scope, instance = transaction)
+    form = TransactionForm(data=request.POST or None, scope = transaction.id_category.scope, 
+                            owner=transaction.id_account.owner, instance = transaction)
     if form.is_valid():
         transaction = form.save(commit=False)
         transaction.converted_amount = form.cleaned_data['amount']
