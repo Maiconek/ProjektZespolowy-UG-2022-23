@@ -207,8 +207,6 @@ def joinAccount(request, pk):
     account = get_object_or_404(Account, id=pk)
     if account.is_shared == False:
         raise Http404
-    #if nie powinieneś mieć dostępu
-    #raise Http404
     context = {'account': account}
     if request.method == 'POST':
         #Dodaj do konta użytkownika
