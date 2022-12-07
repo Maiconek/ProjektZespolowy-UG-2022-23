@@ -2,7 +2,7 @@ from django import forms
 from django.forms import ModelForm
 from django.db import models
 from .models import Account, Transaction
-from UsersApp.models import Category
+from UsersApp.models import Category, Subcategory
 from django.db.models import Q
 
 
@@ -22,3 +22,4 @@ class TransactionForm(ModelForm):
             self.fields['id_category'].queryset = owned_categories.filter(scope=scope)
         if scope == "EXPENSE":
             self.fields['id_category'].queryset = owned_categories.filter(scope=scope)
+        self.fields['id_subcategory'].queryset = Subcategory.objects.filter(id_category__in=self.fields['id_category'].queryset)
