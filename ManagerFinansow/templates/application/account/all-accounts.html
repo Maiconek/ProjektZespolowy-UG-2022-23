@@ -8,7 +8,9 @@
     <div class="title">
         <h1>Konta</h1>
     </div>
-    <a href={% url 'create-account' %}>Dodaj nowe konto</a>
+    <a href="{% url 'create-account' %}">
+        <button class="function-button">Dodaj nowe konto</button>
+    </a>
 
     <div class="content tiles" id="all-accounts">
         
@@ -17,21 +19,8 @@
                 <a class="account-link" href={% url 'account' pk=acc.id %}>
                 <span class="name">{{ acc }}</span>
                 <span class="account-description">{{ acc.print_description }}</span>
-                <span class="balance">Saldo: {{ acc.calculate_balance }} zł</span>
-                <span class="balance">Waluta: {{ acc.currency }} zł</span>
-                {% for tr in acc.transactions %}
-                    <div class="transaction">
-                        <span class="date">{{ tr.date }}</span>
-                        <span class="date">{{ tr.id_category }}</span>
-                        {% if tr.id_subcategory is not None %}
-                            <span class="date">{{ tr.id_subcategory }}</span>
-                        {% endif %}
-                        {% if tr.name %}
-                            <span class="name">{{ tr.name }}</span>
-                        {% endif %}
-                        <span class="amount">{{ tr.amount }} zł</span>
-                    </div>
-                {% endfor %}
+                <span class="balance">Saldo: {{ acc.calculate_balance }} {{acc.currency.sign}}</span>
+                <span class="balance">Waluta: {{ acc.currency }}</span>
                 </a>
             </div>
         {% endfor %}

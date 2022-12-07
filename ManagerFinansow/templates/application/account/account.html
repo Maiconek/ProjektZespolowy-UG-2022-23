@@ -10,12 +10,18 @@
         <h1>{{ account.calculate_balance }} {{ account.currency.sign }}</h1>
     </div>
 
-    <a href="{% url 'addExpense' account.id %}">Nowy Wydatek</a>
-    <a href="{% url 'addIncome' account.id %}">Nowy Przychód</a><br>
-    <a href="{% url 'editAccount' account.id %}">Edytuj informacje o koncie</a><br>
-    <a href="{% url 'delAccount' account.id %}" onclick=
-    "return confirm('Czy napewno chcesz usunąć konto {{account}}?')">Usuń to konto</a><br>
-    <a href="{% url 'all-accounts' %}">Wszystkie Konta</a>
+    <p class="buttons">
+        <a class="button" href="{% url 'addExpense' account.id %}">Nowy Wydatek</a>
+        <a class="button" href="{% url 'addIncome' account.id %}">Nowy Przychód</a>
+    </p>
+    <p class="buttons">
+        <a class="button" href="{% url 'editAccount' account.id %}">Edytuj informacje o koncie</a>
+        <a class="button" href="{% url 'delAccount' account.id %}" onclick=
+        "return confirm('Czy napewno chcesz usunąć konto {{account}}?')">Usuń to konto</a>
+    </p>
+    <p class="buttons">
+    <a class="button" href="{% url 'all-accounts' %}">Wszystkie Konta</a>
+    </p>
     
     <div class="content">
         <table>
@@ -33,8 +39,8 @@
                 </div>
             {% endif %}
             {% for date in dates %}
-                <tr class="date">
-                    <td colspan="3">{{ date }}</td>
+                <tr id="date">
+                    <td colspan="7">{{ date }}</td>
                 </tr>
                 {% for tr in account.transactions %}
                     {% if tr.transaction_date == date %}
@@ -52,9 +58,9 @@
                         {% else %}
                             <td id="transaction-amount" class="expense">{{ tr.converted_amount }} {{ tr.currency.sign }}</td>
                         {% endif %}
-                        <td><a href="{% url 'showTransaction' tr.id %}">Szczegóły</a></td>
-                        <td><a href="{% url 'duplicateTransaction' tr.id %}">Duplikuj</a></td>
-                        <td><span class="name"><a href="{% url 'delTransaction' tr.id %}" onclick=
+                        <td><a class="link" href="{% url 'showTransaction' tr.id %}">Szczegóły</a></td>
+                        <td><a class="link" href="{% url 'duplicateTransaction' tr.id %}">Duplikuj</a></td>
+                        <td><span class="name"><a class="link" href="{% url 'delTransaction' tr.id %}" onclick=
                             "return confirm('Czy napewno chcesz usunąć tę transakcję?')">Usuń</a></span></td>
                         </tr>
                     {% endif %}

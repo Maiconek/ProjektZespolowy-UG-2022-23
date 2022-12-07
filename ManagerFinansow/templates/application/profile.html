@@ -8,8 +8,6 @@
     <div class="content">
         <p>Witaj {{ user.username }} na swojej stronie profilu</p>
         <p>Tutaj możesz zarządzać swoim profilem</p>
-        <a href="{% url 'all-categories' %}">
-            <button id="category-button">Zarządzaj kategoriami</button>
-        </a>
+        <a class="button" href="{% url 'all-categories' %}">Zarządzaj kategoriami</a>
     </div>
 {% endblock  %} 
