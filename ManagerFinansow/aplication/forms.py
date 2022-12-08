@@ -14,14 +14,13 @@ class AccountForm(ModelForm):
 class TransactionForm(ModelForm):
     class Meta:
         model = Transaction
-        exclude = ['id_account', 'id_user', 'converted_amount', 'transaction_date']
+        exclude = ['id_user', 'converted_amount', 'transaction_date']
 
-    def __init__(self, *, scope = "EXPENSE", Accountless = False, owner, **kwargs):
+    def __init__(self, *, scope = "EXPENSE", owner, **kwargs):
         super(TransactionForm, self).__init__(**kwargs)
         owned_categories = Category.objects.filter(Q(owner=owner) | Q(owner=None))
-        if Accountless:
-            self.fields['id_account'] = forms.ModelChoiceField(queryset = Account.objects.filter(id__in=User_Account.objects.
-                                                            filter(id_user=owner).values_list('id_account')), required=True)
+        self.fields['id_account'].queryset = Account.objects.filter(id__in=User_Account.objects.filter(id_user=owner).values_list('id_account'))
+        
         if scope == "INCOME":
             self.fields['id_category'].queryset = owned_categories.filter(scope=scope)
         if scope == "EXPENSE":
