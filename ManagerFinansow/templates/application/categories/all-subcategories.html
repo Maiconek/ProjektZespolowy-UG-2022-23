@@ -1,0 +1,32 @@
+{% extends 'application/base.html' %}
+
+{% block content %}
+<div class="title">
+    <h1>{{category.name}}</h1> 
+</div>
+<div class="content">
+    <div id="custom-cat">
+        <h3 class="purple">Podkategorie</h3>
+        <ul id="cat-list">
+            {% for sc in subcategory %}
+                <li id="category">
+                    {% if sc.id_category.scope == "INCOME" %}
+                        <span class="bold income">{{sc.name}}</span>
+                    {% else %}
+                        <span class="bold expense">{{sc.name}}</span>
+                    {% endif %}
+                    
+                    <p class="buttons-close">
+                        <a class="button" href="{% url 'edit-subcategory' category.id sc.id %}">Edytuj</a>
+                        <a class="button" href="{% url 'delete-subcategory' category.id sc.id %}" onclick=
+                        "return confirm('Are you sure you want to delete {{sc.name}}?')">Usuń</a>
+                    </p>
+                </li>
+            {% endfor %}
+        </ul>
+        <p class="button"><a class="button" href="{% url 'create-subcategory' category.id %}">Dodaj nową podkategorie</a></p>
+        <p class="buttons"><a class="button" href="{% url 'all-categories' %}">Wróć do kategorii</a></p>
+    </div>
+</div>
+
+{% endblock %}

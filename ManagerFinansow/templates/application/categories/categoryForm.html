@@ -1,0 +1,73 @@
+{% extends 'application/base.html' %}
+
+{% block content %}
+
+{% if page == "create" %}
+<div class="title">
+    <h1>Utwórz nową kategorie</h1>
+</div>
+<div class="content">
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+        <tr>
+            <td><label>Nazwa</label></td>
+            <td><span class="field"><input type="text" name="name" maxlength="255" required id="id_name"></span></td>
+        </tr>
+        <tr>
+            <td><label>Rodzaj</label></td>
+            <td><span class="field">
+                <select name="scope" required id="id_scope">
+
+                    <option value="INCOME">Przychód</option>
+                    <option value="EXPENSE">Wydatek</option>
+    
+                </select>
+            </span></td>
+        </tr>
+        </table>
+        <div class="center">
+            <button class="button" type="submit">Stwórz</button>
+            <button type="button" class="button"><a class="inbutton" href="{% url 'all-categories' %}">Anuluj</a></button>
+        </div>
+        
+    </form>
+</div>
+
+{% else %}
+<div class="title">
+    <h1>Edytuj kategorie</h1>
+</div>
+
+<div class="content">
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+        <tr>
+            <td><label>Nazwa</label></td>
+            <td><span class="field"><input type="text" name="name" value="{{ category.name }}" maxlength="255" required id="id_name"></span></td>
+        </tr>
+        <tr>
+            <td><label>Rodzaj</label></td>
+            <td><span class="field">
+                <select name="scope" required id="id_scope">
+                    {% if category.scope == 'INCOME' %}
+                        <option value="INCOME" selected>Przychód</option>
+                        <option value="EXPENSE">Wydatek</option>
+                    {% else %}
+                        <option value="INCOME">Przychód</option>
+                        <option value="EXPENSE" selected>Wydatek</option>
+                    {% endif %}
+                </select>
+            </span></td>
+        </tr>
+        </table>
+        <div class="center">
+            <button class="button" type="submit">Zapisz zmiany</button>
+            <button type="button" class="button"><a class="inbutton" href="{% url 'all-categories' %}">Anuluj</a></button>
+        </div>
+    </form>
+</div>
+{% endif %}
+
+{% endblock %}

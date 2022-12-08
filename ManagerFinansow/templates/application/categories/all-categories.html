@@ -1,0 +1,72 @@
+{% extends 'application/base.html' %}
+
+{% block content %}
+<div class="title">
+    <h1>Kategorie</h1>
+</div>
+<div class="content">
+
+    <div id="default-cat">
+        <h3 class="purple">Kategorie domyślne</h3>
+        <h4>Przychód:</h4>
+        <ul id="cat-list">
+            {% for dc in defaultCategory %}
+                {% if dc.scope == "INCOME" %}
+                    <li id="category">
+                        <span class="bold income">{{dc.name}}</span></br>
+                    </li>
+                {% endif %}
+            {% endfor %}
+            </ul>
+        <h4>Wydatek:</h4>
+        <ul id="cat-list">
+            {% for dc in defaultCategory %}
+            {% if dc.scope == "EXPENSE" %}
+                <li id="category">
+                    <span class="bold expense">{{dc.name}}</span></br>
+                </li>
+            {% endif %}
+        {% endfor %}
+        </ul>
+    </div>
+    
+
+    <div id="custom-cat">
+        <h3 class="purple">Moje kategorie</h3>
+        <p class="buttons"><a class="button" href="{% url 'create-category' %}">Dodaj nową kategorie</a></p>
+        <h4>Przychód:</h4>
+        <ul id="cat-list">
+            {% for uc in userCategory %}
+                {% if uc.scope == "INCOME" %}
+                    <li id="category">
+                        <span class="bold income">{{uc.name}}</span>
+                        <p class="buttons-close"><a class="button" href="{% url 'all-subcategories' uc.id %}">Podkategorie</a></p>
+                        <p class="buttons-close">
+                            <a class="button" href="{% url 'edit-category' uc.id %}">Edytuj</a>
+                            <a class="button" href="{% url 'delete-category' uc.id %}" onclick=
+                            "return confirm('Are you sure you want to delete {{uc.name}}?')">Usuń</a>
+                        </p>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <h4>Wydatek:</h4>
+        <ul id="cat-list">
+            {% for uc in userCategory %}
+                {% if uc.scope == "EXPENSE" %}
+                    <li id="category">
+                        <span class="bold expense">{{uc.name}}</span>
+                        <p class="buttons-close"><a class="button" href="{% url 'all-subcategories' uc.id %}">Podkategorie</a></p>
+                        <p class="buttons-close">
+                            <a class="button" href="{% url 'edit-category' uc.id %}">Edytuj</a>
+                            <a class="button" href="{% url 'delete-category' uc.id %}" onclick=
+                            "return confirm('Are you sure you want to delete {{uc.name}}?')">Usuń</a>
+                        </p>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+{% endblock %}

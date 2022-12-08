@@ -37,9 +37,21 @@ nav.nav{
     margin-bottom: 4vh;
     margin-left: 4vw;
     margin-right: 4vw;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
     border: 3px solid purple;
     border-radius: 10px;
     background-color: whitesmoke;
+    position: relative;
+}
+#dark-mode-button{
+    position: absolute;
+    top: 20px;
+}
+#dark-mode-button > img{
+    width: 30px;
 }
 div.title{
     padding-top: 5vh;
@@ -53,61 +65,105 @@ div.title h1{
     font-weight: bold;
 }
 div.content{
-    padding-left: 1vw;
-    padding-right: 1vw;
+    margin-top: 15px;
 }
 div.tiles{
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: space-evenly;
 }
     /* ACCOUNT LIST */
 div.account{
     margin-top: 1vh;
-    margin-bottom: 1vh;
-    margin-left: 1vw;
-    margin-right: 1vw;
+    margin-bottom: 2vh;
+    margin-left: 2vw;
+    margin-right: 2vw;
     padding: 5px;
     border: 2px solid purple;
     border-radius: 5px;
     background-color: lightgoldenrodyellow;
-    min-width: 150px;
-    display: flex;
-    flex-direction: column;
+    width: 300px;
 }
 div.account:nth-child(even){
     background-color: lightsalmon;
 }
-div.account > span.name > a{
+a.account-link{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: black;
+}
+a.account-link > span.name{
     font-weight: bold;
     font-size: 15px;
     color: purple;
-    text-decoration: none;
 }
-div.account > span.balance{
-}
-div.account > span.account-description{
+a.account-link > span.account-description{
     font-style: italic;
     color: rgba(0, 0, 0, 0.6);
 }
     /* ACCOUNT */
+#date{
+    text-align: center;
+}
 tr.transaction{
+    border: 1px solid purple;
+    background-color: lightgoldenrodyellow;
+}
+#table-header > th{
+    text-align: center;
 }
 tr.transaction > td{
     padding: 5px;
 }
-tr.income{
-    background-color: lightgreen;
+#transaction-category{}
+#transaction-subcategory{
+    font-style: italic;
+    color: rgba(0, 0, 0, 0.8);
 }
-tr.expense{
-    background-color: lightcoral;
+#transaction-name{
+    font-weight: bold;
+}
+#transaction-description{
+    font-style: italic;
+    color: rgba(0, 0, 0, 0.6);
+}
+#transaction-amount{
+    text-align: end;
+    font-weight: bold;
+}
+.income{
+    color: green;
+}
+.expense{
+    color: red;
+}
+#tr-acc-link{
+    color: purple;
+}
+/* CATEGORIES */
+#cat-list{
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    list-style: none;
+}
+#category{
+    margin: 5px;
+    padding: 5px;
+    border: 2px solid purple;
+    border-radius: 5px;
+    background-color: lightgoldenrodyellow;
+    /* background-color: rgba(177, 67, 177, 0.2); */
+    width: 150px;
+    text-align: center;
 }
 
 /* FORMS */
 .site-with-form-content{
     display: flex;
     flex-direction: column;
-    /* align-items: flex-start; */
     align-items: center;
 }
 form{
@@ -115,17 +171,58 @@ form{
     flex-direction: column;
     align-items: center;
 }
-span.form-field > input{
-    color: green;
+form > table{
+    margin-bottom: 5px;
 }
-.form-button{
-    margin-top: 5px;
+span.field{
+    margin-left: 5px;
 }
 .mam-niemam{
     margin-top: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+/* OTHER */
+p.buttons{
+    margin: 10px 0px;
+}
+p.buttons-close{
+    margin: 7px 0px;
+}
+.button {
+    background-color: rgba(163, 31, 163, 0.8);
+    color: white;
+    /* opacity: 0.8; */
+    padding: 2px 8px;
+    border: 2px solid;
+    border-radius: 10px;
+    border-color: grey black black grey; 
+    text-decoration: none;
+}
+.button:hover{
+    background-color: rgba(163, 31, 163, 1);
+    color: white;
+}
+.purple{
+    color: purple;
+}
+.purple:hover{
+    color: purple;
+}
+.center{
+    text-align: center;
+}
+.bold{
+    font-weight: bold;
+}
+.inbutton{
+    color: white;
+    text-decoration: none;
+}
+.inbutton:hover{
+    color: white;
 }
 
 /* FOOTER */
@@ -135,4 +232,9 @@ footer{
     justify-content: space-between;
     padding-left: 4vw;
     padding-right: 4vw;
+}
+
+button{
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
 }

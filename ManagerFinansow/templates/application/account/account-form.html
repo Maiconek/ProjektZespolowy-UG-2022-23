@@ -2,14 +2,51 @@
 
 {% block content %}
 
-<form method="POST">
-    {% csrf_token %}
-    {% for field in form %}
-    
-    <label>{{field.label}}</label>
-    {{field}}
-    {% endfor %}
-    <button type="submit">Create</button>
-</form>
+{% if option == "add" %}
+<div class="title">
+    <h1>Utwórz konto</h1>
+</div>
+<div class="content">
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+        {% for field in form %}
+        <tr>
+            <td>{{field.label}}</td>
+            <td><span class="field">{{field}}</span></td>
+        </tr>
+        {% endfor %}
+        </table>
+        <div>
+            <button class="button" type="submit">Utwórz</button>
+            <button type="button" class="button"><a class="inbutton" href="{% url 'all-accounts' %}">Anuluj</a></button>
+        </div>
+        
+    </form>
+</div>
+
+{% elif option == "edit" %}
+<div class="title">
+    <h1>Edytuj konto</h1>
+</div>
+<div class="content">
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+            {% for field in form %}
+            <tr>
+                <td>{{field.label}}</td>
+                <td><span class="field">{{field}}</span></td>
+            </tr>
+            {% endfor %}
+            </table>
+        <div>
+            <button class="button" type="submit">Zapisz</button>
+            <button type="button" class="button"><a class="inbutton" href="{% url 'account' account.id %}">Anuluj</a></button>
+        </div>
+    </form>
+</div>
+
+{% endif %}
 
 {% endblock %}

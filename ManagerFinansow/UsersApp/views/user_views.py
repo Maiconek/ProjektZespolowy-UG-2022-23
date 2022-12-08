@@ -4,7 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
 
-from .forms import CustomUserCreationForm, ProfileForm
+from UsersApp.forms import CustomUserCreationForm
+from UsersApp.models import *
 
 #Create your views here.
 def loginUser(request):
@@ -41,7 +42,7 @@ def registerUser(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.username = user.username.lower()
+            # user.username = user.username.lower()
             user.save()
 
             messages.success(request, 'User account was created')
@@ -68,19 +69,4 @@ def profile(request):
     context = {'profile': profile}
     return render(request, 'application/profile.html', context)
 
-# @login_required(login_url='login')
-# def allAccounts(request):
-#     accounts = Account.objects.all()
-#     user_accounts = accounts.filter(owner=request.user.profile)
-#     context = {'accounts': user_accounts}
-#     return render(request, 'application/all-accounts.html', context)
 
-# if request.method == 'POST':
-#     form = RegistrationFormTeacher(request.POST)
-#     if form.is_valid():
-#         new_teacher = form.save(commit=False)
-#         new_teacher.user = request.user #get the user object however you want - you 
-#             #can pass the user ID to the view as a parameter and do 
-#             #User.objects.get(pk=id) or some such, too. 
-#         new_teacher.save()
-#         form.save_m2m()

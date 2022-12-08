@@ -29,4 +29,29 @@ class Currency(models.Model):
                             primary_key=True, editable=False)
 
     def __str__(self):
-        return "[{}] - {} - {}".format(self.name, self.sign, self.access_name)
+        return "{}".format(self.name)
+
+# 1. kategorie podczepione do użytkownika (n-1), współdzielone dziedziczą po założycielu
+class Category(models.Model):
+    SCOPE_CHOICES = (
+    ("INCOME", "income"),
+    ("EXPENSE", "expense"),
+    )
+    name = models.CharField(max_length=255)
+    owner = models.ForeignKey(Profile, null=True, blank=True, on_delete=models.CASCADE)
+    scope = models.CharField(max_length=10, choices=SCOPE_CHOICES) #income / expense - do oddzielenia rodzaju transakcji
+    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
+    
+
+    def __str__(self):
+        return self.name
+
+class Subcategory(models.Model):
+    name = models.CharField(max_length=255)
+    id_category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
+
+    def __str__(self):
+        return self.name
+
+

@@ -7,17 +7,46 @@
 
 <div class="title">
     <h1>{{ tr.name }}</h1>
+    <h3>{{ tr.id_category }}</h3>
+    {% if tr.id_category.scope == "EXPENSE" and tr.converted_amount > 0 or tr.id_category.scope == "INCOME" and tr.converted_amount < 0 %}
+    <h3>Zwrot Pieniędzy</h3>
+    {% else %}
+        {% if tr.id_category.scope == "EXPENSE" %}
+        <h3>Wydatek</h3>
+        {% else %}
+        <h3>Przychód</h3>
+        {% endif %}
+    {% endif %}
+    {% if tr.id_subcategory %}
+    <h5>{{ tr.id_subcategory }}</h5>
+    {% endif %}
 </div>
-<div class="content">
+<div class="content center">
+    {% if tr.converted_amount >= 0 %}
+        <h2 class="income">{{ tr.converted_amount }} {{ tr.currency.sign }}</h2>
+    {% else %}
+        <h2 class="expense">{{ tr.converted_amount }} {{ tr.currency.sign }}</h2>
+    {% endif %}
     <p>Data: {{ tr.transaction_date }}</p>
-    <p>Kwota: {{ tr.amount }}</p>
-    <p>Opis: {{ tr.description }}</p>
-    <p>Podkategoria: {{ tr.id_subcategory }}</p>
-    <p>Cykliczna: {{ tr.is_periodic }}</p>
-    <span class="name"><a href="{% url 'editTransaction' tr.id %}">Edytuj</a></span><br>
-    <span class="name"><a href="{% url 'delTransaction' tr.id %}">Usuń</a></span><br>
-    <span class="name"><a href="{% url 'account' tr.id_account.id %}">Powrót do konta</a></span>
-    <br><br>
+    {% if tr.description is not None %}
+        <p>Opis: {{ tr.description }}</p>
+    {% endif %}
+    {% comment %} {% if tr.is_periodic == True %}
+        <p>Cykliczna: <input type="checkbox" checked onclick="return false;"></p>
+    {% else %}
+        <p>Cykliczna: <input type="checkbox" onclick="return false;"></p>
+    {% endif %} {% endcomment %}
+    {% if tr.is_periodic == True %}
+        <p>Cykliczna: TAK</p>
+    {% else %}
+        <p>Cykliczna: NIE</p>
+    {% endif %}
+    <p class="buttons"><a class="button" href="{% url 'editTransaction' tr.id %}">Edytuj</a>
+    <a class="button" href="{% url 'duplicateTransaction' tr.id %}">Duplikuj</a>
+    <a class="button" href="{% url 'delTransaction' tr.id %}" onclick=
+        "return confirm('Czy napewno chcesz usunąć tę transakcję?')">Usuń</a>
+    <p class="buttons"><a class="button" href="{% url 'account' tr.id_account.id %}">Powrót do konta</a></p>
+    <br>
 </div>
 
 {% endblock  %} 

@@ -7,44 +7,71 @@
 
     <div class="title">
         <h1>{{ account }}</h1>
-        <h1>{{ account.calculate_balance }} PLN</h1>
-    </div>
-
-    <div class="content">
-        <table>
-            {% if account.transactions %}
-            <tr>
-                <th>Data</th>
-                <th>Opis</th>
-                <th>Kwota</th>
-            </tr>
-            {% else %}
-            <tr><h3>Wygląda na to, że nie dodałeś jeszcze żadnych transakcji na tym koncie</h3></tr>
-            {% endif %}
-            {% if account.is_shared %}
-            <div>
-                <span>To konto jest ustawione jako współdzielone.<span>
-                <br/>
-                <span>Aby zaprosić innego użytkownika do współdzielenia konta, przekaż mu ten URL:<span>
-                <br/>
-                <code class="url">{{ request.build_absolute_uri }}/join</code>
-            </div>
-            {% endif %}
-            {% for transaction in account.transactions %}
-            {% if transaction.converted_amount > 0 %}
-            <tr class="transaction income">
-            {% else %}
-            <tr class="transaction expense">
-            {% endif %}
-                <td>{{ transaction.transaction_date }}</td>
-                <td>{{ transaction.description }}</td>
-                <td>{{ transaction.converted_amount }}</td>
-                <td><a href="{% url 'showTransaction' transaction.id %}">Szczegóły</a></td>
-                <td><span class="name"><a href="{% url 'delTransaction' transaction.id %}">Usuń</a></span></td>
-            </tr>
-            {% endfor %}
-        </table>
-        <a href="{% url 'addTransaction' account.id %}">Dodaj</a>
+        <h1>{{ account.calculate_balance }} {{ account.currency.sign }}</h1>
+        <h4>{{ account.description }}</h4>
     </div>
     
+    <div class="content">
+        <p class="buttons">
+            <a class="button" href="{% url 'addExpense' account.id %}">Nowy Wydatek</a>
+            <a class="button" href="{% url 'addIncome' account.id %}">Nowy Przychód</a>
+        </p>
+        <p class="buttons">
+            <a class="button" href="{% url 'editAccount' account.id %}">Edytuj informacje o koncie</a>
+            <a class="button" href="{% url 'delAccount' account.id %}" onclick=
+            "return confirm('Czy napewno chcesz usunąć konto {{account}}?')">Usuń to konto</a>
+        </p>
+        <p class="buttons">
+        <a class="button" href="{% url 'all-accounts' %}">Wszystkie Konta</a>
+        </p>
+    
+        <table>
+            {% if account.transactions %}
+            {% else %}
+                <tr><h3>Wygląda na to, że nie dodałeś jeszcze żadnych transakcji na tym koncie</h3></tr>
+            {% endif %}
+            {% if account.is_shared %}
+                <div>
+                    <span>To konto jest ustawione jako współdzielone.<span>
+                    <br/>
+                    <span>Aby zaprosić innego użytkownika do współdzielenia konta, przekaż mu ten URL:<span>
+                    <br/>
+                    <code id="url">{{ request.build_absolute_uri }}/join</code>
+                </div>
+            {% endif %}
+            {% for date in dates %}
+                <tr id="date">
+                    <td colspan="7">{{ date }}</td>
+                </tr>
+                {% for tr in account.transactions %}
+                    {% if tr.transaction_date == date %}
+                        <tr class="transaction">                        
+                        <td id="transaction-category">{{ tr.id_category }}</td>
+                        {% if tr.id_subcategory %}
+                            <td id="transaction-subcategory">{{ tr.id_subcategory }}</td>
+                        {% else %}
+                            <td id="transaction-subcategory"></td>
+                        {% endif %}
+                        <td id="transaction-name">{{ tr.name }}</td>
+                        {% if tr.description %}
+                            <td id="transaction-description">{{ tr.description }}</td>
+                        {% else %}
+                            <td id="transaction-description"></td>
+                        {% endif %}
+                        <td id="transaction-subcategory">{{ tr.subcategory }}</td>
+                        {% if tr.converted_amount >= 0 %}
+                            <td id="transaction-amount" class="income">{{ tr.converted_amount }} {{ tr.currency.sign }}</td>
+                        {% else %}
+                            <td id="transaction-amount" class="expense">{{ tr.converted_amount }} {{ tr.currency.sign }}</td>
+                        {% endif %}
+                        <td><a class="purple" href="{% url 'showTransaction' tr.id %}">Szczegóły</a></td>
+                        <td><a class="purple" href="{% url 'duplicateTransaction' tr.id %}">Duplikuj</a></td>
+                        <td><span class="name"><a class="purple" href="{% url 'delTransaction' tr.id %}" onclick=
+                            "return confirm('Czy napewno chcesz usunąć tę transakcję?')">Usuń</a></span></td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </table>
+    </div>
 {% endblock %}

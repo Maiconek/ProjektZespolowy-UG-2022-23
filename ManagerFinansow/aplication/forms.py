@@ -9,7 +9,7 @@ from django.db.models import Q
 class AccountForm(ModelForm):
     class Meta:
         model = Account
-        fields = ['name', 'is_shared', 'description']
+        fields = ['name', 'currency', 'description']
 
 class TransactionForm(ModelForm):
     class Meta:

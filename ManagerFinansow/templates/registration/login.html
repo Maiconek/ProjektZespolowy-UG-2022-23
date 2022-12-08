@@ -6,69 +6,70 @@
 {% comment %} Strona Rejestracji {% endcomment %}
 
 <div class="title">
-  <h3>Rejestracja</h3>
+  <h1>Rejestracja</h1>
 </div>
 
-<div class="container site-with-form-content">
+<div class="content site-with-form-content">
   <form action="/register" method="POST">
     {% csrf_token %}
     {{ form.non_field_errors }}
     <table>
       <tr>
         <td>
-          {{ form.username.errors }}
           <label>Nazwa użytkownika</label>
         </td> 
         <td>
           <span class="field"><input type="text" name="username" maxlength="150" autofocus required id="id_username"></span>
         </td>
+        {{ form.username.errors }}
       </tr>
       
       <tr>
         <td>
-          {{ form.first_name.errors }}
           <label>Imię</label>
         </td> 
         <td>
           <span class="field"><input type="text" name="first_name" maxlength="150" id="id_first_name"></span>
         </td>
+        {{ form.first_name.errors }}
       </tr>
       
       <tr>
         <td>
-          {{ form.email.errors }}
           <label>Email</label>
         </td> 
         <td>
           <span class="field"><input type="email" name="email" maxlength="254" id="id_email"></span>
         </td>
+        {{ form.email.errors }}
       </tr>
       
       <tr>
         <td>
-          {{ form.password1.errors }}
           <label>Hasło</label>
         </td> 
         <td>
           <span class="field"><input type="password" name="password1" autocomplete="new-password" required id="id_password1"></span>
         </td>
+        {{ form.password1.errors }}
       </tr>
       
       <tr>
-        <td>{{ form.password2.errors }}
+        <td>
           <label>Potwierdź hasło</label>
         </td> 
         <td>
           <span class="field"><input type="password" name="password2" autocomplete="new-password" required id="id_password2"></span>
         </td>
+        {{ form.password2.errors }}
       </tr>
     </table> 
-    <button class="form-button" type="submit">Zarejestruj</button> 
+    <button class="button" type="submit">Zarejestruj</button> 
 </form>
 
   <div class="mam-niemam">
     <span>Masz już konto?</span>
-    <span><a href="{% url 'login' %}">Zaloguj się</a></span>
+    <span><a class="purple" href="{% url 'login' %}">Zaloguj się</a></span>
   </div>
 </div>
 
@@ -77,9 +78,9 @@
 {% comment %} Strona Logowania {% endcomment %}
 
 <div class="title">
-  <h3>Logowanie</h3>
+  <h1>Logowanie</h1>
 </div>
-<div class="container site-with-form-content">
+<div class="content site-with-form-content">
   <form action="{% url 'login' %}" method="POST">
     {% csrf_token %}
     <table>
@@ -102,7 +103,7 @@
           <label>Hasło</label>
         </td>
         <td>
-          <span>
+          <span class="field">
             <input
               type="password"
               name="password"
@@ -112,12 +113,12 @@
         </td>
       </tr>
     </table>      
-      <button class="form-button" type="submit">Zaloguj</button> 
+      <button class="button" type="submit">Zaloguj</button> 
   </form>
 
   <div class="mam-niemam">
     <span>Nie masz konta?</span>
-    <span><a href="{% url 'register' %}">Zarejestruj się</a></span>
+    <span><a class="purple" href="{% url 'register' %}">Zarejestruj się</a></span>
   </div>
 </div>
 {% endif %}

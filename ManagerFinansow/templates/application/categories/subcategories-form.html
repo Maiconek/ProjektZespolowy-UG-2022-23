@@ -1,0 +1,52 @@
+{% extends 'application/base.html' %}
+
+{% block content %}
+
+{% if page == "create" %}
+<div class="title">
+    <h1>Utwórz nową podkategorie dla {{category.name}}</h1>
+</div>
+<div class="content">
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+            {% for field in form %}
+            <tr>
+                <td><label>{{field.label}}</label></td>
+                <td><span class="field">{{field}}</span></td>
+            </tr>
+            {% endfor %}
+        </table>
+        <div class="center">
+            <button type="submit">Stwórz</button>
+            <button type="button" class="button"><a class="inbutton" href="{% url 'all-subcategories' category.id %}">Anuluj</a></button>
+        </div>
+    </form>
+</div>
+
+
+{% else %}
+<div class="title">
+    <h1>Edytuj podkategorie dla {{category.name}}</h1>
+</div>
+<div class="content">
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+            {% for field in form %}
+            <tr>
+                <td><label>{{field.label}}</label></td>
+                <td><span class="field">{{field}}</span></td>
+            </tr>
+            {% endfor %}
+        </table>
+        <div class="center">
+            <button class="button" type="submit">Edytuj</button>
+            <button type="button" class="button"><a class="inbutton" href="{% url 'all-subcategories' category.id %}">Anuluj</a></button>
+        </div>
+    </form>
+</div>
+
+{% endif %}
+
+{% endblock %}

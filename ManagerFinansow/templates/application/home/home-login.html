@@ -7,7 +7,7 @@
 {% comment %} Strona Domowa użytkownika {% endcomment %}
     <div class="title">
         <h1>Saldo</h1>
-        <h1>{{ profile_balance }} PLN</h1>
+        <h1>{{ profile_balance }} {{ profile.currency.sign }}</h1>
     </div>
     <div class="content">
         <p class="buttons">
@@ -16,11 +16,12 @@
         </p>
         
         <table>
-            <tr>
-                <th>Data</th>
+            <tr id="table-header">
+                <th>Kategoria</th>
                 <th>Nazwa</th>
                 <th>Opis</th>
                 <th>Kwota</th>
+                <th>Konto</th>
             </tr>
             {% for date in dates %}
                 <tr class="date">
@@ -50,7 +51,6 @@
                 {% endfor %}
             {% endfor %}
         </table>
-
     </div>
     
 {% endblock  %}
