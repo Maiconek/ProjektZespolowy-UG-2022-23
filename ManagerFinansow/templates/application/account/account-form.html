@@ -18,8 +18,8 @@
         {% endfor %}
         </table>
         <div>
-            <button type="submit">Utwórz</button>
-            <button><a class="account-link" href="{% url 'all-accounts' %}">Anuluj</a></button>
+            <button class="button" type="submit">Utwórz</button>
+            <button class="button"><a class="inbutton" href="{% url 'all-accounts' %}">Anuluj</a></button>
         </div>
         
     </form>
@@ -41,8 +41,8 @@
             {% endfor %}
             </table>
         <div>
-            <button type="submit">Zapisz</button>
-            <button><a class="account-link" href="{% url 'account' account.id %}">Anuluj</a></button>
+            <button class="button" type="submit">Zapisz</button>
+            <button class="button"><a class="inbutton" href="{% url 'account' account.id %}">Anuluj</a></button>
         </div>
     </form>
 </div>

@@ -177,9 +177,6 @@ form > table{
 span.field{
     margin-left: 5px;
 }
-.form-button{
-    margin-top: 5px;
-}
 .mam-niemam{
     margin-top: 10px;
     display: flex;
@@ -194,16 +191,7 @@ p.buttons{
 p.buttons-close{
     margin: 7px 0px;
 }
-/* a.button {
-    background-color: whitesmoke;
-    color: black;
-    padding: 2px 6px;
-    border: 2px solid;
-    border-color: grey black black grey; 
-    text-decoration: none;
-    
-} */
-a.button {
+.button {
     background-color: rgba(163, 31, 163, 0.8);
     color: white;
     /* opacity: 0.8; */
@@ -213,15 +201,9 @@ a.button {
     border-color: grey black black grey; 
     text-decoration: none;
 }
-.style-button{
-    background-color: rgba(163, 31, 163, 0.8);
+.button:hover{
+    background-color: rgba(163, 31, 163, 1);
     color: white;
-    /* opacity: 0.8; */
-    padding: 2px 8px;
-    border: 2px solid;
-    border-radius: 10px;
-    border-color: grey black black grey; 
-    text-decoration: none;
 }
 .purple{
     color: purple;
@@ -234,6 +216,13 @@ a.button {
 }
 .bold{
     font-weight: bold;
+}
+.inbutton{
+    color: white;
+    text-decoration: none;
+}
+.inbutton:hover{
+    color: white;
 }
 
 /* FOOTER */
