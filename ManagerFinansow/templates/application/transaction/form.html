@@ -26,14 +26,18 @@
         </table>
         <div class="center">
             <button class="button" type="submit">Dodaj</button> 
-            <button type="button" class="button"><a class="inbutton" href={% url 'account' pk=account.id %}>Anuluj</a></button>
+            {% if account is not None %}
+            <button type="button" class="button"><a class="inbutton" href="{% url 'account' pk=account.id %}">Anuluj</a></button>
+            {% else %}
+            <button type="button" class="button"><a class="inbutton" href="{% url 'login' %}">Anuluj</a></button>
+            {% endif %}
         </div>
     </form>
 </div>
 
 {% elif option == "edit" %}
 <div class="title">
-    <h1>Dodaj transakcję</h1>
+    <h1>Edytuj transakcję</h1>
 </div>
 <div class="content">
     <form method="POST">
@@ -51,8 +55,12 @@
             </tr>
         </table>
         <div class="center">
-            <button class="button" type="submit">Zapisz</button> 
-            <button type="button" class="button"><a class="inbutton" href={% url 'account' pk=account.id %}>Anuluj</a></button>
+            <button class="form-button" type="submit">Zapisz</button> 
+            {% if account is not None %}
+            <button type="button" class="button"><a class="inbutton" href="{% url 'account' pk=account.id %}">Anuluj</a></button>
+            {% else %}
+            <button type="button" class="button"><a class="inbutton" href="{% url 'login' %}">Anuluj</a></button>
+            {% endif %}
         </div>
     </form>
 </div>

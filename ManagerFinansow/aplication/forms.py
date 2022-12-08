@@ -26,4 +26,7 @@ class TransactionForm(ModelForm):
         if scope == "EXPENSE":
             self.fields['id_category'].queryset = owned_categories.filter(scope=scope)
         self.fields['id_subcategory'].queryset = Subcategory.objects.filter(id_category__in=self.fields['id_category'].queryset)
-        
+
+    def save(self, commit=True):
+        # do something with self.cleaned_data['temp_id']
+        return super(TransactionForm, self).save(commit=commit)

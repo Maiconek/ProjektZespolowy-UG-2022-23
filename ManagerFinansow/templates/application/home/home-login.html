@@ -10,6 +10,10 @@
         <h1>{{ profile_balance }} {{ profile.currency.sign }}</h1>
     </div>
     <div class="content">
+        <p class="buttons">
+            <a class="button" href="{% url 'addExpenseAccountless' %}">Nowy Wydatek</a>
+            <a class="button" href="{% url 'addIncomeAccountless' %}">Nowy Przychód</a>
+        </p>
         
         <table>
             <tr id="table-header">
@@ -38,6 +42,7 @@
                             {% else %}
                                 <td id="transaction-amount" class="expense">{{ tr.converted_amount }} {{ tr.currency.sign }}</td>
                             {% endif %}
+                            <td><a class="purple" href="{% url 'showTransaction' tr.id %}">Szczegóły</a></td>
                             <td id="transaction-account">
                                 <a id="tr-acc-link" class="purple" href="{% url 'account' pk=tr.id_account.id %}">{{ tr.id_account.name }}</a>
                             </td>
