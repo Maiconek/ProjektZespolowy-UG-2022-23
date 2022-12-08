@@ -17,7 +17,7 @@ function changeToDark(){
     background.style.backgroundColor = "#2d428f";
     background.style.color = "white";
     content.style.backgroundColor = "#081132";
-    button.style.backgroundColor = "darkblue";
+    //button.style.backgroundColor = "darkblue";
     button.style.color = "white";
     //button.innerHTML = "Jasny motyw";
 
@@ -134,7 +134,7 @@ function darkMode() {
 
         content.style.backgroundColor = "whitesmoke";
 
-        button.style.backgroundColor = "rgba(163, 31, 163, 0.8)";
+        //button.style.backgroundColor = "rgba(163, 31, 163, 0.8)";
         button.style.color = "white";
         //button.innerHTML = "Ciemny motyw";
         sessionStorage.setItem("darkmode", "false");
