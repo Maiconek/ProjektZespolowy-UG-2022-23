@@ -41,11 +41,15 @@
     {% else %}
         <p>Cykliczna: NIE</p>
     {% endif %}
-    <p class="buttons"><a class="button" href="{% url 'editTransaction' tr.id %}">Edytuj</a>
-    <a class="button" href="{% url 'duplicateTransaction' tr.id %}">Duplikuj</a>
-    <a class="button" href="{% url 'delTransaction' tr.id %}" onclick=
+    <p class="buttons"><a class="button" href="{% url 'editTransaction' tr.id accountless %}">Edytuj</a>
+    <a class="button" href="{% url 'duplicateTransaction' tr.id accountless %}">Duplikuj</a>
+    <a class="button" href="{% url 'delTransaction' tr.id accountless %}" onclick=
         "return confirm('Czy napewno chcesz usunąć tę transakcję?')">Usuń</a>
-    <p class="buttons"><a class="button" href="{% url 'account' tr.id_account.id %}">Powrót do konta</a></p>
+    {% if not accountless %}
+        <p class="buttons"><a class="button" href="{% url 'account' tr.id_account.id %}">Powrót do konta</a></p>
+    {% else %}
+        <p class="buttons"><a class="button" href="{% url 'login' %}">Powrót</a></p>
+    {% endif %}
     <br>
 </div>
 

@@ -64,9 +64,9 @@
                         {% else %}
                             <td id="transaction-amount" class="expense">{{ tr.converted_amount }} {{ tr.currency.sign }}</td>
                         {% endif %}
-                        <td><a class="purple" href="{% url 'showTransaction' tr.id %}">Szczegóły</a></td>
-                        <td><a class="purple" href="{% url 'duplicateTransaction' tr.id %}">Duplikuj</a></td>
-                        <td><span class="name"><a class="purple" href="{% url 'delTransaction' tr.id %}" onclick=
+                        <td><a class="purple" href="{% url 'showTransaction' tr.id 0 %}">Szczegóły</a></td>
+                        <td><a class="purple" href="{% url 'duplicateTransaction' tr.id 0 %}">Duplikuj</a></td>
+                        <td><span class="name"><a class="purple" href="{% url 'delTransaction' tr.id 0 %}" onclick=
                             "return confirm('Czy napewno chcesz usunąć tę transakcję?')">Usuń</a></span></td>
                         </tr>
                     {% endif %}

@@ -13,7 +13,7 @@ def addExpense(request, pk=None):
             raise Http404
     form = TransactionForm(scope="EXPENSE", owner=request.user.profile, initial={'currency': request.user.profile.currency,
                                                                                 'id_account': account if pk is not None else None})
-    context = {'form': form, 'option': "add", 'today': date.today().strftime("%Y-%m-%d")}
+    context = {'form': form, 'option': "add", 'today': date.today().strftime("%Y-%m-%d"), 'accountless': '1' if pk == None else '0'}
     if pk is not None:
         context.update({'account': account})
     else:
@@ -44,7 +44,7 @@ def addIncome(request, pk=None):
             raise Http404
     form = TransactionForm(scope = "INCOME", owner=request.user.profile, initial={'currency': request.user.profile.currency,
                                                                                 'id_account': account if pk is not None else None})
-    context = {'form': form, 'option': "add", 'today': date.today().strftime("%Y-%m-%d")}
+    context = {'form': form, 'option': "add", 'today': date.today().strftime("%Y-%m-%d"), 'accountless': '1' if pk == None else '0'}
     if pk is not None:
         context.update({'account': account})
     else:
@@ -67,7 +67,7 @@ def addIncome(request, pk=None):
     return render(request, 'application/transaction/form.html', context)
 
 @login_required(login_url='login')
-def duplicate(request, pk):
+def duplicate(request, pk, accountless=0):
     transaction = get_object_or_404(Transaction, id=pk)
     if transaction.id_account.owner != request.user.profile:
         raise Http404
@@ -83,33 +83,40 @@ def duplicate(request, pk):
         _date = request.POST['date']
         transaction.transaction_date = _date 
         transaction.save()
-        return  redirect('account', pk=transaction.id_account.id)
+        if accountless == '0':
+            return  redirect('account', pk=transaction.id_account.id)
+        else:
+            return redirect('login')
     return render(request, 'application/transaction/form.html', {
                                                                 'form': form, 
                                                                 'account': transaction.id_account, 
                                                                 'option': "add", 
                                                                 'transaction': transaction,
+                                                                'accountless': accountless,
                                                                 'today': date.today().strftime("%Y-%m-%d")})
 
 @login_required(login_url='login')
-def showTransaction(request, pk):
+def showTransaction(request, pk, accountless=0):
     transaction = get_object_or_404(Transaction, id=pk)
     if transaction.id_account.owner != request.user.profile:
         raise Http404
-    context = {'tr':transaction}
+    context = {'tr':transaction, 'accountless': accountless}
     return render(request, 'application/transaction/show.html', context)
 
 @login_required(login_url='login')
-def delTransaction(request, pk):
+def delTransaction(request, pk, accountless=0):
     transaction = get_object_or_404(Transaction, id=pk)
     if transaction.id_account.owner != request.user.profile:
         raise Http404
     account = transaction.id_account
     transaction.delete()
-    return redirect('account', pk=account.id)
+    if accountless == '0':
+        return redirect('account', pk=account.id)
+    else:
+        return redirect('login')
 
 @login_required(login_url='login')
-def editTransaction(request, pk):
+def editTransaction(request, pk, accountless=0):
     transaction = get_object_or_404(Transaction, id=pk)
     if transaction.id_account.owner != request.user.profile:
         raise Http404
@@ -124,9 +131,10 @@ def editTransaction(request, pk):
         _date = request.POST['date']
         transaction.transaction_date = _date
         transaction.save()   
-        return redirect('showTransaction', pk=transaction.id)
+        return redirect('showTransaction', pk=transaction.id, accountless=accountless)
     return render(request, 'application/transaction/form.html', {
                                                                 'form': form, 
                                                                 'account': transaction.id_account, 
                                                                 'option': "edit", 
-                                                                'transaction': transaction})
+                                                                'transaction': transaction,
+                                                                'accountless': accountless})

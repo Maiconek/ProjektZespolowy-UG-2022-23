@@ -27,9 +27,9 @@ urlpatterns = [
     path('income-add', addIncome, name='addIncomeAccountless'),
     path('account/<pk>/expense-add', addExpense, name='addExpense'),
     path('expense-add', addExpense, name='addExpenseAccountless'),
-    path('account/transaction/<pk>', showTransaction, name='showTransaction'),
-    path('account/transaction-del/<pk>', delTransaction, name='delTransaction'),
-    path('account/transaction-edit/<pk>', editTransaction, name='editTransaction'),
-    path('account/transaction-duplicate/<pk>', duplicate, name='duplicateTransaction'),
+    path('account/transaction/<pk>/<int:accountless>', showTransaction, name='showTransaction'),
+    path('account/transaction-del/<pk>/<accountless>', delTransaction, name='delTransaction'),
+    path('account/transaction-edit/<pk>/<accountless>', editTransaction, name='editTransaction'),
+    path('account/transaction-duplicate/<pk>/<accountless>', duplicate, name='duplicateTransaction'),
     path('account/<pk>/join', joinAccount, name='joinAccount'),
 ]
