@@ -6,6 +6,7 @@ function checkColorMode(){
         var allAccounts = document.getElementById("all-accounts");
         var allIncomes = document.getElementsByClassName("income");
         var allExpenses = document.getElementsByClassName("expense");
+
         //WOJTEK
         var allTransactions = document.getElementsByClassName("transaction");
         var linkButton = document.getElementsByClassName("button");
@@ -17,6 +18,7 @@ function checkColorMode(){
         button.style.color = "white";
         button.innerHTML = "Jasny motyw";
 
+        
         //poszczególne banki (kolejne dzieci elementu all-accounts)
         if(allAccounts != null){
             for (var i = 0; i < allAccounts.children.length; i++) {
@@ -28,6 +30,7 @@ function checkColorMode(){
                 else{
                     allAccounts.children[i].style.backgroundColor = "rgb(34, 15, 8)";
                 }
+                allAccounts.children[i].getElementsByClassName("account-link")[0].style.color = "white";
             }
         }
 
@@ -87,6 +90,7 @@ function darkMode() {
                 else{
                     allAccounts.children[i].style.backgroundColor = "rgb(34, 15, 8)";
                 }
+                allAccounts.children[i].getElementsByClassName("account-link")[0].style.color = "white";
             }
         }
 
@@ -138,6 +142,7 @@ function darkMode() {
                 else{
                     allAccounts.children[i].style.backgroundColor = "lightsalmon";
                 }
+                allAccounts.children[i].getElementsByClassName("account-link")[0].style.color = "black";
             }
         }
 
