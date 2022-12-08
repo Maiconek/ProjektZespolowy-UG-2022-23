@@ -167,8 +167,8 @@ function darkMode() {
 
         content.style.backgroundColor = "whitesmoke";
 
-        button.style.backgroundColor = "rgb(240, 240, 240)";
-        button.style.color = "black";
+        button.style.backgroundColor = "rgba(163, 31, 163, 0.8)";
+        button.style.color = "white";
         button.innerHTML = "Ciemny motyw";
         sessionStorage.setItem("darkmode", "false");
     }
