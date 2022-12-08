@@ -213,7 +213,7 @@ a.button {
     border-color: grey black black grey; 
     text-decoration: none;
 }
-button{
+.style-button{
     background-color: rgba(163, 31, 163, 0.8);
     color: white;
     /* opacity: 0.8; */
