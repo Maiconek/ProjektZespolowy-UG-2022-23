@@ -50,6 +50,9 @@ nav.nav{
     position: absolute;
     top: 20px;
 }
+#dark-mode-button > img{
+    width: 30px;
+}
 div.title{
     padding-top: 5vh;
     display: flex;

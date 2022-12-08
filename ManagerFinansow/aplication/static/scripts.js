@@ -6,12 +6,9 @@ function changeToDark(){
     var allIncomes = document.getElementsByClassName("income");
     var allExpenses = document.getElementsByClassName("expense");
 
-    var background = document.body;
-    var button = document.getElementById("dark-mode-button");
-    var content = document.getElementById("site-content");
-    var allAccounts = document.getElementById("all-accounts");
-    var allIncomes = document.getElementsByClassName("income");
-    var allExpenses = document.getElementsByClassName("expense");
+    var lightBulb = document.getElementById("light-bulb");
+
+    lightBulb.src = "/static/images/bulb_on.png";
 
     //WOJTEK
     var allTransactions = document.getElementsByClassName("transaction");
@@ -22,7 +19,7 @@ function changeToDark(){
     content.style.backgroundColor = "#081132";
     button.style.backgroundColor = "darkblue";
     button.style.color = "white";
-    button.innerHTML = "Jasny motyw";
+    //button.innerHTML = "Jasny motyw";
 
     
     //poszczególne banki (kolejne dzieci elementu all-accounts)
@@ -84,6 +81,7 @@ function darkMode() {
     var allTransactions = document.getElementsByClassName("transaction");
     var linkButton = document.getElementsByClassName("button");
     
+    var lightBulb = document.getElementById("light-bulb");
 
     //ustawianie ciemnego motywu
     if (sessionStorage.getItem("darkmode") == "false" || sessionStorage.getItem("darkmode") == null) {
@@ -92,6 +90,8 @@ function darkMode() {
     } else {    //ustawianie jasnego motywu
         background.style.backgroundColor = "white";
         background.style.color = "black";
+
+        lightBulb.src = "/static/images/bulb_off.png";
 
         //poszczególne banki (kolejne dzieci elementu all-accounts)
         if(allAccounts != null){
@@ -136,7 +136,7 @@ function darkMode() {
 
         button.style.backgroundColor = "rgba(163, 31, 163, 0.8)";
         button.style.color = "white";
-        button.innerHTML = "Ciemny motyw";
+        //button.innerHTML = "Ciemny motyw";
         sessionStorage.setItem("darkmode", "false");
     }
  }
