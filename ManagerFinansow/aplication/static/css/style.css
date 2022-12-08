@@ -142,6 +142,8 @@ tr.transaction > td{
 /* CATEGORIES */
 #cat-list{
     display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
     list-style: none;
 }
 #category{
@@ -187,7 +189,7 @@ p.buttons{
     margin: 10px 0px 10px 0px;
 }
 p.buttons-close{
-    margin: 5px 0px 5px 0px;
+    margin: 7px 0px 7px 0px;
 }
 a.button {
     background-color: whitesmoke;

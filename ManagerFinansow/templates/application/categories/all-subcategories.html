@@ -10,7 +10,12 @@
         <ul id="cat-list">
             {% for sc in subcategory %}
                 <li id="category">
-                    <span class="bold">{{sc.name}}</span>
+                    {% if sc.id_category.scope == "INCOME" %}
+                        <span class="bold income">{{sc.name}}</span>
+                    {% else %}
+                        <span class="bold expense">{{sc.name}}</span>
+                    {% endif %}
+                    
                     <p class="buttons-close">
                         <a class="button" href="{% url 'edit-subcategory' category.id sc.id %}">Edytuj</a>
                         <a class="button" href="{% url 'delete-subcategory' category.id sc.id %}" onclick=
