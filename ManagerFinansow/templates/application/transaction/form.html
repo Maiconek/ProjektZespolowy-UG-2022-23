@@ -1,0 +1,69 @@
+{% extends 'application/base.html' %}
+
+{% block title %}{{ account }}{% endblock %}
+
+{% block content %}
+{% comment %} Formularz Transakcji {% endcomment %}
+
+{% if option == "add" %}
+<div class="title">
+    <h1>Dodaj transakcję</h1>
+</div>
+<div class="content">
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+            {% for f in form %}
+                <tr>
+                    <td><label>{{f.label}}</label></td>
+                    <td><span class="field">{{f}}</span></td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td><label>Date:</label></td>
+                <td><span class="field"><input type="date" name="date", value="{{ today }}"></span></td>
+            </tr>
+        </table>
+        <div class="center">
+            <button class="form-button" type="submit">Dodaj</button> 
+            {% if account is not None %}
+            <button><a class="account-link" href="{% url 'account' pk=account.id %}">Anuluj</a></button>
+            {% else %}
+            <button><a class="account-link" href="{% url 'login' %}">Anuluj</a></button>
+            {% endif %}
+        </div>
+    </form>
+</div>
+
+{% elif option == "edit" %}
+<div class="title">
+    <h1>Edytuj transakcję</h1>
+</div>
+<div class="content">
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+            {% for f in form %}
+                <tr>
+                    <td><label>{{f.label}}</label></td>
+                    <td><span class="field">{{f}}</span></td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td><label>Date:</label></td>
+                <td><span class="field"><input type="date" name="date" value="{{ transaction.transaction_date|date:'Y-m-d' }}"></span></td>
+            </tr>
+        </table>
+        <div class="center">
+            <button class="form-button" type="submit">Zapisz</button> 
+            {% if account is not None %}
+            <button><a class="account-link" href="{% url 'account' pk=account.id %}">Anuluj</a></button>
+            {% else %}
+            <button><a class="account-link" href="{% url 'login' %}">Anuluj</a></button>
+            {% endif %}
+        </div>
+    </form>
+</div>
+{% endif %}
+
+{% endblock %}
