@@ -6,6 +6,9 @@ function checkColorMode(){
         var allAccounts = document.getElementById("all-accounts");
         var allIncomes = document.getElementsByClassName("income");
         var allExpenses = document.getElementsByClassName("expense");
+        //WOJTEK
+        var allTransactions = document.getElementsByClassName("transaction");
+        var linkButton = document.getElementsByClassName("button");
 
         background.style.backgroundColor = "#2d428f";
         background.style.color = "white";
@@ -28,18 +31,27 @@ function checkColorMode(){
             }
         }
 
+        //WOJTEK
+        //transakcje
+        if(allTransactions != null){
+            for (var i = 0; i < allTransactions.length; i++) {
+                allTransactions[i].style.backgroundColor = "rgb(161, 161, 119)";
+            }
+        }
         
         //przychody
         if(allIncomes != null){
             for (var i = 0; i < allIncomes.length; i++) {
-                allIncomes[i].style.backgroundColor = "rgb(37, 73, 37)";
+                // allIncomes[i].style.backgroundColor = "rgb(37, 73, 37)";
+                allIncomes[i].style.color = "rgb(37, 73, 37)";
             }
         }
 
         //wydatki
         if(allExpenses != null){
             for (var i = 0; i < allExpenses.length; i++) {
-                allExpenses[i].style.backgroundColor = "rgb(73, 37, 37)";
+                // allExpenses[i].style.backgroundColor = "rgb(73, 37, 37)";
+                allExpenses[i].style.color = "rgb(73, 37, 37)";
             }
         }
 
@@ -54,6 +66,10 @@ function darkMode() {
     var allAccounts = document.getElementById("all-accounts");
     var allIncomes = document.getElementsByClassName("income");
     var allExpenses = document.getElementsByClassName("expense");
+    //WOJTEK
+    var allTransactions = document.getElementsByClassName("transaction");
+    var linkButton = document.getElementsByClassName("button");
+    
 
     //ustawianie ciemnego motywu
     if (sessionStorage.getItem("darkmode") == "false" || sessionStorage.getItem("darkmode") == null) {
@@ -74,17 +90,27 @@ function darkMode() {
             }
         }
 
+        //WOJTEK
+        //transakcje
+        if(allTransactions != null){
+            for (var i = 0; i < allTransactions.length; i++) {
+                allTransactions[i].style.backgroundColor = "rgb(161, 161, 119)";
+            }
+        }
+
         //przychody
         if(allIncomes != null){
             for (var i = 0; i < allIncomes.length; i++) {
-                allIncomes[i].style.backgroundColor = "rgb(37, 73, 37)";
+                // allIncomes[i].style.backgroundColor = "rgb(37, 73, 37)";
+                allIncomes[i].style.color = "rgb(37, 73, 37)";
             }
         }
 
         //wydatki
         if(allExpenses != null){
             for (var i = 0; i < allExpenses.length; i++) {
-                allExpenses[i].style.backgroundColor = "rgb(73, 37, 37)";
+                // allExpenses[i].style.backgroundColor = "rgb(73, 37, 37)";
+                allExpenses[i].style.color = "rgb(73, 37, 37)";
             }
         }
 
@@ -115,24 +141,33 @@ function darkMode() {
             }
         }
 
+        //WOJTEK
+        //transakcje
+        if(allTransactions != null){
+            for (var i = 0; i < allTransactions.length; i++) {
+                allTransactions[i].style.backgroundColor = "lightgoldenrodyellow";
+            }
+        }
         
         //przychody
         if(allIncomes != null){
             for (var i = 0; i < allIncomes.length; i++) {
-                allIncomes[i].style.backgroundColor = "lightgreen";
+                // allIncomes[i].style.backgroundColor = "lightgreen";
+                allIncomes[i].style.color = "green";
             }
         }
 
         //wydatki
         if(allExpenses != null){
             for (var i = 0; i < allExpenses.length; i++) {
-                allExpenses[i].style.backgroundColor = "lightcoral";
+                // allExpenses[i].style.backgroundColor = "lightcoral";
+                allExpenses[i].style.color = "red";
             }
         }
 
         content.style.backgroundColor = "whitesmoke";
 
-        button.style.backgroundColor = "white";
+        button.style.backgroundColor = "rgb(240, 240, 240)";
         button.style.color = "black";
         button.innerHTML = "Ciemny motyw";
         sessionStorage.setItem("darkmode", "false");
