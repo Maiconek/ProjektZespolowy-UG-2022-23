@@ -31,7 +31,10 @@ def addExpense(request, pk=None):
             _date = request.POST['date']
             transaction.transaction_date = _date   
             transaction.save()
-            return redirect('account', pk=transaction.id_account.id)
+            if pk is not None:
+                return redirect('account', pk=transaction.id_account.id)
+            else:
+                return redirect('login')
     return render(request, 'application/transaction/form.html', context)
 
 @login_required(login_url='login')
@@ -52,14 +55,16 @@ def addIncome(request, pk=None):
         form = TransactionForm(data=request.POST or None, scope="INCOME", owner=request.user.profile)
         if form.is_valid():
             transaction = form.save(commit=False)
-            transaction.id_account=account
             transaction.id_user = request.user.profile
             transaction.transaction_date = datetime.now()
             transaction.converted_amount = form.cleaned_data['amount']     
             _date = request.POST['date']
             transaction.transaction_date = _date 
             transaction.save()
-            return redirect('account', pk=account.id)
+            if pk is not None:
+                return redirect('account', pk=transaction.id_account.id)
+            else:
+                return redirect('login')
     return render(request, 'application/transaction/form.html', context)
 
 @login_required(login_url='login')
