@@ -6,18 +6,23 @@ from datetime import datetime, date
 from django.http import Http404  
 
 @login_required(login_url='login')
-def addExpense(request, pk):
-    account = get_object_or_404(Account, id=pk)
-    if account.owner != request.user.profile:
-        raise Http404
-    form = TransactionForm(scope="EXPENSE", owner=account.owner, initial={'currency': account.currency})
-    context = {'account': account, 'form': form, 'option': "add", 'today': date.today().strftime("%Y-%m-%d")}
+def addExpense(request, pk=None):
+    if pk is not None:
+        account = get_object_or_404(Account, id=pk)
+        if account.owner != request.user.profile:
+            raise Http404
+    form = TransactionForm(scope="EXPENSE", owner=request.user.profile, initial={'currency': request.user.profile.currency,
+                                                                                'id_account': account if pk is not None else None})
+    context = {'form': form, 'option': "add", 'today': date.today().strftime("%Y-%m-%d")}
+    if pk is not None:
+        context.update({'account': account})
+    else:
+        context.update({'account': None})
 
     if request.method == "POST":
         form = TransactionForm(data=request.POST or None, owner=account.owner)
         if form.is_valid():
             transaction = form.save(commit=False)
-            transaction.id_account=account
             transaction.id_user = request.user.profile
             transaction.transaction_date = datetime.now()
             transaction.amount = -form.cleaned_data['amount']
@@ -29,12 +34,18 @@ def addExpense(request, pk):
     return render(request, 'application/transaction/form.html', context)
 
 @login_required(login_url='login')
-def addIncome(request, pk):
-    account = get_object_or_404(Account, id=pk)
-    if account.owner != request.user.profile:
-        raise Http404
-    form = TransactionForm(scope = "INCOME", owner=account.owner, initial={'currency': account.currency})
-    context = {'account': account, 'form': form, 'option': "add", 'today': date.today().strftime("%Y-%m-%d")}
+def addIncome(request, pk=None):
+    if pk is not None:
+        account = get_object_or_404(Account, id=pk)
+        if account.owner != request.user.profile:
+            raise Http404
+    form = TransactionForm(scope = "INCOME", owner=request.user.profile, initial={'currency': request.user.profile.currency,
+                                                                                'id_account': account if pk is not None else None})
+    context = {'form': form, 'option': "add", 'today': date.today().strftime("%Y-%m-%d")}
+    if pk is not None:
+        context.update({'account': account})
+    else:
+        context.update({'account': None})
 
     if request.method == "POST":
         form = TransactionForm(data=request.POST or None, scope="INCOME", owner=account.owner)
