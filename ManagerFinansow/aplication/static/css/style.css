@@ -244,3 +244,8 @@ footer{
     padding-left: 4vw;
     padding-right: 4vw;
 }
+
+button{
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+}
