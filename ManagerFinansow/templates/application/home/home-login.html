@@ -16,40 +16,36 @@
         </p>
         
         <table>
-        {%if transactions %}
-            {% for date in dates %}
-                <tr class="date">
-                    <td class="center" colspan="7">{{ date }}</td>
-                </tr>
-                {% for tr in transactions %}
-                    {% if tr.transaction_date == date %}
-                        <tr class="transaction">
-                            <td id="transaction-category" class="bold">{{ tr.id_category }}</td>
-                            {% if tr.id_subcategory %}
-                            <td id="transaction-subcategory">{{ tr.id_subcategory }}</td>
-                            {% else %}
-                            <td id="transaction-subcategory"></td>
-                            {% endif %}                 
-                            <td id="transaction-name">{{ tr.name }}</td>
-                            {% if tr.description %}
-                            <td id="transaction-description">{{ tr.description }}</td>
-                            {% else %}
-                            <td id="transaction-description"></td>
-                            {% endif %}
-                            {% if tr.converted_amount >= 0 %}
-                                <td id="transaction-amount" class="income">{{ tr.converted_amount }} {{ tr.currency.sign }}</td>
-                            {% else %}
-                                <td id="transaction-amount" class="expense">{{ tr.converted_amount }} {{ tr.currency.sign }}</td>
-                            {% endif %}
-                            <td><a class="purple" href="{% url 'showTransaction' tr.id 1 %}">Szczegóły</a></td>
-                            <td id="transaction-account">
-                                <a id="tr-acc-link" class="purple" href="{% url 'account' pk=tr.id_account.id %}">{{ tr.id_account.name }}</a>
-                            </td>
-                        </tr>
+        {% for date, transactions, value in daily %}
+            <tr class="date">
+                <td class="center" colspan="5">{{ date }}</td>
+                <td>{{ value }}</td>
+            </tr>
+            {% for tr in transactions %}
+                <tr class="transaction">
+                    <td id="transaction-category" class="bold">{{ tr.id_category }}</td>
+                    {% if tr.id_subcategory %}
+                    <td id="transaction-subcategory">{{ tr.id_subcategory }}</td>
+                    {% else %}
+                    <td id="transaction-subcategory"></td>
+                    {% endif %}                 
+                    {% if tr.description %}
+                    <td id="transaction-description">{{ tr.description }}</td>
+                    {% else %}
+                    <td id="transaction-description"></td>
                     {% endif %}
-                {% endfor %}
+                    {% if tr.converted_amount >= 0 %}
+                        <td id="transaction-amount" class="income">{{ tr.converted_amount }} {{ tr.currency.sign }}</td>
+                    {% else %}
+                        <td id="transaction-amount" class="expense">{{ tr.converted_amount }} {{ tr.currency.sign }}</td>
+                    {% endif %}
+                    <td><a class="purple" href="{% url 'showTransaction' tr.id 1 %}">Szczegóły</a></td>
+                    <td id="transaction-account">
+                        <a id="tr-acc-link" class="purple" href="{% url 'account' pk=tr.id_account.id %}">{{ tr.id_account.name }}</a>
+                    </td>
+                </tr>
             {% endfor %}
-        {% endif %}
+        {% endfor %}
         </table>
     </div>
     

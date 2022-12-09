@@ -7,27 +7,24 @@ from django.http import Http404
 def home(request):
     if request.user.is_authenticated:
     # Zalogowany użytkownik
-        balance = 0
-        user_accounts = User_Account.objects.filter(id_user = request.user.profile.id)
-        accounts = []
-        for ua in user_accounts:
-            if ua.id_account.owner == request.user.profile and ua.id_account.is_shared == False:
-                accounts.append(ua.id_account)
         all_transactions = Transaction.objects.filter(id_user=request.user.profile).order_by('-transaction_date')
         dates = []
         transactions = []
+        values = []
         for t in all_transactions:
-            if t.id_account.is_shared == False:
-                transactions.append(t)
-                if t.transaction_date not in dates:
-                    dates.append(t.transaction_date)
-        for acc in accounts:
-            balance += acc.calculate_balance()
+            if t.transaction_date not in dates:
+                dates.append(t.transaction_date)
+
+        for dt in dates:
+            values.append(sum(tr.converted_amount for tr in all_transactions if tr.transaction_date == dt))
+            transactions.append([tr for tr in all_transactions if tr.transaction_date == dt])
+            
+        daily = zip(dates, transactions, values)
+        balance = sum(v for v in values)
 
         context = {
             'profile': request.user.profile,
-            'dates': dates,
-            "transactions": transactions,
+            'daily': daily,
             'profile_balance': balance,
         }
         return render(request, 'application/home/home-login.html', context)
@@ -59,7 +56,7 @@ def createAccount(request):
             account_user = User_Account(profile.id, account.id, 0)
             account_user.save()
             return redirect('all-accounts')
-    context = {'form' : form, 'option': "add"}
+    context = {'form': form, 'option': "add"}
     return render(request, 'application/account/account-form.html', context)
 
 @login_required(login_url='login')
@@ -80,12 +77,21 @@ def showAccount(request, pk):
     account = Account.objects.get(id=pk)
     if account.owner != request.user.profile:
         raise Http404
-    transactions = Transaction.objects.filter(id_account=account).order_by('-transaction_date')
+    all_transactions = Transaction.objects.filter(id_account=account).order_by('-transaction_date')
     dates = []
-    for t in transactions:
+    transactions = []
+    values = []
+    for t in all_transactions:
         if t.transaction_date not in dates:
             dates.append(t.transaction_date)
-    context = {'account': account, 'transactions': transactions, 'dates': dates}
+
+    for dt in dates:
+        values.append(sum(tr.converted_amount for tr in all_transactions if tr.transaction_date == dt))
+        transactions.append([tr for tr in all_transactions if tr.transaction_date == dt])
+        
+    daily = zip(dates, transactions, values)
+
+    context = {'account': account, 'daily': daily, 'dates': dates}
     return render(request, 'application/account/account.html', context)
 
 @login_required(login_url='login')
