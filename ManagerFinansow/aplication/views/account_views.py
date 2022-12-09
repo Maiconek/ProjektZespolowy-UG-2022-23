@@ -28,7 +28,7 @@ def home(request):
             'profile': request.user.profile,
             'dates': dates,
             "transactions": transactions,
-            'profile_balance': balance
+            'profile_balance': balance,
         }
         return render(request, 'application/home/home-login.html', context)
 

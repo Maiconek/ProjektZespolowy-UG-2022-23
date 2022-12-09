@@ -139,6 +139,12 @@ tr.transaction > td{
 .expense{
     color: red;
 }
+.cat-income{
+    color: white;
+}
+.cat-expense{
+    color: white;
+}
 #tr-acc-link{
     color: purple;
 }
@@ -152,8 +158,9 @@ tr.transaction > td{
 #category{
     margin: 5px;
     padding: 5px;
-    border: 2px solid purple;
+    border: 2px solid rgba(236,180,19,255);
     border-radius: 5px;
+    /* background-color: lightgoldenrodyellow; */
     background-color: lightgoldenrodyellow;
     /* background-color: rgba(177, 67, 177, 0.2); */
     width: 150px;

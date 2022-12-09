@@ -16,16 +16,10 @@
         </p>
         
         <table>
-            <tr id="table-header">
-                <th>Kategoria</th>
-                <th>Nazwa</th>
-                <th>Opis</th>
-                <th>Kwota</th>
-                <th>Konto</th>
-            </tr>
+        {%if transactions %}
             {% for date in dates %}
                 <tr class="date">
-                    <td class="center" colspan="5">{{ date }}</td>
+                    <td class="center" colspan="4">{{ date }}</td>
                 </tr>
                 {% for tr in transactions %}
                     {% if tr.transaction_date == date %}
@@ -50,6 +44,7 @@
                     {% endif %}
                 {% endfor %}
             {% endfor %}
+        {% endif %}
         </table>
     </div>
     
