@@ -19,12 +19,17 @@
         {%if transactions %}
             {% for date in dates %}
                 <tr class="date">
-                    <td class="center" colspan="4">{{ date }}</td>
+                    <td class="center" colspan="7">{{ date }}</td>
                 </tr>
                 {% for tr in transactions %}
                     {% if tr.transaction_date == date %}
                         <tr class="transaction">
-                            <td id="transaction-category">{{ tr.id_category }}</td>                    
+                            <td id="transaction-category" class="bold">{{ tr.id_category }}</td>
+                            {% if tr.id_subcategory %}
+                            <td id="transaction-subcategory">{{ tr.id_subcategory }}</td>
+                            {% else %}
+                            <td id="transaction-subcategory"></td>
+                            {% endif %}                 
                             <td id="transaction-name">{{ tr.name }}</td>
                             {% if tr.description %}
                             <td id="transaction-description">{{ tr.description }}</td>

@@ -108,8 +108,8 @@ a.account-link > span.account-description{
     text-align: center;
 }
 tr.transaction{
-    border: 1px solid purple;
-    background-color: lightgoldenrodyellow;
+    border: 1px solid rgb(236, 182, 19);
+    background-color: rgba(250, 250, 210, 0.692);
 }
 #table-header > th{
     text-align: center;
@@ -140,10 +140,10 @@ tr.transaction > td{
     color: red;
 }
 .cat-income{
-    color: white;
+    color: green;
 }
 .cat-expense{
-    color: white;
+    color: red;
 }
 #tr-acc-link{
     color: purple;
@@ -158,9 +158,8 @@ tr.transaction > td{
 #category{
     margin: 5px;
     padding: 5px;
-    border: 2px solid rgba(236,180,19,255);
+    border: 2px solid rgba(236,180,19);
     border-radius: 5px;
-    /* background-color: lightgoldenrodyellow; */
     background-color: lightgoldenrodyellow;
     /* background-color: rgba(177, 67, 177, 0.2); */
     width: 150px;
