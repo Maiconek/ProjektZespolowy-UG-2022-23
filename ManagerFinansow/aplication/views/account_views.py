@@ -17,7 +17,7 @@ def home(request):
 
         for dt in dates:
             values.append(sum(tr.converted_amount for tr in all_transactions if tr.transaction_date == dt))
-            transactions.append([tr for tr in all_transactions if tr.transaction_date == dt])
+            transactions.append(reversed([tr for tr in all_transactions if tr.transaction_date == dt]))
             
         daily = zip(dates, transactions, values)
         balance = sum(v for v in values)
@@ -87,7 +87,7 @@ def showAccount(request, pk):
 
     for dt in dates:
         values.append(sum(tr.converted_amount for tr in all_transactions if tr.transaction_date == dt))
-        transactions.append([tr for tr in all_transactions if tr.transaction_date == dt])
+        transactions.append(reversed([tr for tr in all_transactions if tr.transaction_date == dt]))
         
     daily = zip(dates, transactions, values)
 

@@ -44,6 +44,8 @@
             <button class="button" type="submit">Zapisz</button>
             <button type="button" class="button"><a class="inbutton" href="{% url 'account' account.id %}">Anuluj</a></button>
         </div>
+        <a class="button" href="{% url 'delAccount' account.id %}" onclick=
+        "return confirm('Czy napewno chcesz usunąć konto {{account}}?')">Usuń to konto</a>
     </form>
 </div>
 

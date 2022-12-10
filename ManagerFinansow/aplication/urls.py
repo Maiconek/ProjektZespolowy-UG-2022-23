@@ -32,4 +32,6 @@ urlpatterns = [
     path('account/transaction-edit/<pk>/<accountless>', editTransaction, name='editTransaction'),
     path('account/transaction-duplicate/<pk>/<accountless>', duplicate, name='duplicateTransaction'),
     path('account/<pk>/join', joinAccount, name='joinAccount'),
+    path('budget', budget, name='budget'),
+    path('summary', summary, name='summary')
 ]

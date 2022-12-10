@@ -26,8 +26,8 @@
             </a>
             <li class="nav-item"><a class="nav-link" href="{% url 'all-accounts' %}">Konta</a></li>
             {% comment %} <li class="nav-item"><a class="nav-link" href="{% url 'all-categories' %}">Kategorie</a></li> {% endcomment %}
-            <li class="nav-item"><a class="nav-link" href="#">Podsumowania</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Budżet</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'summary' %}">Podsumowania</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'budget' %}">Budżet</a></li>
         </ul>
         <ul class="nav justify-content-end">
             {% comment %} logged user image instead of placeholder {% endcomment %}
