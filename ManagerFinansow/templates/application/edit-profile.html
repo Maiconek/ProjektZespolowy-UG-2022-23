@@ -14,8 +14,10 @@ Edytuj profil
         {% csrf_token %}
         <table>
         {% for field in form %}
-            <label>{{field.label}}</label>
-            {{field}}
+        <tr>
+            <td><label>{{field.label}}</label></td>
+            <td><span class="field">{{field}}</span></td>
+        </tr>
         {% endfor %}
         </table>
     <div class="center">
