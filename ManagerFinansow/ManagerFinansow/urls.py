@@ -23,6 +23,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('aplication.urls')),
     path('', include('UsersApp.urls')),
+    #path('api/', include('api.urls'))
+
 ]
 
 handler404 = 'aplication.views.error404'

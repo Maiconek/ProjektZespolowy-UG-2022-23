@@ -1,0 +1,19 @@
+{% extends 'application/base.html' %}
+
+{% block title %}
+Edytuj profil
+{% endblock %}
+
+{% block content %}
+<h1>Edytuj swój profil</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    {% for field in form %}
+    <label>{{field.label}}</label>
+    {{field}}
+    {% endfor %}
+    <button type="button" class="button">Edytuj</button>
+</form>
+
+{% endblock %}

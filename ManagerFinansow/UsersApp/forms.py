@@ -20,7 +20,7 @@ class CustomUserCreationForm(UserCreationForm):
 class ProfileForm(ModelForm):
     class Meta:
         model = Profile
-        fields = ['name', 'username', 'email', 'image']
+        fields = ['name', 'username', 'email', 'image', 'currency']
 
 class CategoryForm(ModelForm):
     class Meta:

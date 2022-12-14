@@ -22,6 +22,7 @@ urlpatterns = [
     path('login/', views.loginUser, name='login'),
     path('register', views.registerUser, name='register'),
     path('profile', views.profile, name='profile'),
+    path('profile/edit', views.editProfile, name='edit-profile'),
     path('profile/categories', views.showCategories, name='all-categories'),
     path('profile/categories/create', views.createCategory, name='create-category'),
     path('profile/categories/edit/<str:pk>', views.editCategory, name='edit-category'),

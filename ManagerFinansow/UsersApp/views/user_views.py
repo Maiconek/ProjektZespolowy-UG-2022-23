@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
 
-from UsersApp.forms import CustomUserCreationForm
+from UsersApp.forms import CustomUserCreationForm, ProfileForm
 from UsersApp.models import *
 
 #Create your views here.
@@ -68,5 +68,19 @@ def profile(request):
     profile = request.user.profile
     context = {'profile': profile}
     return render(request, 'application/profile.html', context)
+
+@login_required(login_url='login')
+def editProfile(request):
+    profile = request.user.profile
+    form = ProfileForm(instance=profile)
+
+    if request.method == "POST":
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+    context = {"form" : form}
+    return render(request, "application/edit-profile.html", context)
+
 
 
