@@ -9,13 +9,18 @@ Edytuj profil
     <h1>Edytuj swój profil</h1>
 </div>
 
-<form method="POST">
-    {% csrf_token %}
-    {% for field in form %}
-    <label>{{field.label}}</label>
-    {{field}}
-    {% endfor %}
-    <button type="button" class="button">Edytuj</button>
+<div class="content">
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+        {% for field in form %}
+            <label>{{field.label}}</label>
+            {{field}}
+        {% endfor %}
+        </table>
+    <div class="center">
+        <button type="button" class="button">Edytuj</button>
+    </div>    
 </form>
-
+</div>
 {% endblock %}
