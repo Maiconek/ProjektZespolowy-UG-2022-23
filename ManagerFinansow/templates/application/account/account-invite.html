@@ -1,0 +1,24 @@
+{% extends 'application/base.html' %}
+
+{% block content %}
+{% load static %}
+
+<div class="title">
+    <h1>Utwórz konto</h1>
+</div>
+<div class="content">
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+            {{ form }}
+        </table>
+        <div>
+            <button class="button" type="submit">Zaproś użytkownika</button>
+            <button type="button" class="button"><a class="inbutton" href="{% url 'account' account.id %}">Anuluj</a></button>
+        </div>
+        
+    </form>
+</div>
+
+
+{% endblock %}

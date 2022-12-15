@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.contrib.auth.decorators import login_required
 from aplication.models import *
-from aplication.forms import AccountForm
+from aplication.forms import AccountForm, InviteForm
 from django.http import Http404  
 
 def home(request):
@@ -64,7 +64,6 @@ def editAccount(request, pk):
     account = get_object_or_404(Account, id=pk)
     form = AccountForm(request.POST or None, instance=account)
     if request.method == "POST":
-        
         if form.is_valid():
             account = form.save(commit=False)
             account.save()
@@ -75,8 +74,8 @@ def editAccount(request, pk):
 @login_required(login_url='login')
 def showAccount(request, pk):
     account = Account.objects.get(id=pk)
-    if account.owner != request.user.profile:
-        raise Http404
+    users = User_Account.objects.filter(id_account=account)
+    users = users.exclude(id_user=request.user.profile)
     all_transactions = Transaction.objects.filter(id_account=account).order_by('-transaction_date')
     dates = []
     transactions = []
@@ -91,24 +90,22 @@ def showAccount(request, pk):
         
     daily = zip(dates, transactions, values)
 
-    context = {'account': account, 'daily': daily, 'dates': dates}
+    context = {'account': account, 'daily': daily, 'dates': dates, 'users': users}
     return render(request, 'application/account/account.html', context)
 
 @login_required(login_url='login')
 def joinAccount(request, pk):
-    account = get_object_or_404(Account, id=pk)
-    if account.is_shared == False:
-        raise Http404
-    context = {'account': account}
+    invitation = get_object_or_404(Invitation, id=pk)
+    context = {'invitation': invitation}
     if request.method == 'POST':
-        #Dodaj do konta użytkownika
-        account.save()
-        return redirect('account', pk=account.id)
+        account_user = User_Account(request.user.profile.id, invitation.id_account.id, invitation.access_level)
+        account_user.save()
+        invitation.delete()
+        return redirect('account', pk=invitation.id_account.id)
     return render(request, 'application/account/account-join.html', context)
 
 def error404(request, exception):
     return render(request, 'application/error/404.html')
-
 
 @login_required(login_url='login')
 def delAccount(request, pk):
@@ -117,3 +114,19 @@ def delAccount(request, pk):
         account.delete()
     return redirect('all-accounts')
 
+@login_required(login_url='login')
+def invite(request, pk):
+    account = get_object_or_404(Account, id=pk)
+    form = InviteForm(account=account)
+    if request.method == "POST":
+        form = InviteForm(data=request.POST, account=account)
+        if form.is_valid():
+            invitation = Invitation(
+                userFrom = request.user.profile,
+                userTo = form.cleaned_data['profile'].profile,
+                id_account=account
+            )
+            invitation.save()
+            return redirect('account', pk=account.id)
+    context = {'account': account, 'form': form}
+    return render(request, 'application/account/account-invite.html', context)

@@ -3,9 +3,11 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.db.models import Q
 
 from UsersApp.forms import CustomUserCreationForm, ProfileForm
 from UsersApp.models import *
+from aplication.models import Invitation
 
 #Create your views here.
 def loginUser(request):
@@ -66,7 +68,7 @@ def logoutUser(request):
 @login_required(login_url='login')
 def profile(request):
     profile = request.user.profile
-    context = {'profile': profile}
+    context = {'profile': profile, 'mes': Invitation.objects.filter(Q(userTo=profile) | Q(userFrom=profile))}
     return render(request, 'application/profile.html', context)
 
 @login_required(login_url='login')

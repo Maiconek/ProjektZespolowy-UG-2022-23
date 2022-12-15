@@ -10,5 +10,14 @@
         <p>Tutaj możesz zarządzać swoim profilem</p>
         <a class="button" href="{% url 'edit-profile' %}">Edytuj swój profil</a>
         <a class="button" href="{% url 'all-categories' %}">Zarządzaj kategoriami</a>
+
+        {% for m in mes %}
+            {% if profile == m.userTo %}
+                <p>Użytkownik {{ m.userFrom }} zaprasza cię do dołączenia do konta {{ m.id_account }}!</p>
+                <a href="{% url 'joinAccount' m.id %}">Kliknij by dołączyć</a>
+            {% elif profile == m.userFrom %}
+                <p>Wysłano zaproszenie do użytkownika {{ m.userTo }} do dołączenia do konta {{ m.id_account }}</p>
+            {% endif %}
+        {% endfor %}
     </div>
 {% endblock  %} 
