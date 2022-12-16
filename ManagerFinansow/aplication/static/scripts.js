@@ -150,3 +150,20 @@ function darkMode() {
     var logo = document.getElementById("app-logo");
     logo.src="/static/images/logo.png";
  }
+
+ function formOptionsDisplay(){
+    var category = document.getElementById("id_category");
+    var categorySelected=category.options[category.selectedIndex].value;
+    var formOptions = document.getElementsByClassName(categorySelected);
+
+    for (var i = 0; i < formOptions.length; i++) {
+        formOptions[i].style.color = "white";
+    }
+
+    // if(formOptions.style.display == "none"){
+    //     formOptions.style.display = "block";
+    // }
+    // else{
+    //     formOptions.style.display = "none";
+    // }
+ }

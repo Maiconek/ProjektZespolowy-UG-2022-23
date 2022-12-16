@@ -16,7 +16,34 @@
             {% for f in form %}
                 <tr>
                     <td><label>{{f.label}}</label></td>
-                    <td><span class="field">{{f}}</span></td>
+                    <td><span class="field">
+                        <!-- {% if f.name == "id_category" %}
+                        <select name="category" required id="id_category" onchange="formOptionsDisplay()">
+                            {% for value, text in form.fields.id_category.choices %}
+                                <option value="{{value}}">{{ text }}</option>
+                            {% endfor %}
+                        </select>
+                        {% elif f.name == "id_subcategory" %}
+                        <select name="subcategory" required id="id_subcategory">
+                            {% for value, text in form.fields.id_subcategory.choices %}
+                                
+                                get field from subcategory element
+                                {% for subcategory in subcategories %}
+                                    {% if subcategory.id == value %}
+                                        <option value="{{value}}">{{ subcategory.name }}</option>
+                                    {% endif %}
+                                {% endfor %}
+
+
+                            {% endfor %}
+                        </select>
+                        {% else %}
+                            {{f}}
+                        {% endif %}
+                        {{f.name}} -->
+                        <!-- previously (all in this <span>): -->
+                        {{f}}
+                    </span></td>
                 </tr>
             {% endfor %}
             <tr>
