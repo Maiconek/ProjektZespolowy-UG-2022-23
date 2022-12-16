@@ -109,6 +109,7 @@ a.account-link > span.account-description{
 }
 tr.transaction{
     border: 1px solid rgb(236, 182, 19);
+    border-collapse: collapse;
     background-color: rgba(250, 250, 210, 0.5);
 }
 #table-header > th{

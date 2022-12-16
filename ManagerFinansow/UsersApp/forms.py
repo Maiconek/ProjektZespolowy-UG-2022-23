@@ -21,13 +21,27 @@ class ProfileForm(ModelForm):
     class Meta:
         model = Profile
         fields = ['name', 'username', 'email', 'image', 'currency']
+        labels = {
+            'name' : 'Imię',
+            'username' : 'Nazwa użytkownika',
+            'email' : 'Email',
+            'image' : 'Zdjęcie',
+            'currency' : 'Waluta'
+        }
 
 class CategoryForm(ModelForm):
     class Meta:
         model = Category
         fields = ['name', 'scope']
+        labels = {
+            'name' : 'Nazwa',
+            'scope' : 'Rodzaj'
+        }
 
 class SubCategoryForm(ModelForm):
     class Meta:
         model = Subcategory
         fields = ['name']
+        labels = {
+            'name' : 'Nazwa'
+        }

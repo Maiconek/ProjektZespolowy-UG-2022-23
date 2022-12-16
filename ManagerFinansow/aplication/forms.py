@@ -9,12 +9,28 @@ from django.db.models import Q
 class AccountForm(ModelForm):
     class Meta:
         model = Account
-        fields = ['name', 'currency', 'description']
+        fields = ['name', 'currency','is_shared' ,'description']
+        labels = {
+            'name' : 'Nazwa',
+            'currency' : 'Waluta',
+            'is_shared' : 'Współdzielone?',
+            'description' : 'Opis'
+        }
 
 class TransactionForm(ModelForm):
     class Meta:
         model = Transaction
         exclude = ['id_user', 'converted_amount', 'transaction_date']
+        labels = {
+            'id_account' : 'Konto',
+            'id_category' : 'Kategoria',
+            'id_subcategory' : 'Podkategoria',
+            'amount' : 'Kwota',
+            'description' : 'Opis',
+            'date' : 'Data', #NOT WORKING
+            'currency' : 'Waluta',
+            'is_periodic' : 'Powtarzalna?',
+        }
 
     def __init__(self, *, scope = "EXPENSE", owner, **kwargs):
         super(TransactionForm, self).__init__(**kwargs)
