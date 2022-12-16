@@ -31,7 +31,7 @@
         </ul>
         <ul class="nav justify-content-end">
             {% comment %} logged user image instead of placeholder {% endcomment %}
-            <img src="{{ profile.image.url }}", style="border-radius: 50%; width: 40px;">
+            {% comment %} <img src="{{ profile.image.url }}", style="border-radius: 50%; width: 40px;"> {% endcomment %}
 
             <img src="{% static 'images/circle_user_image.png' %}", style="border-radius: 50%; width: 40px;">
             <li class="nav-item"><a class="nav-link" href="{% url 'profile' %}">{{ user.username }}</a></li>
