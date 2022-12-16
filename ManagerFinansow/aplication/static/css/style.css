@@ -249,3 +249,13 @@ button{
 .subcategory-element{
     display: none;
 }
+
+::-moz-selection { /* na firefoxa */
+    color: rgb(236,180,19);
+    background: purple;
+  }
+  
+::selection {
+    color: rgb(236,180,19);
+    background: purple;
+ }
