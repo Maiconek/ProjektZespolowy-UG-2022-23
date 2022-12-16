@@ -11,11 +11,11 @@
         {% csrf_token %}
         <table>
         <tr>
-            <td><label>Nazwa</label></td>
+            <td><label class="bold">Nazwa</label></td>
             <td><span class="field"><input type="text" name="name" maxlength="255" required id="id_name"></span></td>
         </tr>
         <tr>
-            <td><label>Rodzaj</label></td>
+            <td><label class="bold">Rodzaj</label></td>
             <td><span class="field">
                 <select name="scope" required id="id_scope">
 
@@ -44,11 +44,11 @@
         {% csrf_token %}
         <table>
         <tr>
-            <td><label>Nazwa</label></td>
+            <td><label class="bold">Nazwa</label></td>
             <td><span class="field"><input type="text" name="name" value="{{ category.name }}" maxlength="255" required id="id_name"></span></td>
         </tr>
         <tr>
-            <td><label>Rodzaj</label></td>
+            <td><label class="bold">Rodzaj</label></td>
             <td><span class="field">
                 <select name="scope" required id="id_scope">
                     {% if category.scope == 'INCOME' %}
