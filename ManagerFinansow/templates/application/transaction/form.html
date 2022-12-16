@@ -37,8 +37,6 @@
                         {% else %}
                             {{f}}
                         {% endif %}
-                        <!-- nie wysyła formularza (?????????????????????????????) XDDDDDDDDDDDDDDDDD
-                        Pozdrawiam z dobrze wykonaną robotą, Cezar. -->
                     </span></td>
                 </tr>
             {% endfor %}
@@ -78,7 +76,7 @@
             </tr>
         </table>
         <div class="center">
-            <button class="form-button" type="submit">Zapisz</button> 
+            <button class="button" type="submit">Zapisz</button> 
             {% if accountless == "1" %}
             <button type="button" class="button"><a class="inbutton" href="{% url 'login' %}">Anuluj</a></button>
             {% else %}
