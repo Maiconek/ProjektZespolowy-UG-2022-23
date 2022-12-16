@@ -12,7 +12,7 @@ def addExpense(request, pk=None):
         if account.owner != request.user.profile:
             raise Http404
     subcategories = Subcategory.objects.all()
-    form = TransactionForm(scope="EXPENSE", owner=request.user.profile, initial={'currency': request.user.profile.currency,
+    form = TransactionForm(scope="EXPENSE", owner=request.user.profile, initial={'currency': request.user.profile.currency if pk is None else account.currency,
                                                                                 'id_account': account if pk is not None else None})
     context = {'form': form, 'option': "add", 'today': date.today().strftime("%Y-%m-%d"), 'accountless': '1' if pk == None else '0', 'subcategories': subcategories}
     if pk is not None:
@@ -44,7 +44,7 @@ def addIncome(request, pk=None):
         if account.owner != request.user.profile:
             raise Http404
     subcategories = Subcategory.objects.all()
-    form = TransactionForm(scope = "INCOME", owner=request.user.profile, initial={'currency': request.user.profile.currency,
+    form = TransactionForm(scope = "INCOME", owner=request.user.profile, initial={'currency': request.user.profile.currency if pk is None else account.currency,
                                                                                 'id_account': account if pk is not None else None})
     context = {'form': form, 'option': "add", 'today': date.today().strftime("%Y-%m-%d"), 'accountless': '1' if pk == None else '0', 'subcategories': subcategories}
     if pk is not None:
