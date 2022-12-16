@@ -15,7 +15,7 @@
         <table>
             {% for f in form %}
                 <tr>
-                    <td><label>{{f.label}}</label></td>
+                    <td><label class="bold">{{f.label}}</label></td>
                     <td><span class="field">
                         {% if f.name == "id_category" %}
                         <select name="id_category" required id="id_category" onchange="subcatDisplay_AfterClick()">
@@ -41,7 +41,7 @@
                 </tr>
             {% endfor %}
             <tr>
-                <td><label>Date:</label></td>
+                <td><label class="bold">Date:</label></td>
                 <td><span class="field"><input type="date" name="date", value="{{ today }}"></span></td>
             </tr>
         </table>
@@ -66,12 +66,12 @@
         <table>
             {% for f in form %}
                 <tr>
-                    <td><label>{{f.label}}</label></td>
+                    <td><label class="bold">{{f.label}}</label></td>
                     <td><span class="field">{{f}}</span></td>
                 </tr>
             {% endfor %}
             <tr>
-                <td><label>Date:</label></td>
+                <td><label class="bold">Date:</label></td>
                 <td><span class="field"><input type="date" name="date" value="{{ transaction.transaction_date|date:'Y-m-d' }}"></span></td>
             </tr>
         </table>
