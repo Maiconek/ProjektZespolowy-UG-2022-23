@@ -40,12 +40,17 @@
             </tr>
             {% endfor %}
             </table>
-        <div>
+        <p class="buttons-close">
             <button class="button" type="submit">Zapisz</button>
             <button type="button" class="button"><a class="inbutton" href="{% url 'account' account.id %}">Anuluj</a></button>
-        </div>
-        <a class="button" href="{% url 'delAccount' account.id %}" onclick=
+        </p>
+        <p class "buttons-close">
+            <button class="button" type="button">
+                <a class="inbutton" href="{% url 'delAccount' account.id %}" onclick=
         "return confirm('Czy napewno chcesz usunąć konto {{account}}?')">Usuń to konto</a>
+            </button>
+    </p>
+        
     </form>
 </div>
 
