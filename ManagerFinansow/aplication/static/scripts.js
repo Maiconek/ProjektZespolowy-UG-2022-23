@@ -151,19 +151,16 @@ function darkMode() {
     logo.src="/static/images/logo.png";
  }
 
- function formOptionsDisplay(){
+ function subcatDisplay_AfterClick(){
     var category = document.getElementById("id_category");
     var categorySelected=category.options[category.selectedIndex].value;
     var formOptions = document.getElementsByClassName(categorySelected);
+    var subcategoryElements = document.getElementsByClassName("subcategory-element");
 
-    for (var i = 0; i < formOptions.length; i++) {
-        formOptions[i].style.color = "white";
+    for (var i = 0; i < subcategoryElements.length; i++) {
+        subcategoryElements[i].style.display = "none";
     }
-
-    // if(formOptions.style.display == "none"){
-    //     formOptions.style.display = "block";
-    // }
-    // else{
-    //     formOptions.style.display = "none";
-    // }
+    for (var i = 0; i < formOptions.length; i++) {
+        formOptions[i].style.display = "block";
+    }
  }
