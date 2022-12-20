@@ -31,11 +31,8 @@ def addExpense(request, pk=None):
         if form.is_valid():
             transaction = form.save(commit=False)
             transaction.id_user = request.user.profile
-            transaction.transaction_date = datetime.now()
             transaction.amount = -form.cleaned_data['amount']
             transaction.converted_amount = -form.cleaned_data['amount']    
-            _date = request.POST['date']
-            transaction.transaction_date = _date   
             transaction.save()
             if pk is not None:
                 return redirect('account', pk=transaction.id_account.id)
@@ -69,10 +66,7 @@ def addIncome(request, pk=None):
         if form.is_valid():
             transaction = form.save(commit=False)
             transaction.id_user = request.user.profile
-            transaction.transaction_date = datetime.now()
             transaction.converted_amount = form.cleaned_data['amount']     
-            _date = request.POST['date']
-            transaction.transaction_date = _date 
             transaction.save()
             if pk is not None:
                 return redirect('account', pk=transaction.id_account.id)
@@ -95,8 +89,6 @@ def duplicate(request, pk, accountless=0):
         amnt = form.cleaned_data['amount']
         transaction.amount = -amnt if transaction.id_category.scope=="EXPENSE" else amnt
         transaction.converted_amount = -amnt if transaction.id_category.scope=="EXPENSE" else amnt
-        _date = request.POST['date']
-        transaction.transaction_date = _date 
         transaction.save()
         if accountless == '0':
             return  redirect('account', pk=transaction.id_account.id)
@@ -146,8 +138,6 @@ def editTransaction(request, pk, accountless=0):
         amnt = form.cleaned_data['amount']
         transaction.amount = -amnt if transaction.id_category.scope=="EXPENSE" else amnt
         transaction.converted_amount = -amnt if transaction.id_category.scope=="EXPENSE" else amnt
-        _date = request.POST['date']
-        transaction.transaction_date = _date
         transaction.save()   
         return redirect('showTransaction', pk=transaction.id, accountless=accountless)
 

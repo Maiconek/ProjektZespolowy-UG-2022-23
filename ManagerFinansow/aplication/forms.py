@@ -20,14 +20,14 @@ class AccountForm(ModelForm):
 class TransactionForm(ModelForm):
     class Meta:
         model = Transaction
-        exclude = ['id_user', 'converted_amount', 'transaction_date']
+        exclude = ['id_user', 'converted_amount']
         labels = {
             'id_account' : 'Konto',
             'id_category' : 'Kategoria',
             'id_subcategory' : 'Podkategoria',
             'amount' : 'Kwota',
             'description' : 'Opis',
-            'date' : 'Data', #NOT WORKING
+            'transaction_date' : 'Data',
             'currency' : 'Waluta',
             'is_periodic' : 'Powtarzalna?',
         }

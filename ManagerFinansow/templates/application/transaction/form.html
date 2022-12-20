@@ -9,6 +9,12 @@
 <div class="title">
     <h1>Dodaj transakcję</h1>
 </div>
+{% elif option == "edit" %}
+<div class="title">
+    <h1>Edytuj transakcję</h1>
+</div>
+{% endif %}
+
 <div class="content">
     <form method="POST">
         {% csrf_token %}
@@ -34,49 +40,25 @@
                                 {% endfor %}
                             {% endfor %}
                         </select>
+                        {% elif f.name == "transaction_date" %}
+                            {% if option == "add" %}
+                            <input name="transaction_date" id="transaction_date" type="date" name="date" value="{{ today }}">
+                            {% elif option == "edit" %}
+                            <input name="transaction_date" id="transaction_date" type="date" name="date" value="{{ transaction.transaction_date|date:'Y-m-d' }}">
+                            {% endif %}
                         {% else %}
-                            {{f}}
+                            {{ f }}
                         {% endif %}
                     </span></td>
                 </tr>
             {% endfor %}
-            <tr>
-                <td><label class="bold">Date:</label></td>
-                <td><span class="field"><input type="date" name="date", value="{{ today }}"></span></td>
-            </tr>
         </table>
         <div class="center">
+            {% if option == "add" %}
             <button class="button" type="submit">Dodaj</button> 
-            {% if accountless == "1" %}
-            <button type="button" class="button"><a class="inbutton" href="{% url 'login' %}">Anuluj</a></button>
-            {% else %}
-            <button type="button" class="button"><a class="inbutton" href="{% url 'account' pk=account.id %}">Anuluj</a></button>
-            {% endif %}
-        </div>
-    </form>
-</div>
-
-{% elif option == "edit" %}
-<div class="title">
-    <h1>Edytuj transakcję</h1>
-</div>
-<div class="content">
-    <form method="POST">
-        {% csrf_token %}
-        <table>
-            {% for f in form %}
-                <tr>
-                    <td><label class="bold">{{f.label}}</label></td>
-                    <td><span class="field">{{f}}</span></td>
-                </tr>
-            {% endfor %}
-            <tr>
-                <td><label class="bold">Date:</label></td>
-                <td><span class="field"><input type="date" name="date" value="{{ transaction.transaction_date|date:'Y-m-d' }}"></span></td>
-            </tr>
-        </table>
-        <div class="center">
+            {% elif option == "edit" %}
             <button class="button" type="submit">Zapisz</button> 
+            {% endif %}
             {% if accountless == "1" %}
             <button type="button" class="button"><a class="inbutton" href="{% url 'login' %}">Anuluj</a></button>
             {% else %}
@@ -85,6 +67,5 @@
         </div>
     </form>
 </div>
-{% endif %}
 
 {% endblock %}
