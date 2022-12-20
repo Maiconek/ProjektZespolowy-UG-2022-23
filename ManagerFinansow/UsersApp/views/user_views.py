@@ -64,11 +64,21 @@ def logoutUser(request):
     messages.info(request, 'User was logout')
     return redirect("home")
 
+@login_required(login_url='login')
 def allProfiles(request):
     profiles = Profile.objects.all()
-    context = {'profiles' : profiles}
+    search_query = ''
+
+    if request.GET.get('search_query'):
+        search_query = request.GET.get('search_query')
+
+    profiles = Profile.objects.filter(username__icontains=search_query)
+    context = {'search_query' : search_query, 'profiles' : profiles}
+
     return render(request, 'application/profiles-list.html', context)
 
+
+    
 
 @login_required(login_url='login')
 def profile(request):
