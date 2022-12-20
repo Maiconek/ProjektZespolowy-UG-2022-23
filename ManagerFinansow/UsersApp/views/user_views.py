@@ -64,6 +64,12 @@ def logoutUser(request):
     messages.info(request, 'User was logout')
     return redirect("home")
 
+def allProfiles(request):
+    profiles = Profile.objects.all()
+    context = {'profiles' : profiles}
+    return render(request, 'application/profiles-list.html', context)
+
+
 @login_required(login_url='login')
 def profile(request):
     profile = request.user.profile

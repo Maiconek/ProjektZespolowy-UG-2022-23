@@ -22,6 +22,9 @@
         <p class="buttons">
             <a class="button" href="{% url 'invite' account.id %}">Zaproś użytkownika do współdzielenia</a>
         </p>
+        <p class="buttons">
+            <a class="button" href="{% url 'profiles' %}">Lista użytkowników</a>
+        </p>
     
         <table>
             {% if not account.transactions %}
