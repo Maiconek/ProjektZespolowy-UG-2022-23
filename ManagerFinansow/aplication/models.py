@@ -51,6 +51,9 @@ class Invitation(models.Model):
     id_account = models.ForeignKey(Account, on_delete=models.SET_NULL, null=True)
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
 
+    def __str__(self):
+        return f"od: {self.userFrom} do: {self.userTo}, konto: {self.id_account}, poziom dostępu: {self.access_level}"
+
 class Transaction(models.Model):
     id_account = models.ForeignKey(Account, on_delete=models.CASCADE)
     id_user = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True) #konto z którego dokonano transakcji zostało usunięte ale transakcja ma pozostać 
