@@ -5,8 +5,6 @@ import uuid
 
 from UsersApp.models import Profile, Currency, Category, Subcategory
 
-# Create your models here.
-
 class Account(models.Model):
     owner = models.ForeignKey(Profile, null=True, blank=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=30)

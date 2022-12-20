@@ -37,14 +37,11 @@ class TransactionForm(ModelForm):
         owned_categories = Category.objects.filter(Q(owner=owner) | Q(owner=None))
         self.fields['id_account'].queryset = Account.objects.filter(id__in=User_Account.objects.filter(id_user=owner).values_list('id_account'))
         
-        if scope == "INCOME":
-            self.fields['id_category'].queryset = owned_categories.filter(scope=scope)
-        if scope == "EXPENSE":
+        if scope == "INCOME" or scope == "EXPENSE":
             self.fields['id_category'].queryset = owned_categories.filter(scope=scope)
         self.fields['id_subcategory'].queryset = Subcategory.objects.filter(id_category__in=self.fields['id_category'].queryset)
 
     def save(self, commit=True):
-        # do something with self.cleaned_data['temp_id']
         return super(TransactionForm, self).save(commit=commit)
 
 class InviteForm(forms.Form):

@@ -9,7 +9,6 @@ from UsersApp.forms import CustomUserCreationForm, ProfileForm
 from UsersApp.models import *
 from aplication.models import Invitation
 
-#Create your views here.
 def loginUser(request):
     page = "login"
 

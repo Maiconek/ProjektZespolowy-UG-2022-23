@@ -7,7 +7,6 @@ from django.contrib.auth.models import User
 from .models import Profile
 
 def createProfile(sender, instance, created, **kwargs):
-    print("YEEEEES")
     if created:
         user = instance
         profile = Profile.objects.create(
