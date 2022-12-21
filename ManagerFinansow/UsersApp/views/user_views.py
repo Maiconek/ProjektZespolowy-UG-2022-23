@@ -72,7 +72,7 @@ def allProfiles(request):
     if request.GET.get('search_query'):
         search_query = request.GET.get('search_query')
 
-    profiles = Profile.objects.filter(username__icontains=search_query)
+    profiles= Profile.objects.filter(username__icontains=search_query)
     context = {'search_query' : search_query, 'profiles' : profiles}
 
     return render(request, 'application/profiles-list.html', context)
