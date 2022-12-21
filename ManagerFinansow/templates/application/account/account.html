@@ -27,7 +27,7 @@
         </p>
     
         <table>
-            {% if not account.transactions %}
+            {% if not daily %}
                 <tr><h3>Wygląda na to, że nie dodałeś jeszcze żadnych transakcji na tym koncie</h3></tr>
             {% endif %}
             {% for usr in users %}

@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.contrib.auth.decorators import login_required
+from aplication.decorators import permission_required
 from aplication.models import *
 from aplication.forms import AccountForm, InviteForm
 from django.http import Http404  
@@ -60,6 +61,7 @@ def createAccount(request):
     return render(request, 'application/account/account-form.html', context)
 
 @login_required(login_url='login')
+@permission_required
 def editAccount(request, pk):
     account = get_object_or_404(Account, id=pk)
     form = AccountForm(request.POST or None, instance=account)
@@ -72,6 +74,7 @@ def editAccount(request, pk):
     return render(request, 'application/account/account-form.html', context)
 
 @login_required(login_url='login')
+@permission_required
 def showAccount(request, pk):
     account = Account.objects.get(id=pk)
     users = User_Account.objects.filter(id_account=account)
@@ -108,6 +111,7 @@ def error404(request, exception):
     return render(request, 'application/error/404.html')
 
 @login_required(login_url='login')
+@permission_required
 def delAccount(request, pk):
     account = get_object_or_404(Account, id=pk)
     if account.owner == request.user.profile:
@@ -115,6 +119,7 @@ def delAccount(request, pk):
     return redirect('all-accounts')
 
 @login_required(login_url='login')
+@permission_required
 def invite(request, pk):
     account = get_object_or_404(Account, id=pk)
     form = InviteForm(account=account)

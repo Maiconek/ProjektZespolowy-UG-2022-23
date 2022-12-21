@@ -42,7 +42,11 @@ class TransactionForm(ModelForm):
         self.fields['id_subcategory'].queryset = Subcategory.objects.filter(id_category__in=self.fields['id_category'].queryset)
 
     def save(self, commit=True):
-        return super(TransactionForm, self).save(commit=commit)
+        saved = super(TransactionForm, self).save(commit=commit)
+        if self.cleaned_data['id_category'].scope == "EXPENSE":
+            saved.amount = -saved.amount
+        saved.converted_amount = saved.amount
+        return saved       
 
 class InviteForm(forms.Form):
     access = (

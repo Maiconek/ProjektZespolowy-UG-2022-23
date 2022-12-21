@@ -24,8 +24,11 @@ class Account(models.Model):
             balance += transaction.converted_amount
         return balance
 
-    def transactions(self):
+    def get_transactions(self):
         return Transaction.objects.filter(id_account=self).order_by('-transaction_date')
+
+    def get_users(self):
+        return Profile.objects.filter(id__in=User_Account.objects.filter(id_account=self.id).values_list('id_user'))
 
     #wyświetlenie opisu jeśli istnieje
     def print_description(self):

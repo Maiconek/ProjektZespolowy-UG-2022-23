@@ -4,13 +4,13 @@ from aplication.models import *
 from aplication.forms import TransactionForm
 from datetime import datetime, date
 from django.http import Http404  
+from aplication.decorators import permission_required
 
 @login_required(login_url='login')
+@permission_required
 def addExpense(request, pk=None):
     if pk is not None:
         account = get_object_or_404(Account, id=pk)
-        if account.owner != request.user.profile:
-            raise Http404
 
     form = TransactionForm(scope="EXPENSE", owner=request.user.profile, 
                             initial={'currency': request.user.profile.currency if pk is None else account.currency,
@@ -31,8 +31,6 @@ def addExpense(request, pk=None):
         if form.is_valid():
             transaction = form.save(commit=False)
             transaction.id_user = request.user.profile
-            transaction.amount = -form.cleaned_data['amount']
-            transaction.converted_amount = -form.cleaned_data['amount']    
             transaction.save()
             if pk is not None:
                 return redirect('account', pk=transaction.id_account.id)
@@ -41,11 +39,10 @@ def addExpense(request, pk=None):
     return render(request, 'application/transaction/form.html', context)
 
 @login_required(login_url='login')
+@permission_required
 def addIncome(request, pk=None):
     if pk is not None:
         account = get_object_or_404(Account, id=pk)
-        if account.owner != request.user.profile:
-            raise Http404
 
     form = TransactionForm(scope = "INCOME", owner=request.user.profile, 
                             initial={'currency': request.user.profile.currency if pk is None else account.currency,
@@ -66,7 +63,6 @@ def addIncome(request, pk=None):
         if form.is_valid():
             transaction = form.save(commit=False)
             transaction.id_user = request.user.profile
-            transaction.converted_amount = form.cleaned_data['amount']     
             transaction.save()
             if pk is not None:
                 return redirect('account', pk=transaction.id_account.id)
@@ -85,11 +81,8 @@ def duplicate(request, pk, accountless=0):
                             initial={'amount': -transaction.amount if transaction.id_category.scope=="EXPENSE" 
                             else transaction.amount})
     if form.is_valid():
-        form.save(commit=False)
-        amnt = form.cleaned_data['amount']
-        transaction.amount = -amnt if transaction.id_category.scope=="EXPENSE" else amnt
-        transaction.converted_amount = -amnt if transaction.id_category.scope=="EXPENSE" else amnt
-        transaction.save()
+        newTransaction = form.save(commit=False)
+        newTransaction.save()
         if accountless == '0':
             return  redirect('account', pk=transaction.id_account.id)
         else:
@@ -101,6 +94,28 @@ def duplicate(request, pk, accountless=0):
                 'accountless': accountless,
                 'subcategories': form.fields['id_subcategory'].queryset,
                 'today': date.today().strftime("%Y-%m-%d")}
+    return render(request, 'application/transaction/form.html', context)
+
+@login_required(login_url='login')
+def editTransaction(request, pk, accountless=0):
+    transaction = get_object_or_404(Transaction, id=pk)
+    if transaction.id_account.owner != request.user.profile:
+        raise Http404
+    form = TransactionForm(data=request.POST or None, scope = transaction.id_category.scope, 
+                            owner=transaction.id_account.owner, instance = transaction,
+                            initial={'amount': -transaction.amount if transaction.id_category.scope=="EXPENSE" 
+                            else transaction.amount})
+    if form.is_valid():
+        form.save(commit=False)
+        transaction.save()
+        return redirect('showTransaction', pk=transaction.id, accountless=accountless)
+
+    context = {'form': form, 
+                'account': transaction.id_account, 
+                'option': "edit", 
+                'transaction': transaction,
+                'accountless': accountless,
+                'subcategories': form.fields['id_subcategory'].queryset}
     return render(request, 'application/transaction/form.html', context)
 
 @login_required(login_url='login')
@@ -122,29 +137,3 @@ def delTransaction(request, pk, accountless=0):
         return redirect('account', pk=account.id)
     else:
         return redirect('login')
-
-@login_required(login_url='login')
-def editTransaction(request, pk, accountless=0):
-    transaction = get_object_or_404(Transaction, id=pk)
-    if transaction.id_account.owner != request.user.profile:
-        raise Http404
-    subcategories = Subcategory.objects.all()
-    form = TransactionForm(data=request.POST or None, scope = transaction.id_category.scope, 
-                            owner=transaction.id_account.owner, instance = transaction,
-                            initial={'amount': -transaction.amount if transaction.id_category.scope=="EXPENSE" 
-                            else transaction.amount})
-    if form.is_valid():
-        transaction = form.save(commit=False)
-        amnt = form.cleaned_data['amount']
-        transaction.amount = -amnt if transaction.id_category.scope=="EXPENSE" else amnt
-        transaction.converted_amount = -amnt if transaction.id_category.scope=="EXPENSE" else amnt
-        transaction.save()   
-        return redirect('showTransaction', pk=transaction.id, accountless=accountless)
-
-    context = {'form': form, 
-                'account': transaction.id_account, 
-                'option': "edit", 
-                'transaction': transaction,
-                'accountless': accountless,
-                'subcategories': form.fields['id_subcategory'].queryset}
-    return render(request, 'application/transaction/form.html', context)
