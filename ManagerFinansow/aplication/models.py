@@ -71,6 +71,6 @@ class Transaction(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
 
     def __str__(self):
-        return (f"{self.id_account.name} - {self.id_user.name} - "
-                f"{self.id_category} - {self.id_subcategory} - {self.is_periodic} - "
-                f"{self.amount} - {self.converted_amount} - {self.transaction_date} - {self.description}")
+        return (f"{self.id_account.name} - {self.id_user} - {self.id_category} - "
+                f"{self.id_subcategory} - {self.is_periodic} - {self.amount} - "
+                f"{self.converted_amount} - {self.transaction_date} - {self.description}")

@@ -24,9 +24,13 @@
                     <td><label class="bold">{{f.label}}</label></td>
                     <td><span class="field">
                         {% if f.name == "id_category" %}
-                        <select name="id_category" required id="id_category" onchange="subcatDisplay_AfterClick()">
+                        <select name="id_category" required id="id_category" value="f.value" onchange="subcatDisplay_AfterClick()">
                             {% for value, text in form.fields.id_category.choices %}
+                                {% if value == f.value %}
+                                <option selected value="{{value}}">{{ text }}</option>
+                                {% else %}
                                 <option value="{{value}}">{{ text }}</option>
+                                {% endif %}
                             {% endfor %}
                         </select>
                         {% elif f.name == "id_subcategory" %}
@@ -35,7 +39,11 @@
                             {% for value, text in form.fields.id_subcategory.choices %}
                                 {% for subcategory in subcategories %}
                                     {% if subcategory.id == value %}
-                                        <option class="{{subcategory.id_category.id}} subcategory-element" value="{{value}}">{{text}}</option>
+                                        {% if value == f.value %}
+                                            <option class="{{subcategory.id_category.id}} subcategory-element" selected value="{{value}}">{{text}}</option>
+                                        {% else %}
+                                            <option class="{{subcategory.id_category.id}} subcategory-element" value="{{value}}">{{text}}</option>
+                                        {% endif %}
                                     {% endif %}
                                 {% endfor %}
                             {% endfor %}

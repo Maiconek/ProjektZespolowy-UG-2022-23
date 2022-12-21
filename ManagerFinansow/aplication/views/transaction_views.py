@@ -15,11 +15,12 @@ def addExpense(request, pk=None):
     form = TransactionForm(scope="EXPENSE", owner=request.user.profile, 
                             initial={'currency': request.user.profile.currency if pk is None else account.currency,
                                     'id_account': account if pk is not None else None})
-    context = {'form': form, 
-                'option': "add", 
-                'today': date.today().strftime("%Y-%m-%d"),
-                'accountless': '1' if pk == None else '0', 
-                'subcategories': form.fields['id_subcategory'].queryset}
+    context = {
+        'form': form, 
+        'option': "add", 
+        'today': date.today().strftime("%Y-%m-%d"),
+        'accountless': '1' if pk == None else '0', 
+        'subcategories': form.fields['id_subcategory'].queryset}
 
     if pk is not None:
         context.update({'account': account})
@@ -47,11 +48,12 @@ def addIncome(request, pk=None):
     form = TransactionForm(scope = "INCOME", owner=request.user.profile, 
                             initial={'currency': request.user.profile.currency if pk is None else account.currency,
                                     'id_account': account if pk is not None else None})
-    context = {'form': form, 
-                'option': "add", 
-                'today': date.today().strftime("%Y-%m-%d"), 
-                'accountless': '1' if pk == None else '0', 
-                'subcategories': form.fields['id_subcategory'].queryset}
+    context = {
+        'form': form, 
+        'option': "add", 
+        'today': date.today().strftime("%Y-%m-%d"), 
+        'accountless': '1' if pk == None else '0', 
+        'subcategories': form.fields['id_subcategory'].queryset}
 
     if pk is not None:
         context.update({'account': account})
@@ -76,24 +78,27 @@ def duplicate(request, pk, accountless=0):
     if transaction.id_account.owner != request.user.profile:
         raise Http404
     transaction.id = None
-    form = TransactionForm(data=request.POST or None, scope = transaction.id_category.scope, 
-                            owner=transaction.id_account.owner, instance=transaction, 
+    form = TransactionForm(scope = transaction.id_category.scope, owner=transaction.id_account.owner, instance=transaction, 
                             initial={'amount': -transaction.amount if transaction.id_category.scope=="EXPENSE" 
                             else transaction.amount})
-    if form.is_valid():
-        newTransaction = form.save(commit=False)
-        newTransaction.save()
+    if request.method == 'POST':
+        form = TransactionForm(data=request.POST or None, scope = transaction.id_category.scope, 
+                                owner=transaction.id_account.owner, instance = transaction)
+        if form.is_valid():
+            newTransaction = form.save(commit=False)
+            newTransaction.save()
         if accountless == '0':
             return  redirect('account', pk=transaction.id_account.id)
         else:
             return redirect('login')
-    context = {'form': form, 
-                'account': transaction.id_account, 
-                'option': "add", 
-                'transaction': transaction,
-                'accountless': accountless,
-                'subcategories': form.fields['id_subcategory'].queryset,
-                'today': date.today().strftime("%Y-%m-%d")}
+    context = {
+        'form': form, 
+        'account': transaction.id_account, 
+        'option': "add", 
+        'transaction': transaction,
+        'accountless': accountless,
+        'subcategories': form.fields['id_subcategory'].queryset,
+        'today': date.today().strftime("%Y-%m-%d")}
     return render(request, 'application/transaction/form.html', context)
 
 @login_required(login_url='login')
@@ -101,21 +106,24 @@ def editTransaction(request, pk, accountless=0):
     transaction = get_object_or_404(Transaction, id=pk)
     if transaction.id_account.owner != request.user.profile:
         raise Http404
-    form = TransactionForm(data=request.POST or None, scope = transaction.id_category.scope, 
-                            owner=transaction.id_account.owner, instance = transaction,
+    form = TransactionForm(scope = transaction.id_category.scope, owner=transaction.id_account.owner, instance = transaction,
                             initial={'amount': -transaction.amount if transaction.id_category.scope=="EXPENSE" 
                             else transaction.amount})
-    if form.is_valid():
-        form.save(commit=False)
-        transaction.save()
-        return redirect('showTransaction', pk=transaction.id, accountless=accountless)
+    if request.method == 'POST':
+        form = TransactionForm(data=request.POST or None, scope = transaction.id_category.scope, 
+                                owner=transaction.id_account.owner, instance = transaction)
+        if form.is_valid():
+            transaction = form.save(commit=False)
+            transaction.save()
+            return redirect('showTransaction', pk=transaction.id, accountless=accountless)
 
-    context = {'form': form, 
-                'account': transaction.id_account, 
-                'option': "edit", 
-                'transaction': transaction,
-                'accountless': accountless,
-                'subcategories': form.fields['id_subcategory'].queryset}
+    context = {
+        'form': form, 
+        'account': transaction.id_account, 
+        'option': "edit", 
+        'transaction': transaction,
+        'accountless': accountless,
+        'subcategories': form.fields['id_subcategory'].queryset}
     return render(request, 'application/transaction/form.html', context)
 
 @login_required(login_url='login')
