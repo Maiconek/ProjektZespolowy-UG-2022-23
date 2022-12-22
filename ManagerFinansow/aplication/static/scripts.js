@@ -163,4 +163,6 @@ function darkMode() {
     for (var i = 0; i < formOptions.length; i++) {
         formOptions[i].style.display = "block";
     }
+    var subcategory = document.getElementById("id_subcategory")
+    subcategory.options[0].selected = 'selected';
  }

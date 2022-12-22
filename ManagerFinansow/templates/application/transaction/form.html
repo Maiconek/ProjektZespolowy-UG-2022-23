@@ -24,7 +24,7 @@
                     <td><label class="bold">{{f.label}}</label></td>
                     <td><span class="field">
                         {% if f.name == "id_category" %}
-                        <select name="id_category" required id="id_category" value="f.value" onchange="subcatDisplay_AfterClick()">
+                        <select name="id_category" required id="id_category" onchange="subcatDisplay_AfterClick()">
                             {% for value, text in form.fields.id_category.choices %}
                                 {% if value == f.value %}
                                 <option selected value="{{value}}">{{ text }}</option>
@@ -60,6 +60,12 @@
                     </span></td>
                 </tr>
             {% endfor %}
+            <script type="text/javascript">
+                window.onload = subcatDisplay_AfterClick();
+                var subcategory = document.getElementById("id_subcategory")
+                if ('{{ form.id_subcategory.value }}' != 'None')
+                    subcategory.value = '{{ form.id_subcategory.value }}';
+            </script>
         </table>
         <div class="center">
             {% if option == "add" %}
