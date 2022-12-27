@@ -34,8 +34,8 @@ class Currency(models.Model):
 # 1. kategorie podczepione do użytkownika (n-1), współdzielone dziedziczą po założycielu
 class Category(models.Model):
     SCOPE_CHOICES = (
-    ("INCOME", "income"),
-    ("EXPENSE", "expense"),
+        ("INCOME", "income"),
+        ("EXPENSE", "expense"),
     )
     name = models.CharField(max_length=255)
     owner = models.ForeignKey(Profile, null=True, blank=True, on_delete=models.CASCADE)

@@ -29,14 +29,22 @@ class TransactionForm(ModelForm):
             'description' : 'Opis',
             'transaction_date' : 'Data',
             'currency' : 'Waluta',
-            'is_periodic' : 'Powtarzalna?',
+            'repeat' : 'Powtarzanie',
         }
 
     def __init__(self, *, scope = "EXPENSE", owner, **kwargs):
+        instance = kwargs.get('instance', None)
+        if scope == "EXPENSE" and instance is not None:
+            initial = kwargs.get('initial', None)
+            if initial is not None:
+                initial['amount'] = -instance.amount
+            else:
+                initial = {'amount': -instance.amount}
+            kwargs.update(initial = initial)
         super(TransactionForm, self).__init__(**kwargs)
+
         owned_categories = Category.objects.filter(Q(owner=owner) | Q(owner=None))
         self.fields['id_account'].queryset = Account.objects.filter(id__in=User_Account.objects.filter(id_user=owner).values_list('id_account'))
-        
         if scope == "INCOME" or scope == "EXPENSE":
             self.fields['id_category'].queryset = owned_categories.filter(scope=scope)
         self.fields['id_subcategory'].queryset = Subcategory.objects.filter(id_category__in=self.fields['id_category'].queryset)
