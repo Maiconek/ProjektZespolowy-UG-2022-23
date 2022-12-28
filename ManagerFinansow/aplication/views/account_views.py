@@ -1,47 +1,60 @@
 from datetime import date
-from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from aplication.decorators import permission_required
 from aplication.models import *
 from aplication.forms import AccountForm, InviteForm
-from django.http import Http404  
+from django.views.generic import TemplateView
 
-def home(request):
-    if request.user.is_authenticated:
-    # Zalogowany użytkownik
-        all_transactions = Transaction.objects.filter(id_user=request.user.profile).order_by('-transaction_date')
-        today = date.today()
-        dates = []; fut_dates = []
-        for t in all_transactions:
-            if t.transaction_date <= today:
-                if t.transaction_date not in dates:
-                    dates.append(t.transaction_date)
-            elif t.transaction_date not in fut_dates:
-                fut_dates.append(t.transaction_date)
+def prepareTransactions(all_transactions):
+    today = date.today()
+    dates = []; fut_dates = []
+    for t in all_transactions:
+        if t.transaction_date <= today:
+            if t.transaction_date not in dates:
+                dates.append(t.transaction_date)
+        elif t.transaction_date not in fut_dates:
+            fut_dates.append(t.transaction_date)
 
-        def prepare_transactions_list(dates):
-            transactions = []; values = []
-            for dt in dates:
-                values.append(sum(tr.converted_amount for tr in all_transactions if tr.transaction_date == dt))
-                transactions.append(reversed([tr for tr in all_transactions if tr.transaction_date == dt]))
-            return transactions, values
-            
-        transactions = prepare_transactions_list(dates)
-        daily = zip(dates, *transactions)
-        balance = sum(v for v in transactions[1])
-        future = zip(fut_dates, *prepare_transactions_list(fut_dates))
+    def prepare_transactions_list(dates):
+        transactions = []; values = []
+        for dt in dates:
+            values.append(sum(tr.converted_amount for tr in all_transactions if tr.transaction_date == dt))
+            transactions.append(reversed([tr for tr in all_transactions if tr.transaction_date == dt]))
+        return transactions, values
+        
+    transactions = prepare_transactions_list(dates)
+    daily = zip(dates, *transactions)
+    balance = sum(v for v in transactions[1])
+    future = zip(fut_dates, *prepare_transactions_list(fut_dates))
+    return daily, balance, future
 
-        context = {
-            'profile': request.user.profile,
-            'daily': daily,
-            'profile_balance': balance,
-            'future': future
-        }
-        return render(request, 'application/home/home-login.html', context)
+@login_required(login_url='login')
+def showAllTransactions(request):
+    transactions = Transaction.objects.filter(id_user=request.user.profile).order_by('-transaction_date')
+    prepared = list(prepareTransactions(transactions))
+    context = {
+        'profile': request.user.profile,
+        'daily': prepared[0],
+        'balance': prepared[1],
+        'future': prepared[2]
+    }
+    return render(request, 'application/home/home-login.html', context)
 
-    else:
-    # Niezalogowany użytkownik
-        return render(request, 'application/home/home-logout.html')
+@login_required(login_url='login')
+@permission_required
+def showAccount(request, pk):
+    account = Account.objects.get(id=pk)
+    users = User_Account.objects.filter(id_account=account).exclude(id_user=request.user.profile)
+    transactions = Transaction.objects.filter(id_account=account).order_by('-transaction_date')
+    prepared = list(prepareTransactions(transactions))
+    context = {
+        'account': account, 
+        'users': users,
+        'daily': prepared[0],  
+        'balance': prepared[1],
+        'future': prepared[2]}
+    return render(request, 'application/account/account.html', context)
 
 @login_required(login_url='login')
 def allAccounts(request):
@@ -81,41 +94,6 @@ def editAccount(request, pk):
             return redirect('account', pk=account.id)
     context = {'form' : form, 'option': "edit", 'account': account}
     return render(request, 'application/account/account-form.html', context)
-
-@login_required(login_url='login')
-@permission_required
-def showAccount(request, pk):
-    account = Account.objects.get(id=pk)
-    users = User_Account.objects.filter(id_account=account)
-    users = users.exclude(id_user=request.user.profile)
-    all_transactions = Transaction.objects.filter(id_account=account).order_by('-transaction_date')
-
-    today = date.today()
-    dates = []; fut_dates = []
-    for t in all_transactions:
-        if t.transaction_date <= today:
-            if t.transaction_date not in dates:
-                dates.append(t.transaction_date)
-        elif t.transaction_date not in fut_dates:
-            fut_dates.append(t.transaction_date)
-
-    def prepare_transactions_list(dates):
-        transactions = []; values = []
-        for dt in dates:
-            values.append(sum(tr.converted_amount for tr in all_transactions if tr.transaction_date == dt))
-            transactions.append(reversed([tr for tr in all_transactions if tr.transaction_date == dt]))
-        return transactions, values
-        
-    daily = zip(dates, *prepare_transactions_list(dates))
-    future = zip(fut_dates, *prepare_transactions_list(fut_dates))
-
-    context = {
-        'account': account, 
-        'daily': daily,
-        'dates': dates,
-        'users': users,
-        'future': future}
-    return render(request, 'application/account/account.html', context)
 
 @login_required(login_url='login')
 def joinAccount(request, pk):

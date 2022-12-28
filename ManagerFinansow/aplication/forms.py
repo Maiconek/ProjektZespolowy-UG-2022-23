@@ -54,6 +54,8 @@ class TransactionForm(ModelForm):
         if self.cleaned_data['id_category'].scope == "EXPENSE":
             saved.amount = -saved.amount
         saved.converted_amount = saved.amount
+        if commit:
+            saved.save()
         return saved       
 
 class InviteForm(forms.Form):

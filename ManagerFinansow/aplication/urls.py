@@ -17,22 +17,23 @@ from django.urls import path
 from aplication.views import *
 
 urlpatterns = [
-    path('', home, name='home'),
+    path('', showAllTransactions, name='home'),
+    #accounts
     path('all-accounts', allAccounts, name='all-accounts'),
     path('create-account', createAccount, name='create-account'),
     path('account/<pk>', showAccount, name='account'),
     path('account/<pk>/del', delAccount, name='delAccount'),
     path('account/<pk>/edit', editAccount, name='editAccount'),
-    path('account/<pk>/income-add', addIncome, name='addIncome'),
-    path('income-add', addIncome, name='addIncomeAccountless'),
-    path('account/<pk>/expense-add', addExpense, name='addExpense'),
-    path('expense-add', addExpense, name='addExpenseAccountless'),
-    path('account/transaction/<pk>/<int:accountless>', showTransaction, name='showTransaction'),
-    path('account/transaction-del/<pk>/<accountless>', delTransaction, name='delTransaction'),
-    path('account/transaction-edit/<pk>/<accountless>', editTransaction, name='editTransaction'),
-    path('account/transaction-duplicate/<pk>/<accountless>', duplicate, name='duplicateTransaction'),
+    path('account/<pk>/invite', invite, name='invite'),
     path('invitation/<pk>/join', joinAccount, name='joinAccount'),
+    #transactions
+    path('account/<pk>/<str:type>', TransactionAdd.as_view(), name='add'),
+    path('<str:type>', TransactionAdd.as_view(), name='addAccountless'),
+    path('account/transaction/<pk>/<int:accountless>', showTransaction, name='showTransaction'),
+    path('account/transaction-del/<pk>/<int:accountless>', delTransaction, name='delTransaction'),
+    path('account/transaction-edit/<pk>/<int:accountless>', TransactionEdit.as_view(), name='editTransaction'),
+    path('account/transaction-duplicate/<pk>/<int:accountless>', TransactionDuplicate.as_view(), name='duplicateTransaction'),
+    #other
     path('budget', budget, name='budget'),
     path('summary', summary, name='summary'),
-    path('account/<pk>/invite', invite, name='invite'),
 ]

@@ -7,12 +7,12 @@
 {% comment %} Strona Domowa użytkownika {% endcomment %}
     <div class="title">
         <h1>Saldo</h1>
-        <h1>{{ profile_balance }} {{ profile.currency.sign }}</h1>
+        <h1>{{ balance }} {{ profile.currency.sign }}</h1>
     </div>
     <div class="content">
         <p class="buttons">
-            <a class="button" href="{% url 'addExpenseAccountless' %}">Nowy Wydatek</a>
-            <a class="button" href="{% url 'addIncomeAccountless' %}">Nowy Przychód</a>
+            <a class="button" href="{% url 'addAccountless' type='expense' %}">Nowy Wydatek</a>
+            <a class="button" href="{% url 'addAccountless' type='income' %}">Nowy Przychód</a>
         </p>
 
         <table>

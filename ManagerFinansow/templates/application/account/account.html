@@ -7,14 +7,14 @@
 
     <div class="title">
         <h1>{{ account }}</h1>
-        <h1>{{ account.calculate_balance }} {{ account.currency.sign }}</h1>
+        <h1>{{ balance }} {{ account.currency.sign }}</h1>
         <h4>{{ account.description }}</h4>
     </div>
     
     <div class="content">
         <p class="buttons">
-            <a class="button" href="{% url 'addExpense' account.id %}">Nowy Wydatek</a>
-            <a class="button" href="{% url 'addIncome' account.id %}">Nowy Przychód</a>
+            <a class="button" href="{% url 'add' account.id 'expense' %}">Nowy Wydatek</a>
+            <a class="button" href="{% url 'add' account.id 'income' %}">Nowy Przychód</a>
         </p>
         <p class="buttons">
             <a class="button" href="{% url 'editAccount' account.id %}">Edytuj informacje o koncie</a>

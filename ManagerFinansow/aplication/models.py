@@ -17,16 +17,6 @@ class Account(models.Model):
     def __str__(self):
         return self.name
 
-    # Obliczenie bilansu konta
-    def calculate_balance(self):
-        balance = 0
-        today = date.today()
-        transactions = Transaction.objects.filter(id_account=self)
-        for transaction in transactions:
-            if transaction.transaction_date <= today:
-                balance += transaction.converted_amount
-        return balance
-
     def get_transactions(self):
         return Transaction.objects.filter(id_account=self).order_by('-transaction_date')
 
