@@ -73,10 +73,10 @@
             {% elif option == "edit" %}
             <button class="button" type="submit">Zapisz</button> 
             {% endif %}
-            {% if accountless == "1" %}
-            <button type="button" class="button"><a class="inbutton" href="{% url 'login' %}">Anuluj</a></button>
-            {% else %}
+            {% if accountless == '0' %}
             <button type="button" class="button"><a class="inbutton" href="{% url 'account' pk=account.id %}">Anuluj</a></button>
+            {% else %}
+            <button type="button" class="button"><a class="inbutton" href="{% url 'login' %}">Anuluj</a></button>
             {% endif %}
         </div>
     </form>

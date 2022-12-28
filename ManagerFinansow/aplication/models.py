@@ -1,5 +1,5 @@
 from datetime import date, timedelta
-from os import access
+from dateutil.relativedelta import relativedelta
 from django.db import models
 from django.contrib.auth.models import User
 import uuid
@@ -52,9 +52,10 @@ class Invitation(models.Model):
 
 class Transaction(models.Model):
     intervals = {
-        'daily': (lambda x : x + timedelta(days=1), 'Codziennie'),
-        'weekly': (lambda x : x + timedelta(weeks=1), 'Co tydzień'),
-        'biweekly': (lambda x : x + timedelta(weeks=2), 'Co 2 tygodnie')}
+        'daily': (lambda x: x + timedelta(days=1), 'Codziennie'),
+        'weekly': (lambda x: x + timedelta(weeks=1), 'Co tydzień'),
+        'biweekly': (lambda x: x + timedelta(weeks=2), 'Co 2 tygodnie'),
+        'montly': (lambda x: x + relativedelta(months=+1), 'Co miesiąc')}
 
     id_account = models.ForeignKey(Account, on_delete=models.CASCADE)
     id_user = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True) #konto z którego dokonano transakcji zostało usunięte ale transakcja ma pozostać 

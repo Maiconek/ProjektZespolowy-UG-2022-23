@@ -36,16 +36,14 @@
     {% else %}
         <p>Cykliczna: <input type="checkbox" onclick="return false;"></p>
     {% endif %} {% endcomment %}
-    {% if tr.is_periodic == True %}
-        <p>Cykliczna: TAK</p>
-    {% else %}
-        <p>Cykliczna: NIE</p>
-    {% endif %}
+    Powtarzanie: {{ tr.repeat }}
     <p class="buttons"><a class="button" href="{% url 'editTransaction' tr.id accountless %}">Edytuj</a>
     <a class="button" href="{% url 'duplicateTransaction' tr.id accountless %}">Duplikuj</a>
+    <a class="button" href="?action=move">Dodaj dzisiaj</a>
+    {% if tr.repeat is not None %}<a class="button" href="?action=skip">Pomiń</a>{% endif %}
     <a class="button" href="{% url 'delTransaction' tr.id accountless %}" onclick=
-        "return confirm('Czy napewno chcesz usunąć tę transakcję?')">Usuń</a>
-    {% if not accountless %}
+        "return confirm('Czy napewno chcesz usunąć tę transakcję?')">Usuń</a></p>
+    {% if accountless == '0' %}
         <p class="buttons"><a class="button" href="{% url 'account' tr.id_account.id %}">Powrót do konta</a></p>
     {% else %}
         <p class="buttons"><a class="button" href="{% url 'login' %}">Powrót</a></p>

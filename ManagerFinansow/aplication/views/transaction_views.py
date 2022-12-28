@@ -1,3 +1,4 @@
+import copy
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views import View
@@ -107,6 +108,23 @@ def showTransaction(request, pk, accountless=0):
     if transaction.id_account.owner != request.user.profile:
         raise Http404
     context = {'tr':transaction, 'accountless': accountless}
+    action = request.GET.get('action')
+    if action is not None:
+        if action == 'skip':
+            transaction.transaction_date = transaction.get_next_date()
+            transaction.save()
+        if action == 'move':
+            if transaction.repeat is not None:
+                newTransaction = copy.copy(transaction)
+                newTransaction.id = None
+                newTransaction.repeat = None
+                newTransaction.transaction_date = date.today()
+                newTransaction.save()
+                transaction.transaction_date = transaction.get_next_date()
+                transaction.save()
+            else:
+                transaction.transaction_date = date.today()
+                transaction.save()
     return render(request, 'application/transaction/show.html', context)
 
 @login_required(login_url='login')

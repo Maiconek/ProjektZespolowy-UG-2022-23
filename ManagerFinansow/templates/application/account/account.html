@@ -25,10 +25,6 @@
         <p class="buttons">
             <a class="button" href="{% url 'profiles' %}">Lista użytkowników</a>
         </p>
-
-        {% if not daily %}
-        <tr><h3>Wygląda na to, że nie dodałeś jeszcze żadnych transakcji na tym koncie</h3></tr>
-        {% endif %}
         {% for usr in users %}
             <p>Wspólnik: {{ usr.id_user }}</p>
         {% endfor %}
@@ -67,7 +63,7 @@
             {% endfor %}
         </table>
     
-        <p>Zaplanowanych transakcji w tym miesiącu: {{ 0 }}</p>
+        <p>Zaplanowanych transakcji w tym miesiącu: {{ count }}</p>
 
         <table>
             <!-- {% if account.is_shared %}
@@ -109,6 +105,8 @@
                         "return confirm('Czy napewno chcesz usunąć tę transakcję?')">Usuń</a></span></td>
                     </tr>
                 {% endfor %}
+            {% empty %}
+            <h3>Wygląda na to, że nie dodałeś jeszcze żadnych transakcji na tym koncie</h3>
             {% endfor %}
         </table>
     </div>

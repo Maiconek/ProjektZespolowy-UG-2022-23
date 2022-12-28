@@ -27,12 +27,12 @@ urlpatterns = [
     path('account/<pk>/invite', invite, name='invite'),
     path('invitation/<pk>/join', joinAccount, name='joinAccount'),
     #transactions
-    path('account/<pk>/<str:type>', TransactionAdd.as_view(), name='add'),
-    path('<str:type>', TransactionAdd.as_view(), name='addAccountless'),
-    path('account/transaction/<pk>/<int:accountless>', showTransaction, name='showTransaction'),
-    path('account/transaction-del/<pk>/<int:accountless>', delTransaction, name='delTransaction'),
-    path('account/transaction-edit/<pk>/<int:accountless>', TransactionEdit.as_view(), name='editTransaction'),
-    path('account/transaction-duplicate/<pk>/<int:accountless>', TransactionDuplicate.as_view(), name='duplicateTransaction'),
+    path('account/<pk>/add/<str:type>', TransactionAdd.as_view(), name='add'),
+    path('add/<str:type>', TransactionAdd.as_view(), name='addAccountless'),
+    path('account/transaction/<pk>/<str:accountless>', showTransaction, name='showTransaction'),
+    path('account/transaction-del/<pk>/<str:accountless>', delTransaction, name='delTransaction'),
+    path('account/transaction-edit/<pk>/<str:accountless>', TransactionEdit.as_view(), name='editTransaction'),
+    path('account/transaction-duplicate/<pk>/<str:accountless>', TransactionDuplicate.as_view(), name='duplicateTransaction'),
     #other
     path('budget', budget, name='budget'),
     path('summary', summary, name='summary'),

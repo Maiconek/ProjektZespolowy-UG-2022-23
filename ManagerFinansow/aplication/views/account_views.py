@@ -1,13 +1,35 @@
+import copy
 from datetime import date
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from aplication.decorators import permission_required
 from aplication.models import *
 from aplication.forms import AccountForm, InviteForm
-from django.views.generic import TemplateView
+from django.db.models import Q
+from dateutil.relativedelta import relativedelta
 
 def prepareTransactions(all_transactions):
     today = date.today()
+    repeating = all_transactions.filter(~Q(repeat=None))
+    for tr in repeating:
+        _date = tr.transaction_date
+        while _date <= today:
+            newTransaction = copy.copy(tr)
+            newTransaction.id = None
+            newTransaction.repeat = None
+            newTransaction.save()
+            _date = tr.transaction_date = tr.get_next_date()
+        tr.save()
+
+    count = 0
+    nextMonth = today + relativedelta(months=+1)
+    for tr in repeating:
+        _date = tr.transaction_date
+        while _date <= nextMonth:
+            count += 1
+            newTransaction = copy.copy(tr)
+            _date = tr.transaction_date = tr.get_next_date()
+
     dates = []; fut_dates = []
     for t in all_transactions:
         if t.transaction_date <= today:
@@ -15,6 +37,7 @@ def prepareTransactions(all_transactions):
                 dates.append(t.transaction_date)
         elif t.transaction_date not in fut_dates:
             fut_dates.append(t.transaction_date)
+    count += len(fut_dates) - len(repeating)
 
     def prepare_transactions_list(dates):
         transactions = []; values = []
@@ -27,7 +50,7 @@ def prepareTransactions(all_transactions):
     daily = zip(dates, *transactions)
     balance = sum(v for v in transactions[1])
     future = zip(fut_dates, *prepare_transactions_list(fut_dates))
-    return daily, balance, future
+    return daily, balance, future, count
 
 @login_required(login_url='login')
 def showAllTransactions(request):
@@ -37,7 +60,8 @@ def showAllTransactions(request):
         'profile': request.user.profile,
         'daily': prepared[0],
         'balance': prepared[1],
-        'future': prepared[2]
+        'future': prepared[2],
+        'count': prepared[3]
     }
     return render(request, 'application/home/home-login.html', context)
 
@@ -53,7 +77,9 @@ def showAccount(request, pk):
         'users': users,
         'daily': prepared[0],  
         'balance': prepared[1],
-        'future': prepared[2]}
+        'future': prepared[2],
+        'count': prepared[3]
+    }
     return render(request, 'application/account/account.html', context)
 
 @login_required(login_url='login')
