@@ -1,61 +1,14 @@
-import copy
-from datetime import date
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from aplication.decorators import permission_required
 from aplication.models import *
 from aplication.forms import AccountForm, InviteForm
-from django.db.models import Q
-from dateutil.relativedelta import relativedelta
-
-def prepareTransactions(all_transactions):
-    today = date.today()
-    repeating = all_transactions.filter(~Q(repeat=None))
-    for tr in repeating:
-        _date = tr.transaction_date
-        while _date <= today:
-            newTransaction = copy.copy(tr)
-            newTransaction.id = None
-            newTransaction.repeat = None
-            newTransaction.save()
-            _date = tr.transaction_date = tr.get_next_date()
-        tr.save()
-
-    count = 0
-    nextMonth = today + relativedelta(months=+1)
-    for tr in repeating:
-        _date = tr.transaction_date
-        while _date <= nextMonth:
-            count += 1
-            newTransaction = copy.copy(tr)
-            _date = tr.transaction_date = tr.get_next_date()
-
-    dates = []; fut_dates = []
-    for t in all_transactions:
-        if t.transaction_date <= today:
-            if t.transaction_date not in dates:
-                dates.append(t.transaction_date)
-        elif t.transaction_date not in fut_dates:
-            fut_dates.append(t.transaction_date)
-    count += len(fut_dates) - len(repeating)
-
-    def prepare_transactions_list(dates):
-        transactions = []; values = []
-        for dt in dates:
-            values.append(sum(tr.converted_amount for tr in all_transactions if tr.transaction_date == dt))
-            transactions.append(reversed([tr for tr in all_transactions if tr.transaction_date == dt]))
-        return transactions, values
-        
-    transactions = prepare_transactions_list(dates)
-    daily = zip(dates, *transactions)
-    balance = sum(v for v in transactions[1])
-    future = zip(fut_dates, *prepare_transactions_list(fut_dates))
-    return daily, balance, future, count
+from aplication.services import prepareTransactions
 
 @login_required(login_url='login')
 def showAllTransactions(request):
     transactions = Transaction.objects.filter(id_user=request.user.profile).order_by('-transaction_date')
-    prepared = list(prepareTransactions(transactions))
+    prepared = list(prepareTransactions(transactions, request.user.profile.currency))
     context = {
         'profile': request.user.profile,
         'daily': prepared[0],
@@ -71,7 +24,7 @@ def showAccount(request, pk):
     account = Account.objects.get(id=pk)
     users = User_Account.objects.filter(id_account=account).exclude(id_user=request.user.profile)
     transactions = Transaction.objects.filter(id_account=account).order_by('-transaction_date')
-    prepared = list(prepareTransactions(transactions))
+    prepared = list(prepareTransactions(transactions, account.currency))
     context = {
         'account': account, 
         'users': users,
