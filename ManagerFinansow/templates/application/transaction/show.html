@@ -39,8 +39,8 @@
     Powtarzanie: {{ tr.repeat }}
     <p class="buttons"><a class="button" href="{% url 'editTransaction' tr.id accountless %}">Edytuj</a>
     <a class="button" href="{% url 'duplicateTransaction' tr.id accountless %}">Duplikuj</a>
-    <a class="button" href="?action=move">Dodaj dzisiaj</a>
-    {% if tr.repeat is not None %}<a class="button" href="?action=skip">Pomiń</a>{% endif %}
+    {% if tr.transaction_date > today %}<a class="button" href="{% url 'showTransaction' tr.id accountless %}?action=move">Dodaj dzisiaj</a>{% endif %}
+    {% if tr.repeat is not None %}<a class="button" href="{% url 'showTransaction' tr.id accountless %}?action=skip">Pomiń</a>{% endif %}
     <a class="button" href="{% url 'delTransaction' tr.id accountless %}" onclick=
         "return confirm('Czy napewno chcesz usunąć tę transakcję?')">Usuń</a></p>
     {% if accountless == '0' %}

@@ -107,7 +107,7 @@ def showTransaction(request, pk, accountless=0):
     transaction = get_object_or_404(Transaction, id=pk)
     if transaction.id_account.owner != request.user.profile:
         raise Http404
-    context = {'tr':transaction, 'accountless': accountless}
+    context = {'tr':transaction, 'accountless': accountless, 'today':date.today()}
     action = request.GET.get('action')
     if action is not None:
         if action == 'skip':
