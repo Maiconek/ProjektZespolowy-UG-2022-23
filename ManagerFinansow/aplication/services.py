@@ -33,7 +33,6 @@ def prepareTransactions(all_transactions, currency):
         _date = tr.transaction_date
         while _date <= nextMonth:
             count += 1
-            newTransaction = copy.copy(tr)
             _date = tr.transaction_date = tr.get_next_date()
 
     dates = []; fut_dates = []
