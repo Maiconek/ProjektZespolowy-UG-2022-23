@@ -3,11 +3,12 @@ from django.contrib.auth.decorators import login_required
 from aplication.decorators import permission_required
 from aplication.models import *
 from aplication.forms import AccountForm, InviteForm
-from aplication.services import prepareTransactions
+from aplication.services import prepareTransactions, updateTransactions
 
 @login_required(login_url='login')
 def showAllTransactions(request):
-    transactions = Transaction.objects.filter(id_user=request.user.profile).order_by('-transaction_date')
+    updateTransactions(Transaction.objects.filter(id_user=request.user.profile))
+    transactions = Transaction.objects.filter(id_user=request.user.profile)
     prepared = list(prepareTransactions(transactions, request.user.profile.currency))
     context = {
         'profile': request.user.profile,
@@ -23,7 +24,8 @@ def showAllTransactions(request):
 def showAccount(request, pk):
     account = Account.objects.get(id=pk)
     users = User_Account.objects.filter(id_account=account).exclude(id_user=request.user.profile)
-    transactions = Transaction.objects.filter(id_account=account).order_by('-transaction_date')
+    updateTransactions(Transaction.objects.filter(id_account=account))
+    transactions = Transaction.objects.filter(id_account=account)
     prepared = list(prepareTransactions(transactions, account.currency))
     context = {
         'account': account, 

@@ -143,3 +143,5 @@ myvenv/Scripts/python.exe
 myvenv/Scripts/pythonw.exe
 myvenv/Scripts/sqlformat.exe
 myvenv/Scripts/currency_converter.exe
+
+ManagerFinansow/ManagerFinansow/local_settings/*

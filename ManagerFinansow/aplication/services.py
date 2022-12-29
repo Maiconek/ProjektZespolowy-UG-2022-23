@@ -6,10 +6,13 @@ from currency_converter import CurrencyConverter, ECB_URL
 
 c = CurrencyConverter(ECB_URL, decimal=True, fallback_on_wrong_date=True, fallback_on_missing_rate=True)
 
-def updateTransactions(all_transactions, currency):
-    for tr in all_transactions:
+def setCurrency(all_transactions, currency):
+    for i, tr in enumerate(all_transactions):
         if currency.access_name != tr.currency.access_name:
-            tr.converted_amount = round(c.convert(tr.amount, tr.currency.access_name, currency.access_name, date=tr.transaction_date), 2)
+            all_transactions[i].converted_amount = round(c.convert(tr.amount, tr.currency.access_name, currency.access_name, date=tr.transaction_date), 2)
+    return all_transactions
+
+def updateTransactions(all_transactions):
     today = date.today()
     repeating = all_transactions.filter(~Q(repeat=None))
     for tr in repeating:
@@ -24,7 +27,8 @@ def updateTransactions(all_transactions, currency):
             tr.save()
 
 def prepareTransactions(all_transactions, currency):
-    updateTransactions(all_transactions, currency)
+    all_transactions = all_transactions.order_by('-transaction_date')
+    all_transactions = setCurrency(all_transactions, currency)
     today = date.today()
     repeating = all_transactions.filter(~Q(repeat=None))
     count = 0
