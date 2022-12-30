@@ -4,18 +4,25 @@ from aplication.decorators import permission_required
 from aplication.models import *
 from aplication.forms import AccountForm, InviteForm
 from aplication.services import prepareTransactions, updateTransactions
+from django.core.paginator import Paginator
+
 
 @login_required(login_url='login')
 def showAllTransactions(request):
     updateTransactions(Transaction.objects.filter(id_user=request.user.profile))
     transactions = Transaction.objects.filter(id_user=request.user.profile)
     prepared = list(prepareTransactions(transactions, request.user.profile.currency))
+    #paginator = Paginator(transactions, 2)
+    #page_number = request.GET.get('page')
+    #page_obj = paginator.get_page(page_number)
+
+
     context = {
         'profile': request.user.profile,
         'daily': prepared[0],
         'balance': prepared[1],
         'future': prepared[2],
-        'count': prepared[3]
+        'count': prepared[3],
     }
     return render(request, 'application/home/home-login.html', context)
 
@@ -43,7 +50,12 @@ def allAccounts(request):
     accounts = []
     for ua in user_accounts:
         accounts.append(Account.objects.get(id=ua.id_account.id))
-    context = {'accounts': accounts}
+    
+    paginator = Paginator(accounts, 6)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    context = {'page_obj': page_obj}
     return render(request, 'application/account/all-accounts.html', context)
 
 @login_required(login_url='login')
