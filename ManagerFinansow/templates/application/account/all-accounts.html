@@ -14,7 +14,7 @@
 
     <div class="content tiles" id="all-accounts">
         
-        {% for acc in accounts %}
+        {% for acc in page_obj %}
             <div class="account">
                 <a class="account-link" href={% url 'account' pk=acc.id %}>
                 <span class="name">{{ acc }}</span>
@@ -26,5 +26,18 @@
         {% endfor %}
 
     </div>
+    {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; pierwsza</a>
+            <a href="?page={{ page_obj.previous_page_number }}">poprzednia</a>
+    {% endif %}
+
+        <span class="current">
+            Strona {{ page_obj.number }} z {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">następna</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">poprzednia &raquo;</a>
+        {% endif %}
     
 {% endblock %}
