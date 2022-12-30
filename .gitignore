@@ -145,3 +145,4 @@ myvenv/Scripts/sqlformat.exe
 myvenv/Scripts/currency_converter.exe
 
 ManagerFinansow/ManagerFinansow/local_settings/*
+myvenv/Scripts/normalizer.exe
