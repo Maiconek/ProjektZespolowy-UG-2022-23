@@ -12,7 +12,7 @@ def showAllTransactions(request):
     updateTransactions(Transaction.objects.filter(id_user=request.user.profile))
     transactions = Transaction.objects.filter(id_user=request.user.profile)
     page_number = request.GET.get('page')
-    prepared = prepareTransactions(transactions, request.user.profile.currency, page_number, 10)
+    prepared = prepareTransactions(transactions, request.user.profile.currency, page_number, 20)
 
     context = {
         'profile': request.user.profile,
@@ -32,7 +32,7 @@ def showAccount(request, pk):
     updateTransactions(Transaction.objects.filter(id_account=account))
     transactions = Transaction.objects.filter(id_account=account)
     page_number = request.GET.get('page')
-    prepared = prepareTransactions(transactions, account.currency, page_number, 10)
+    prepared = prepareTransactions(transactions, account.currency, page_number, 20)
     context = {
         'account': account, 
         'users': users,

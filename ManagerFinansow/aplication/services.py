@@ -51,17 +51,20 @@ def prepareTransactions(all_transactions, currency, page, size):
 
     dates = set([tr.transaction_date for tr in page_obj]); 
     fut_dates = set([tr.transaction_date for tr in futureTransactions])
+
+    dates = sorted(dates, reverse=True)
+    fut_dates = sorted(fut_dates, reverse=True)
     count += len(fut_dates) - len(repeating)
 
-    def prepare_transactions_list(dataSet, dates):
+    def prepare_transactions_list(dates):
         transactions = []; values = []
         for dt in dates:
-            values.append(sum(tr.converted_amount for tr in dataSet if tr.transaction_date == dt))
-            transactions.append(reversed([tr for tr in dataSet if tr.transaction_date == dt]))
+            values.append(sum(tr.converted_amount for tr in  setCurrency(all_transactions.filter(transaction_date=dt), currency)))
+            transactions.append(reversed([tr for tr in  setCurrency(all_transactions.filter(transaction_date=dt), currency)]))
         return transactions, values
         
-    transactions = prepare_transactions_list(page_obj, dates)
-    daily = zip(sorted(dates, reverse=True), *transactions)
+    transactions = prepare_transactions_list(dates)
+    daily = zip(dates, *transactions)
     balance = sum(tr.converted_amount for tr in all_transactions)
-    future = zip(sorted(fut_dates, reverse=True), *prepare_transactions_list(futureTransactions, fut_dates))
+    future = zip(fut_dates, *prepare_transactions_list(fut_dates))
     return daily, balance, future, count, page_obj
