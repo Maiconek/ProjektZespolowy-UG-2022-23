@@ -10,7 +10,16 @@
         <p>Tutaj możesz zarządzać swoim profilem</p>
         <a class="button" href="{% url 'edit-profile' %}">Edytuj swój profil</a>
         <a class="button" href="{% url 'all-categories' %}">Zarządzaj kategoriami</a>
-
+        
+        
+        <h5>Aktualne dane profilu</h5>
+        <p>Dane osobowe: {{profile.name}}</p>
+        <p>Nickname: {{profile.username}}</p>
+        <p>Adres email: {{profile.email}}</p>
+        <p>Aktualnie wybrana waluta: {{profile.currency}}</p>
+            
+        
+        
         {% for m in mes %}
             {% if profile == m.userTo %}
                 <p>Użytkownik {{ m.userFrom }} zaprasza cię do dołączenia do konta {{ m.id_account }}!</p>
