@@ -11,11 +11,8 @@ from django.core.paginator import Paginator
 def showAllTransactions(request):
     updateTransactions(Transaction.objects.filter(id_user=request.user.profile))
     transactions = Transaction.objects.filter(id_user=request.user.profile)
-    prepared = list(prepareTransactions(transactions, request.user.profile.currency))
-    #paginator = Paginator(prepared, 3)
-    #page_number = request.GET.get('page')
-    #page_obj = paginator.get_page(page_number)
-
+    page_number = request.GET.get('page')
+    prepared = prepareTransactions(transactions, request.user.profile.currency, page_number, 10)
 
     context = {
         'profile': request.user.profile,
@@ -23,7 +20,7 @@ def showAllTransactions(request):
         'balance': prepared[1],
         'future': prepared[2],
         'count': prepared[3],
-        #'page_obj' : page_obj
+        'page_obj': prepared[4]
     }
     return render(request, 'application/home/home-login.html', context)
 
@@ -34,14 +31,16 @@ def showAccount(request, pk):
     users = User_Account.objects.filter(id_account=account).exclude(id_user=request.user.profile)
     updateTransactions(Transaction.objects.filter(id_account=account))
     transactions = Transaction.objects.filter(id_account=account)
-    prepared = list(prepareTransactions(transactions, account.currency))
+    page_number = request.GET.get('page')
+    prepared = prepareTransactions(transactions, account.currency, page_number, 10)
     context = {
         'account': account, 
         'users': users,
         'daily': prepared[0],  
         'balance': prepared[1],
         'future': prepared[2],
-        'count': prepared[3]
+        'count': prepared[3],
+        'page_obj': prepared[4]
     }
     return render(request, 'application/account/account.html', context)
 
