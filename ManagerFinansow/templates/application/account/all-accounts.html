@@ -27,8 +27,8 @@
 
     </div>
     {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; pierwsza</a>
-            <a href="?page={{ page_obj.previous_page_number }}">poprzednia</a>
+            <a class="button" href="?page=1">&laquo; pierwsza</a>
+            <a class="button" href="?page={{ page_obj.previous_page_number }}">poprzednia</a>
     {% endif %}
 
         <span class="current">
@@ -36,8 +36,8 @@
         </span>
 
         {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">następna</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">poprzednia &raquo;</a>
+            <a class="button" href="?page={{ page_obj.paginator.num_pages }}">poprzednia</a>
+            <a class="button" href="?page={{ page_obj.next_page_number }}">następna &raquo;</a>
         {% endif %}
     
 {% endblock %}

@@ -8,7 +8,9 @@
     <div class="title">
         <h1>{{ account }}</h1>
         <h1>{{ balance }} {{ account.currency.sign }}</h1>
-        <h4>{{ account.description }}</h4>
+        {% if account.secription %}
+            <h4>{{ account.description }}</h4>
+        {% endif %}
     </div>
     
     <div class="content">
