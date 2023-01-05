@@ -12,7 +12,7 @@ def showAllTransactions(request):
     updateTransactions(Transaction.objects.filter(id_user=request.user.profile))
     transactions = Transaction.objects.filter(id_user=request.user.profile)
     prepared = list(prepareTransactions(transactions, request.user.profile.currency))
-    #paginator = Paginator(transactions, 2)
+    #paginator = Paginator(prepared, 3)
     #page_number = request.GET.get('page')
     #page_obj = paginator.get_page(page_number)
 
@@ -23,6 +23,7 @@ def showAllTransactions(request):
         'balance': prepared[1],
         'future': prepared[2],
         'count': prepared[3],
+        #'page_obj' : page_obj
     }
     return render(request, 'application/home/home-login.html', context)
 
