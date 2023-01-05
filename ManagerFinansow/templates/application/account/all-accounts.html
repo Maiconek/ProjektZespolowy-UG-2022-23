@@ -14,12 +14,12 @@
 
     <div class="content tiles" id="all-accounts">
         
-        {% for acc in page_obj %}
+        {% for acc, sum in page_obj %}
             <div class="account">
                 <a class="account-link" href={% url 'account' pk=acc.id %}>
                 <span class="name">{{ acc }}</span>
                 <span class="account-description">{{ acc.print_description }}</span>
-                <span class="balance">Saldo: {{ acc.calculate_balance }} {{acc.currency.sign}}</span>
+                <span class="balance">Saldo: {{ sum }} {{acc.currency.sign}}</span>
                 <span class="balance">Waluta: {{ acc.currency }}</span>
                 </a>
             </div>

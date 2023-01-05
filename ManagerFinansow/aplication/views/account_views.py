@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from aplication.decorators import permission_required
 from aplication.models import *
 from aplication.forms import AccountForm, InviteForm
-from aplication.services import prepareTransactions, updateTransactions
+from aplication.services import prepareTransactions, updateTransactions, setCurrency
 from django.core.paginator import Paginator
 
 
@@ -48,10 +48,17 @@ def showAccount(request, pk):
 def allAccounts(request):
     user_accounts = User_Account.objects.filter(id_user = request.user.profile.id)
     accounts = []
+    accountAndSum = []
     for ua in user_accounts:
         accounts.append(Account.objects.get(id=ua.id_account.id))
+    for account in accounts:
+        transactions = Transaction.objects.filter(id_account=account)
+        updateTransactions(transactions)
+        transactions = Transaction.objects.filter(id_account=account).filter(repeat=None)
+        transactions = setCurrency(transactions, account.currency)
+        accountAndSum.append((account, sum(tr.converted_amount for tr in transactions)))
     
-    paginator = Paginator(accounts, 6)
+    paginator = Paginator(accountAndSum, 6)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     
