@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.db.models import Q
 
-from UsersApp.forms import CustomUserCreationForm, ProfileForm
+from UsersApp.forms import CustomUserCreationForm, ProfileForm, SetPasswordForm
 from UsersApp.models import *
 from aplication.models import Invitation
 
@@ -58,6 +58,18 @@ def logoutUser(request):
     logout(request)
     messages.info(request, 'User was logout')
     return redirect("home")
+
+def changePassword(request):
+    user = request.user
+    form = SetPasswordForm(user)
+    
+    if request.method == "POST":
+        form = SetPasswordForm(user, request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("profile")
+    context = {"form" : form}
+    return render(request, "registration/password-change.html", context)
 
 @login_required(login_url='login')
 def allProfiles(request):

@@ -23,6 +23,7 @@ urlpatterns = [
     path('register', views.registerUser, name='register'),
     path('profiles', views.allProfiles, name='profiles'),
     path('profile', views.profile, name='profile'),
+    path('profile/change-password', views.changePassword, name='change-password'),
     path('profile/edit', views.editProfile, name='edit-profile'),
     path('profile/categories', views.showCategories, name='all-categories'),
     path('profile/categories/create', views.createCategory, name='create-category'),
