@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, SetPasswordForm
 from django.forms import ModelForm
 from django.contrib.auth.models import User
 from .models import Profile, Category, Subcategory
@@ -15,6 +15,11 @@ class CustomUserCreationForm(UserCreationForm):
             'password1' : 'Hasło',
             'password2': 'Powtórz hasło'
         }
+
+class SetPasswordForm(SetPasswordForm):
+    class Meta:
+        model = User
+        fields = ['new_password1', 'new_password2']
 
 class ProfileForm(ModelForm):
     class Meta:
