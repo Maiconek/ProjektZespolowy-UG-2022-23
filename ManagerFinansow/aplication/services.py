@@ -9,12 +9,15 @@ from django.core.paginator import Paginator
 #c = CurrencyRates(force_decimal=True)
 c = CurrencyConverter(ECB_URL, decimal=True, fallback_on_wrong_date=True, fallback_on_missing_rate=True)
 
-def setCurrency(all_transactions, currency):
+def sumCurrency(all_transactions, currency):
+    sum = 0
     for tr in all_transactions:
         if currency.access_name != tr.currency.access_name:
             #tr.converted_amount = round(c.convert(tr.currency.access_name, currency.access_name, tr.amount, tr.transaction_date), 2)
-            tr.converted_amount = round(c.convert(tr.amount, tr.currency.access_name, currency.access_name, date=tr.transaction_date), 2)
-    return all_transactions
+            sum += round(c.convert(tr.amount, tr.currency.access_name, currency.access_name, date=tr.transaction_date), 2)
+        else:
+            sum += tr.amount
+    return sum
 
 def updateTransactions(all_transactions):
     today = date.today()
@@ -32,13 +35,9 @@ def updateTransactions(all_transactions):
 
 def prepareTransactions(all_transactions, currency, page, size):
     today = date.today()
-    all_transactions = setCurrency(all_transactions, currency)
     paginator = Paginator(all_transactions.filter(transaction_date__lte=today).order_by('-transaction_date'), size)
     page_obj = paginator.get_page(page)
     futureTransactions = all_transactions.filter(transaction_date__gt=today).order_by('-transaction_date')
-
-    page_obj = setCurrency(page_obj, currency)
-    futureTransactions = setCurrency(futureTransactions, currency)
     
     repeating = all_transactions.filter(~Q(repeat=None))
     count = 0
@@ -59,12 +58,12 @@ def prepareTransactions(all_transactions, currency, page, size):
     def prepare_transactions_list(dates):
         transactions = []; values = []
         for dt in dates:
-            values.append(sum(tr.converted_amount for tr in  setCurrency(all_transactions.filter(transaction_date=dt), currency)))
-            transactions.append(reversed([tr for tr in  setCurrency(all_transactions.filter(transaction_date=dt), currency)]))
+            values.append(sumCurrency(all_transactions.filter(transaction_date=dt), currency))
+            transactions.append(reversed([tr for tr in all_transactions.filter(transaction_date=dt)]))
         return transactions, values
         
     transactions = prepare_transactions_list(dates)
     daily = zip(dates, *transactions)
-    balance = sum(tr.converted_amount for tr in all_transactions)
+    balance = sumCurrency(all_transactions, currency)
     future = zip(fut_dates, *prepare_transactions_list(fut_dates))
     return daily, balance, future, count, page_obj

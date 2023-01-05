@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from aplication.decorators import permission_required
 from aplication.models import *
 from aplication.forms import AccountForm, InviteForm
-from aplication.services import prepareTransactions, updateTransactions, setCurrency
+from aplication.services import prepareTransactions, updateTransactions, sumCurrency
 from django.core.paginator import Paginator
 
 
@@ -55,8 +55,7 @@ def allAccounts(request):
         transactions = Transaction.objects.filter(id_account=account)
         updateTransactions(transactions)
         transactions = Transaction.objects.filter(id_account=account).filter(repeat=None)
-        transactions = setCurrency(transactions, account.currency)
-        accountAndSum.append((account, sum(tr.converted_amount for tr in transactions)))
+        accountAndSum.append((account, sumCurrency(transactions, account.currency)))
     
     paginator = Paginator(accountAndSum, 6)
     page_number = request.GET.get('page')
