@@ -7,14 +7,18 @@ from django.core.paginator import Paginator
 #from forex_python.converter import CurrencyRates
 
 #c = CurrencyRates(force_decimal=True)
-c = CurrencyConverter(ECB_URL, decimal=True, fallback_on_wrong_date=True, fallback_on_missing_rate=True)
+c = CurrencyConverter(ECB_URL, decimal=True, fallback_on_wrong_date=True, fallback_on_missing_rate=True, fallback_on_missing_rate_method='last_known')
 
 def sumCurrency(all_transactions, currency):
     sum = 0
+    today = date.today()
     for tr in all_transactions:
         if currency.access_name != tr.currency.access_name:
-            #tr.converted_amount = round(c.convert(tr.currency.access_name, currency.access_name, tr.amount, tr.transaction_date), 2)
-            sum += round(c.convert(tr.amount, tr.currency.access_name, currency.access_name, date=tr.transaction_date), 2)
+            if tr.id_category.scope == 'EXPENSE' and tr.transaction_date < today:
+                #tr.converted_amount = round(c.convert(tr.currency.access_name, currency.access_name, tr.amount, tr.transaction_date), 2)
+                sum += round(c.convert(tr.amount, tr.currency.access_name, currency.access_name, date=tr.transaction_date), 2)
+            else:
+                sum += round(c.convert(tr.amount, tr.currency.access_name, currency.access_name), 2)
         else:
             sum += tr.amount
     return sum
@@ -25,7 +29,7 @@ def updateTransactions(all_transactions):
     for tr in repeating:
         _date = tr.transaction_date
         if _date <= today:
-            while _date < today:
+            while _date <= today:
                 newTransaction = copy.copy(tr)
                 newTransaction.id = None
                 newTransaction.repeat = None
@@ -64,6 +68,6 @@ def prepareTransactions(all_transactions, currency, page, size):
         
     transactions = prepare_transactions_list(dates)
     daily = zip(dates, *transactions)
-    balance = sumCurrency(all_transactions, currency)
+    balance = sumCurrency(all_transactions.filter(transaction_date__lte=today), currency)
     future = zip(fut_dates, *prepare_transactions_list(fut_dates))
     return daily, balance, future, count, page_obj

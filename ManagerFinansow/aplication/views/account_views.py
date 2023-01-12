@@ -47,6 +47,7 @@ def showAccount(request, pk):
 @login_required(login_url='login')
 def allAccounts(request):
     user_accounts = User_Account.objects.filter(id_user = request.user.profile.id)
+    today = date.today()
     accounts = []
     accountAndSum = []
     for ua in user_accounts:
@@ -54,7 +55,7 @@ def allAccounts(request):
     for account in accounts:
         transactions = Transaction.objects.filter(id_account=account)
         updateTransactions(transactions)
-        transactions = Transaction.objects.filter(id_account=account).filter(repeat=None)
+        transactions = Transaction.objects.filter(id_account=account).filter(transaction_date__lte=today)
         accountAndSum.append((account, sumCurrency(transactions, account.currency)))
     
     paginator = Paginator(accountAndSum, 6)
