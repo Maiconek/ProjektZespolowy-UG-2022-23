@@ -25,7 +25,7 @@
                 <tr class="transaction">
                     <td id="transaction-category" class="bold">{{ tr.id_category }}</td>
                     {% if tr.id_subcategory %}
-                    <td id="transaction-subcategory">{{ tr.id_subcategory }}</td>
+                    <td id="transaction-subcategory">({{ tr.id_subcategory }})</td>
                     {% else %}
                     <td id="transaction-subcategory"></td>
                     {% endif %}                 
@@ -74,7 +74,7 @@
                 <tr class="transaction">
                     <td id="transaction-category" class="bold">{{ tr.id_category }}</td>
                     {% if tr.id_subcategory %}
-                    <td id="transaction-subcategory">{{ tr.id_subcategory }}</td>
+                    <td id="transaction-subcategory">({{ tr.id_subcategory }})</td>
                     {% else %}
                     <td id="transaction-subcategory"></td>
                     {% endif %}                 

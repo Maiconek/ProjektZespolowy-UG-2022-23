@@ -4,13 +4,19 @@ body{
     color: black;
 }
 /* NAV */
+#navigation{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9;
+}
 a.nav-link{
     color: white;
     font-size: 20px;
 }
 a.nav-link:hover{
     color: white;
-    background-color: rgb(176, 0, 176);
+    background-color: #b000b0;
 }
 ul.nav{
     align-items: center;
@@ -31,9 +37,9 @@ nav.nav{
 
 /* CONTENT */
 #site-content{
-    min-height: calc(100vh - 60px - 8vh - 30px); 
-    /* 100vh - nav height - margins - footer height */
-    margin-top: 4vh;
+    min-height: calc(100vh - 60px - 4vh - (60px - 4vh) - 30px); 
+    /* 100vh - nav height - marginBottom - marginTop - footer height */
+    margin-top: calc(60px + 4vh);
     margin-bottom: 4vh;
     margin-left: 4vw;
     margin-right: 4vw;
@@ -101,7 +107,7 @@ a.account-link > span.name{
 }
 
 h5 {
-    color: purple;
+    color: #800080;
     margin-top: 30px;
 }
 
@@ -259,9 +265,35 @@ button{
 ::-moz-selection { /* na firefoxa */
     color: rgb(236,180,19);
     background: purple;
-  }
+}
   
 ::selection {
     color: rgb(236,180,19);
     background: purple;
- }
+}
+
+/* BUTTONS */
+a.delete{
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-image: url("/static/images/icons/delete.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+}
+a.delete:hover{
+    background-image: url("/static/images/icons/delete_hover.png");
+}
+a.copy{
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-image: url("/static/images/icons/copy_v2.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+}
+a.copy:hover{
+    background-image: url("/static/images/icons/copy_hover_v2.png");
+}

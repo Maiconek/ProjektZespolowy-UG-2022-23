@@ -18,7 +18,7 @@
     <script src="{% static 'scripts.js' %}"></script>
 </head>
 <body onload="checkColorMode()">
-    <nav class="nav">
+    <nav class="nav" id="navigation">
         {% if user.is_authenticated %}
         <ul class="nav justify-content-start">
             <li class="nav-item"><a id="logo-link" class="nav-link" href="{% url 'home' %}">
