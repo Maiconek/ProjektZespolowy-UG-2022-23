@@ -30,7 +30,7 @@ def loginUser(request):
         if user is not None:
             messages.success(request, 'You are logged in')
             login(request, user)
-            return redirect("transactionsList")
+            return redirect("home")
         else:
             messages.error(request, 'Username or password is incorrect')
     return render(request, "registration/login.html", {})
@@ -50,7 +50,7 @@ def registerUser(request):
             
             login(request, user)
             print(user)
-            return redirect("transactionsList")
+            return redirect("home")
     context = {"page" : page, 'form': form}
     return render(request, "registration/login.html", context)
 

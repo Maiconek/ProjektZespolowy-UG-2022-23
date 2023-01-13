@@ -10,6 +10,12 @@ from django.views.generic.base import TemplateView
 class Home(TemplateView):
     template_name = 'application/home/home-logout.html'
 
+    def get(self, request):
+        if request.user.is_authenticated:
+            return showAllTransactions(request)
+        else:
+            return render(request, self.template_name)
+
 @login_required(login_url='login')
 def showAllTransactions(request):
     updateTransactions(Transaction.objects.filter(id_user=request.user.profile))
