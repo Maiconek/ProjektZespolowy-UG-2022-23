@@ -21,8 +21,13 @@
         <p class="buttons">
             <a class="button" href="{% url 'editAccount' account.id %}">Edytuj informacje o koncie</a>
         </p>
-        <p class="buttons">
+        <!-- <p class="buttons">
             <a class="button" href="{% url 'invite' account.id %}">Zaproś użytkownika do współdzielenia</a>
+        </p> -->
+        <p class="buttons">
+            <a class="add_user" href="{% url 'invite' account.id %}" title="Zaproś do współdzielenia"></a>
+            <a class="add_user2" href="{% url 'invite' account.id %}" title="Zaproś do współdzielenia"></a>
+            <a class="add_user3" href="{% url 'invite' account.id %}" title="Zaproś do współdzielenia"></a>
         </p>
         <p class="buttons">
             <a class="button" href="{% url 'profiles' %}">Lista użytkowników</a>
@@ -57,9 +62,9 @@
                         <td id="transaction-amount" class="expense">{{ tr.amount }} {{ tr.currency.sign }}</td>
                     {% endif %}
                     <td><a class="purple" href="{% url 'showTransaction' tr.id 0 %}">Szczegóły</a></td>
-                    <td><a class="copy" href="{% url 'duplicateTransaction' tr.id 0 %}"></a></td>
-                    <td><span class="name"><a class="delete" href="{% url 'delTransaction' tr.id 0 %}" onclick=
-                        "return confirm('Czy napewno chcesz usunąć tę transakcję?')"></a></span></td>
+                    <td><a class="copy" href="{% url 'duplicateTransaction' tr.id 0 %}" title="Duplikuj"></a></td>
+                    <td><a class="delete" href="{% url 'delTransaction' tr.id 0 %}" title="Usuń" onclick=
+                        "return confirm('Czy napewno chcesz usunąć tę transakcję?')"></a></td>
                     </tr>
                 {% endfor %}
             {% endfor %}
@@ -82,15 +87,6 @@
         {% endif %}
 
         <table>
-            <!-- {% if account.is_shared %}
-                <div>
-                    <span>To konto jest ustawione jako współdzielone.<span>
-                    <br/>
-                    <span>Aby zaprosić innego użytkownika do współdzielenia konta, przekaż mu ten URL:<span>
-                    <br/>
-                    <code id="url">{{ request.build_absolute_uri }}/join</code>
-                </div>
-            {% endif %} -->
             {% for date, transactions, value in daily %}
                 <tr id="date">
                     <td colspan="7">{{ date }}</td>
@@ -116,8 +112,8 @@
                         <td id="transaction-amount" class="expense">{{ tr.amount }} {{ tr.currency.sign }}</td>
                     {% endif %}
                     <td><a class="purple" href="{% url 'showTransaction' tr.id 0 %}">Szczegóły</a></td>
-                    <td><a class="copy" href="{% url 'duplicateTransaction' tr.id 0 %}"></a></td>
-                    <td><a class="delete" href="{% url 'delTransaction' tr.id 0 %}" onclick=
+                    <td><a class="copy" href="{% url 'duplicateTransaction' tr.id 0 %}" title="Duplikuj"></a></td>
+                    <td><a class="delete" href="{% url 'delTransaction' tr.id 0 %}" title="Usuń" onclick=
                         "return confirm('Czy napewno chcesz usunąć tę transakcję?')"></a></td>
                     </tr>
                 {% endfor %}

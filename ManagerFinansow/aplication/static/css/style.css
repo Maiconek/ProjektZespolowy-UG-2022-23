@@ -297,3 +297,30 @@ a.copy{
 a.copy:hover{
     background-image: url("/static/images/icons/copy_hover_v2.png");
 }
+a.add_user{
+    display: block;
+    width: 40px;
+    height: 40px;
+    background-image: url("/static/images/icons/add_user.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+}
+a.add_user2{
+    display: block;
+    width: 40px;
+    height: 40px;
+    background-image: url("/static/images/icons/add_user_v2.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+}
+a.add_user3{
+    display: block;
+    width: 40px;
+    height: 40px;
+    background-image: url("/static/images/icons/add_user_v3.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+}
