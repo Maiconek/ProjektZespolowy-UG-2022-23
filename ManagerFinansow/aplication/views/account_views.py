@@ -5,7 +5,10 @@ from aplication.models import *
 from aplication.forms import AccountForm, InviteForm
 from aplication.services import prepareTransactions, updateTransactions, sumCurrency
 from django.core.paginator import Paginator
+from django.views.generic.base import TemplateView
 
+class Home(TemplateView):
+    template_name = 'application/home/home-logout.html'
 
 @login_required(login_url='login')
 def showAllTransactions(request):
