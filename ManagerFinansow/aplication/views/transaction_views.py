@@ -69,29 +69,32 @@ class TransactionAdd(View, TransactionMixin):
 class TransactionEdit(View, TransactionMixin):
     template_name = 'application/transaction/form.html'
     form_class = TransactionForm
-    
+    option = 'edit'
+
     def get(self, request, pk, accountless=0):
         transaction = get_object_or_404(Transaction, id=pk)
         form = TransactionForm(scope = transaction.id_category.scope, owner=transaction.id_account.owner, instance = transaction)
-        context = self.get_context_data(form=form, transaction=transaction, option='edit', accountless=accountless)
+        context = self.get_context_data(form=form, transaction=transaction, option=self.option, accountless=accountless)
         return render(request, self.template_name, context)
         
     def post(self, request, pk, accountless=0):
         transaction = get_object_or_404(Transaction, id=pk)
         form = TransactionForm(data=request.POST or None, scope = transaction.id_category.scope, 
                                 owner=transaction.id_account.owner, instance = transaction)
-        context = self.get_context_data(form=form, transaction=transaction, option='edit', accountless=accountless)
+        context = self.get_context_data(form=form, transaction=transaction, option=self.option, accountless=accountless)
         if form.is_valid():
             form.save()
             return redirect('showTransaction', pk=transaction.id, accountless=accountless)
         return render(request, self.template_name, context)
 
 class TransactionDuplicate(TransactionEdit):
+    option = 'add'
+
     def post(self, request, pk, accountless=0):
         transaction = get_object_or_404(Transaction, id=pk)
         form = TransactionForm(data=request.POST or None, scope = transaction.id_category.scope, 
                                 owner=transaction.id_account.owner, instance = transaction)
-        context = self.get_context_data(form=form, transaction=transaction, option='edit', accountless=accountless)
+        context = self.get_context_data(form=form, transaction=transaction, option=self.option, accountless=accountless)
         if form.is_valid():
             newTransaction = form.save(commit=False)
             newTransaction.id = None
