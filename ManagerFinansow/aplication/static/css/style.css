@@ -324,3 +324,8 @@ a.add_user3{
     background-position: center;
     background-size: 100%;
 }
+
+input[type='email'], input[type='password2'] {
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
