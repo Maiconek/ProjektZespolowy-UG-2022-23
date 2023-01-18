@@ -17,14 +17,17 @@ from django.contrib import admin
 from django.urls import path, include
 from aplication.views import *
 from UsersApp.views import *
+from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    
     path('', include('aplication.urls')),
     path('', include('UsersApp.urls')),
+    
+    path('reset_password/', auth_views.PasswordResetView.as_view(), name="reset-password"),
     #path('api/', include('api.urls'))
-
 ]
 
 handler404 = 'aplication.views.error404'
