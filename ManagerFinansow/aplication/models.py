@@ -32,9 +32,13 @@ class Account(models.Model):
 
 
 class User_Account(models.Model):
+    access = (
+        ('FULL', "Pełny dostęp"),
+        ('LIMITED', "Ograniczony dostęp")
+    )  
     id_user = models.ForeignKey(Profile, on_delete=models.CASCADE)
     id_account = models.ForeignKey(Account, on_delete=models.CASCADE)
-    access_level = models.IntegerField(default=0)
+    access_level = models.CharField(choices=access, max_length=20)
     id = models.AutoField(primary_key=True)
 
     def __str__(self):
@@ -43,7 +47,7 @@ class User_Account(models.Model):
 class Invitation(models.Model):
     userFrom = models.ForeignKey(Profile, related_name='from+', on_delete=models.CASCADE)
     userTo = models.ForeignKey(Profile, related_name='to+', on_delete=models.CASCADE)
-    access_level = models.IntegerField(default=0)
+    access_level = models.CharField(choices=User_Account.access, max_length=20)
     id_account = models.ForeignKey(Account, on_delete=models.SET_NULL, null=True)
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
 

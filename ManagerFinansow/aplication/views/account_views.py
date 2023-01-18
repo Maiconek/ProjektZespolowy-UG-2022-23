@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from aplication.decorators import permission_required
+from aplication.decorators import permission_required_account
 from aplication.models import *
 from aplication.forms import AccountForm, InviteForm
 from aplication.services import prepareTransactions, updateTransactions, sumCurrency
 from django.core.paginator import Paginator
 from django.views.generic.base import TemplateView
+from django.db.models import Q
+from django.http import HttpResponseForbidden
 
 class Home(TemplateView):
     template_name = 'application/home/home-logout.html'
@@ -34,7 +36,7 @@ def showAllTransactions(request):
     return render(request, 'application/home/home-login.html', context)
 
 @login_required(login_url='login')
-@permission_required
+@permission_required_account('FULL')
 def showAccount(request, pk):
     account = Account.objects.get(id=pk)
     users = User_Account.objects.filter(id_account=account).exclude(id_user=request.user.profile)
@@ -49,7 +51,8 @@ def showAccount(request, pk):
         'balance': prepared[1],
         'future': prepared[2],
         'count': prepared[3],
-        'page_obj': prepared[4]
+        'page_obj': prepared[4],
+        'fullAccess': User_Account.objects.get(Q(id_account=account) & Q(id_user=request.user.profile)).access_level == 'FULL'
     }
     return render(request, 'application/account/account.html', context)
 
@@ -92,7 +95,7 @@ def createAccount(request):
     return render(request, 'application/account/account-form.html', context)
 
 @login_required(login_url='login')
-@permission_required
+@permission_required_account('LIMITED')
 def editAccount(request, pk):
     account = get_object_or_404(Account, id=pk)
     form = AccountForm(request.POST or None, instance=account)
@@ -107,6 +110,8 @@ def editAccount(request, pk):
 @login_required(login_url='login')
 def joinAccount(request, pk):
     invitation = get_object_or_404(Invitation, id=pk)
+    if invitation.userTo.id != request.user.profile.id:
+        return HttpResponseForbidden
     context = {'invitation': invitation}
     if request.method == 'POST':
         account_user = User_Account(request.user.profile.id, invitation.id_account.id, invitation.access_level)
@@ -119,7 +124,7 @@ def error404(request, exception):
     return render(request, 'application/error/404.html')
 
 @login_required(login_url='login')
-@permission_required
+@permission_required_account('LIMITED')
 def delAccount(request, pk):
     account = get_object_or_404(Account, id=pk)
     if account.owner == request.user.profile:
@@ -127,7 +132,7 @@ def delAccount(request, pk):
     return redirect('all-accounts')
 
 @login_required(login_url='login')
-@permission_required
+@permission_required_account('LIMITED')
 def invite(request, pk):
     account = get_object_or_404(Account, id=pk)
     form = InviteForm(account=account)
@@ -137,9 +142,19 @@ def invite(request, pk):
             invitation = Invitation(
                 userFrom = request.user.profile,
                 userTo = form.cleaned_data['profile'].profile,
-                id_account=account
+                id_account =account,
+                access_level = form.cleaned_data['access_level']
             )
             invitation.save()
             return redirect('account', pk=account.id)
     context = {'account': account, 'form': form}
     return render(request, 'application/account/account-invite.html', context)
+
+@login_required(login_url='login')
+def deleteInvitation(request, pk):
+    invitation = get_object_or_404(Invitation, id=pk)
+    if invitation.userTo.id != request.user.profile.id and invitation.userFrom.id != request.user.profile.id:
+        return HttpResponseForbidden()
+    invitation.delete()
+    return redirect('profile')
+

@@ -26,6 +26,7 @@ urlpatterns = [
     path('account/<uuid:pk>/edit', editAccount, name='editAccount'),
     path('account/<uuid:pk>/invite', invite, name='invite'),
     path('invitation/<uuid:pk>/join', joinAccount, name='joinAccount'),
+    path('invitation/<uuid:pk>/del', deleteInvitation, name='deleteInvitation'),
     #transactions
     path('account/<uuid:pk>/add/<str:type>', TransactionAdd.as_view(), name='add'),
     path('add/<str:type>', TransactionAdd.as_view(), name='addAccountless'),

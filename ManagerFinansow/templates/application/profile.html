@@ -24,10 +24,14 @@
         
         {% for m in mes %}
             {% if profile == m.userTo %}
-                <p>Użytkownik {{ m.userFrom }} zaprasza cię do dołączenia do konta {{ m.id_account }}!</p>
+                <p>Użytkownik {{ m.userFrom }} zaprasza cię do dołączenia do konta {{ m.id_account }}!
                 <a href="{% url 'joinAccount' m.id %}">Kliknij by dołączyć</a>
+                <a href="{% url 'deleteInvitation' m.id %}" onclick=
+                "return confirm('Czy napewno chcesz usunąć?')">Odrzuć Zaproszenie</a></p>
             {% elif profile == m.userFrom %}
-                <p>Wysłano zaproszenie do użytkownika {{ m.userTo }} do dołączenia do konta {{ m.id_account }}</p>
+                <p>Wysłano zaproszenie do użytkownika {{ m.userTo }} do dołączenia do konta {{ m.id_account }}
+                <a href="{% url 'deleteInvitation' m.id %}" onclick=
+                "return confirm('Czy napewno chcesz usunąć?')">Usuń Zaproszenie</a></p>
             {% endif %}
         {% endfor %}
     </div>

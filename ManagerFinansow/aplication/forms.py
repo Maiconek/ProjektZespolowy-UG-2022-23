@@ -58,14 +58,9 @@ class TransactionForm(ModelForm):
             saved.save()
         return saved       
 
-class InviteForm(forms.Form):
-    access = (
-        (0, "Edycja, Usuwanie, Zarządzanie transakcjami"),
-        (1, "Zarządzanie transakcjami"),
-        (2, "Tylko odczyt"),
-    )   
+class InviteForm(forms.Form): 
     profile = forms.ModelChoiceField(User.objects.all(), label='Użytkownik')
-    access_level = forms.ChoiceField(choices=access, label='Poziom dostępu', initial=2)
+    access_level = forms.ChoiceField(choices=User_Account.access, label='Poziom dostępu', initial='LIMITED')
 
     def __init__(self, account=None, **kwargs):
         super(InviteForm, self).__init__(**kwargs)

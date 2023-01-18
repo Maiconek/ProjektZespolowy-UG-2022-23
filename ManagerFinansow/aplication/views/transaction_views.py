@@ -6,7 +6,7 @@ from aplication.models import *
 from aplication.forms import TransactionForm
 from datetime import date
 from django.http import Http404  
-from aplication.decorators import permission_required
+from aplication.decorators import permission_required_transaction
 from django.utils.decorators import method_decorator
 
 class TransactionMixin(object): 
@@ -37,7 +37,6 @@ class TransactionMixin(object):
         return context
 
 @method_decorator(login_required(login_url='login'), name='dispatch')
-@method_decorator(permission_required, name='dispatch')
 class TransactionAdd(View, TransactionMixin):
     template_name = 'application/transaction/form.html'
     form_class = TransactionForm
@@ -66,6 +65,7 @@ class TransactionAdd(View, TransactionMixin):
         return render(request, self.template_name, context)
 
 @method_decorator(login_required(login_url='login'), name='dispatch')
+@method_decorator(permission_required_transaction('LIMITED'), name='dispatch')
 class TransactionEdit(View, TransactionMixin):
     template_name = 'application/transaction/form.html'
     form_class = TransactionForm
@@ -106,10 +106,9 @@ class TransactionDuplicate(TransactionEdit):
         return render(request, self.template_name, context)
 
 @login_required(login_url='login')
+@permission_required_transaction('FULL')
 def showTransaction(request, pk, accountless=0):
     transaction = get_object_or_404(Transaction, id=pk)
-    if transaction.id_account.owner != request.user.profile:
-        raise Http404
     context = {'tr':transaction, 'accountless': accountless, 'today':date.today()}
     action = request.GET.get('action')
     if action is not None:
@@ -131,6 +130,7 @@ def showTransaction(request, pk, accountless=0):
     return render(request, 'application/transaction/show.html', context)
 
 @login_required(login_url='login')
+@permission_required_transaction('LIMITED')
 def delTransaction(request, pk, accountless=0):
     transaction = get_object_or_404(Transaction, id=pk)
     if transaction.id_account.owner != request.user.profile:
