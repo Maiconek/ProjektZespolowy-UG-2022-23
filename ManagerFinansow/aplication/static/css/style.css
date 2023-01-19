@@ -215,6 +215,9 @@ form > table{
 span.field{
     margin-left: 5px;
 }
+select, input{
+    min-width: 200px;
+}
 .mam-niemam{
     margin-top: 10px;
     display: flex;
@@ -425,6 +428,7 @@ td{
         flex-wrap: wrap;
         flex-direction:row;
         align-items: center;
+        justify-content: center;
         /* width: 100%; */
 
 	}

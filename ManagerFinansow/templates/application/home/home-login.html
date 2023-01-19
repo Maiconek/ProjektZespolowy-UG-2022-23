@@ -30,11 +30,11 @@
                     <td id="transaction-subcategory"></td>
                     {% endif %}                  -->
                     <td id="transaction-category" class="bold">{{ tr.id_category }}
-                    {% if tr.id_subcategory %}
-                    <span id="transaction-subcategory">({{ tr.id_subcategory }})</span>
-                    {% else %}
-                    <span id="transaction-subcategory"></span>
-                    {% endif %}
+                        {% if tr.id_subcategory %}
+                        <span id="transaction-subcategory">({{ tr.id_subcategory }})</span>
+                        {% else %}
+                        <span id="transaction-subcategory"></span>
+                        {% endif %}
                     </td>
                     {% if tr.description %}
                     <td id="transaction-description">{{ tr.description }}</td>
@@ -93,7 +93,7 @@
                         {% else %}
                         <span id="transaction-subcategory"></span>
                         {% endif %}
-                        </td>
+                    </td>
                     {% if tr.description %}
                     <td id="transaction-description">{{ tr.description }}</td>
                     {% else %}
