@@ -329,3 +329,36 @@ input[type='email'], input[type='password2'] {
     margin-bottom: 5px;
     margin-top: 5px;
 }
+
+
+table{
+    width: 100%;
+}
+
+/*Screen size 1000px*/
+@media screen and (max-width: 1000px) {
+    
+    /*Transactions adjusting*/
+    .nav-item{
+        display: none;
+    }
+
+    #logo-li{
+        display: block;
+    }
+
+}
+
+/*Screen size 700px*/
+@media screen and (max-width: 700px) {    
+    /*Transactions adjusting*/
+    #transaction-description{
+        display: none;
+    }
+
+    #transaction-amount{
+        width: 100%;
+    }
+    /*empty space in transactions*/
+
+}
