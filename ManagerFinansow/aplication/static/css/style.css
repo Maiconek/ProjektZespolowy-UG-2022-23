@@ -354,6 +354,27 @@ table{
     width: 100%;
 }
 
+tr{
+    width: 100%;
+}
+/* 
+td{
+    width: fit-content;
+} */
+
+#do-not-display{
+    display: none;
+}
+
+/* 
+.table-date{
+    width: 80%;
+}
+
+.table-sum{
+    width: 20%;
+} */
+
 /*Screen size 1000px*/
 @media screen and (max-width: 1000px) {
     
@@ -366,18 +387,24 @@ table{
         display: block;
     }
 
+    #do-not-display{
+        display: block;
+        width: 100%;
+    }
+
 }
 
 /*Screen size 700px*/
 @media screen and (max-width: 700px) {    
     /*Transactions adjusting*/
     #transaction-description{
-        display: none;
-    }
+        display: none; 
 
+    }
+/* 
     #transaction-amount{
         width: 100%;
-    }
+    } */
     /*empty space in transactions*/
 
 }

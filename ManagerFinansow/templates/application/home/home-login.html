@@ -18,7 +18,7 @@
         <table>
         {% for date, transactions, value in future %}
             <tr class="date">
-                <td class="center" colspan="5">{{ date }}</td>
+                <td class="center" colspan="4">{{ date }}</td>
                 <td>{{ value }} {{ profile.currency.sign }}</td>
             </tr>
             {% for tr in transactions %}
@@ -34,6 +34,7 @@
                     {% else %}
                     <td id="transaction-description"></td>
                     {% endif %}
+                    <td id="do-not-display"></td>
                     {% if tr.converted_amount >= 0 %}
                         <td id="transaction-amount" class="income">{{ tr.amount }} {{ tr.currency.sign }}</td>
                     {% else %}
@@ -67,7 +68,7 @@
         <table>
         {% for date, transactions, value in daily %}
             <tr class="date">
-                <td class="center" colspan="5">{{ date }}</td>
+                <td class="center" colspan="4">{{ date }}</td>
                 <td>{{ value }} {{ profile.currency.sign }}</td>
             </tr>
             {% for tr in transactions %}
@@ -83,6 +84,7 @@
                     {% else %}
                     <td id="transaction-description"></td>
                     {% endif %}
+                    <td id="do-not-display"></td>
                     {% if tr.converted_amount >= 0 %}
                         <td id="transaction-amount" class="income">{{ tr.amount }} {{ tr.currency.sign }}</td>
                     {% else %}
