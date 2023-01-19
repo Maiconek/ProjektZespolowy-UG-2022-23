@@ -70,7 +70,7 @@ div.title h1{
     font-size: 40px;
     font-weight: bold;
 }
-div.content{
+div.content-pc{
     margin-top: 15px;
 }
 div.tiles{
@@ -407,4 +407,9 @@ td{
     } */
     /*empty space in transactions*/
 
+}
+
+@media screen and (max-width: 600px) {
+    
+    
 }
