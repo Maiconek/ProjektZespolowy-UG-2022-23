@@ -1,6 +1,7 @@
 {% extends 'application/base.html' %}
 
 {% block title %}{{ account }}{% endblock %}
+{%load static%}
 
 {% block content %}
 {% comment %} Strona z informacjami o danym koncie {% endcomment %}
@@ -15,8 +16,9 @@
     
     <div class="content-pc">
         <p class="buttons">
-            <a class="button" href="{% url 'add' account.id 'expense' %}">Nowy Wydatek</a>
-            <a class="button" href="{% url 'add' account.id 'income' %}">Nowy Przychód</a>
+            <a href="{% url 'add' account.id 'income' %}"><img id="plus-icon" src="{% static 'images/icons/plus.png' %}"/></a>
+            <a href="#"><img id="transfer-icon" src="{% static 'images/icons/arrows.png' %}"/></a>
+            <a  href="{% url 'add' account.id 'expense' %}"><img id="minus-icon" src="{% static 'images/icons/minus.png' %}"/></a>
         </p>
         
         <p class="buttons">

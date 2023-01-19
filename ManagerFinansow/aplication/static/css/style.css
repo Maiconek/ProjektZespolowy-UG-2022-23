@@ -38,6 +38,15 @@ nav.nav{
 #app-logo{
     width: 250px;
 }
+#plus-icon{
+    width: 50px;
+}
+#minus-icon{
+    width: 50px;
+}
+#transfer-icon{
+    width: 50px;
+}
 
 /* CONTENT */
 #site-content{
@@ -237,6 +246,14 @@ p.buttons{
 p.buttons-close{
     margin: 7px 0px;
 }
+.content-pc > .buttons{
+    /* centeer */
+    display: flex;
+    justify-content: center;
+    /* gap between */
+    gap: 10px;
+
+}
 .button {
     background-color: rgba(163, 31, 163, 0.8);
     color: white;
@@ -252,7 +269,7 @@ p.buttons-close{
     color: white;
 }
 .purple{
-    color: purple;
+    color: #800080;
 }
 .purple:hover{
     color: purple;
