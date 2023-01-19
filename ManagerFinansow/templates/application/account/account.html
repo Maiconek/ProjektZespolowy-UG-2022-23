@@ -33,8 +33,6 @@
         <p class="buttons">
             {% if fullAccess %}
             <a class="add_user" href="{% url 'invite' account.id %}" title="Zaproś do współdzielenia"></a>
-            <a class="add_user2" href="{% url 'invite' account.id %}" title="Zaproś do współdzielenia"></a>
-            <a class="add_user3" href="{% url 'invite' account.id %}" title="Zaproś do współdzielenia"></a>
             {% else %}
             <a class="button">Nie możesz zapraszać</a>
             {% endif %}
