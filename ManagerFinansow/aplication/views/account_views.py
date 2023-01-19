@@ -88,7 +88,7 @@ def createAccount(request):
             account = form.save(commit=False)
             account.owner = profile
             account.save()
-            account_user = User_Account(profile.id, account.id, 0)
+            account_user = User_Account(profile.id, account.id, 'FULL')
             account_user.save()
             return redirect('all-accounts')
     context = {'form': form, 'option': "add"}

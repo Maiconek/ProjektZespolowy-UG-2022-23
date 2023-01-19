@@ -16,12 +16,12 @@ def sumCurrency(all_transactions, currency):
     for tr in all_transactions.filter(~Q(currency=currency)):
         if tr.id_category.scope == 'EXPENSE' and tr.transaction_date < today:
             #tr.converted_amount = round(c.convert(tr.currency.access_name, currency.access_name, tr.amount, tr.transaction_date), 2)
-            sum += round(c.convert(tr.amount, tr.currency.access_name, currency.access_name, date=tr.transaction_date), 2)
+            sum += c.convert(tr.amount, tr.currency.access_name, currency.access_name, date=tr.transaction_date)
         else:
-            sum += round(c.convert(tr.amount, tr.currency.access_name, currency.access_name), 2)
+            sum += c.convert(tr.amount, tr.currency.access_name, currency.access_name)
     matchingCurrencySum = all_transactions.filter(Q(currency=currency)).aggregate(Sum('amount'))['amount__sum']
-    sum += round(matchingCurrencySum, 2) if matchingCurrencySum is not None else 0
-    return sum
+    sum += matchingCurrencySum if matchingCurrencySum is not None else 0
+    return round(sum, 2)
 
 def updateTransactions(all_transactions):
     today = date.today()
