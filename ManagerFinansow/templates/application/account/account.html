@@ -18,16 +18,26 @@
             <a class="button" href="{% url 'add' account.id 'expense' %}">Nowy Wydatek</a>
             <a class="button" href="{% url 'add' account.id 'income' %}">Nowy Przychód</a>
         </p>
+        
         <p class="buttons">
+            {% if fullAccess %}
             <a class="button" href="{% url 'editAccount' account.id %}">Edytuj informacje o koncie</a>
+            {% else %}
+            <a class="button">Nie możesz edytować konta</a>
+            {% endif %}
         </p>
+
         <!-- <p class="buttons">
             <a class="button" href="{% url 'invite' account.id %}">Zaproś użytkownika do współdzielenia</a>
         </p> -->
         <p class="buttons">
+            {% if fullAccess %}
             <a class="add_user" href="{% url 'invite' account.id %}" title="Zaproś do współdzielenia"></a>
             <a class="add_user2" href="{% url 'invite' account.id %}" title="Zaproś do współdzielenia"></a>
             <a class="add_user3" href="{% url 'invite' account.id %}" title="Zaproś do współdzielenia"></a>
+            {% else %}
+            <a class="button">Nie możesz zapraszać</a>
+            {% endif %}
         </p>
         <p class="buttons">
             <a class="button" href="{% url 'profiles' %}">Lista użytkowników</a>
@@ -62,9 +72,15 @@
                         <td id="transaction-amount" class="expense">{{ tr.amount }} {{ tr.currency.sign }}</td>
                     {% endif %}
                     <td><a class="purple" href="{% url 'showTransaction' tr.id 0 %}">Szczegóły</a></td>
+
+                    {% if fullAccess %}
                     <td><a class="copy" href="{% url 'duplicateTransaction' tr.id 0 %}" title="Duplikuj"></a></td>
                     <td><a class="delete" href="{% url 'delTransaction' tr.id 0 %}" title="Usuń" onclick=
                         "return confirm('Czy napewno chcesz usunąć tę transakcję?')"></a></td>
+                    {% else %}
+                    <td></td><td></td>
+                    {% endif %}
+
                     </tr>
                 {% endfor %}
             {% endfor %}
@@ -112,9 +128,15 @@
                         <td id="transaction-amount" class="expense">{{ tr.amount }} {{ tr.currency.sign }}</td>
                     {% endif %}
                     <td><a class="purple" href="{% url 'showTransaction' tr.id 0 %}">Szczegóły</a></td>
+
+                    {% if fullAccess %}
                     <td><a class="copy" href="{% url 'duplicateTransaction' tr.id 0 %}" title="Duplikuj"></a></td>
                     <td><a class="delete" href="{% url 'delTransaction' tr.id 0 %}" title="Usuń" onclick=
                         "return confirm('Czy napewno chcesz usunąć tę transakcję?')"></a></td>
+                    {% else %}
+                    <td></td><td></td>
+                    {% endif %}
+                    
                     </tr>
                 {% endfor %}
             {% empty %}
