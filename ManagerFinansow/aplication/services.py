@@ -4,6 +4,7 @@ from django.db.models import Q
 from dateutil.relativedelta import relativedelta
 from currency_converter import CurrencyConverter, ECB_URL
 from django.core.paginator import Paginator
+from django.db.models import Sum
 #from forex_python.converter import CurrencyRates
 
 #c = CurrencyRates(force_decimal=True)
@@ -12,15 +13,14 @@ c = CurrencyConverter(ECB_URL, decimal=True, fallback_on_wrong_date=True, fallba
 def sumCurrency(all_transactions, currency):
     sum = 0
     today = date.today()
-    for tr in all_transactions:
-        if currency.access_name != tr.currency.access_name:
-            if tr.id_category.scope == 'EXPENSE' and tr.transaction_date < today:
-                #tr.converted_amount = round(c.convert(tr.currency.access_name, currency.access_name, tr.amount, tr.transaction_date), 2)
-                sum += round(c.convert(tr.amount, tr.currency.access_name, currency.access_name, date=tr.transaction_date), 2)
-            else:
-                sum += round(c.convert(tr.amount, tr.currency.access_name, currency.access_name), 2)
+    for tr in all_transactions.filter(~Q(currency=currency)):
+        if tr.id_category.scope == 'EXPENSE' and tr.transaction_date < today:
+            #tr.converted_amount = round(c.convert(tr.currency.access_name, currency.access_name, tr.amount, tr.transaction_date), 2)
+            sum += round(c.convert(tr.amount, tr.currency.access_name, currency.access_name, date=tr.transaction_date), 2)
         else:
-            sum += tr.amount
+            sum += round(c.convert(tr.amount, tr.currency.access_name, currency.access_name), 2)
+    matchingCurrencySum = all_transactions.filter(Q(currency=currency)).aggregate(Sum('amount'))['amount__sum']
+    sum += round(matchingCurrencySum, 2) if matchingCurrencySum is not None else 0
     return sum
 
 def updateTransactions(all_transactions):
