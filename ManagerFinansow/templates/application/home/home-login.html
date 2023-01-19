@@ -23,12 +23,19 @@
             </tr>
             {% for tr in transactions %}
                 <tr class="transaction">
-                    <td id="transaction-category" class="bold">{{ tr.id_category }}</td>
+                    <!-- <td id="transaction-category" class="bold">{{ tr.id_category }}</td>
                     {% if tr.id_subcategory %}
                     <td id="transaction-subcategory">({{ tr.id_subcategory }})</td>
                     {% else %}
                     <td id="transaction-subcategory"></td>
-                    {% endif %}                 
+                    {% endif %}                  -->
+                    <td id="transaction-category" class="bold">{{ tr.id_category }}
+                    {% if tr.id_subcategory %}
+                    <span id="transaction-subcategory">({{ tr.id_subcategory }})</span>
+                    {% else %}
+                    <span id="transaction-subcategory"></span>
+                    {% endif %}
+                    </td>
                     {% if tr.description %}
                     <td id="transaction-description">{{ tr.description }}</td>
                     {% else %}
@@ -73,12 +80,20 @@
             </tr>
             {% for tr in transactions %}
                 <tr class="transaction">
-                    <td id="transaction-category" class="bold">{{ tr.id_category }}</td>
+                    <!-- <td id="transaction-category" class="bold">{{ tr.id_category }}</td>
                     {% if tr.id_subcategory %}
                     <td id="transaction-subcategory">({{ tr.id_subcategory }})</td>
                     {% else %}
                     <td id="transaction-subcategory"></td>
-                    {% endif %}                 
+                    {% endif %}                  -->
+                    
+                    <td id="transaction-category" class="bold">{{ tr.id_category }}
+                        {% if tr.id_subcategory %}
+                        <span id="transaction-subcategory">({{ tr.id_subcategory }})</span>
+                        {% else %}
+                        <span id="transaction-subcategory"></span>
+                        {% endif %}
+                        </td>
                     {% if tr.description %}
                     <td id="transaction-description">{{ tr.description }}</td>
                     {% else %}
@@ -99,6 +114,7 @@
         {% endfor %}
         </table>
     </div>
+
 
     {% if page_obj.has_previous %}
             <a href="?page=1">&laquo; first</a>
