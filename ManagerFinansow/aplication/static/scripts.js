@@ -5,6 +5,8 @@ function changeToDark(){
     var allAccounts = document.getElementById("all-accounts");
     var allIncomes = document.getElementsByClassName("income");
     var allExpenses = document.getElementsByClassName("expense");
+    var selects = document.getElementsByTagName("select");
+    var inputs = document.getElementsByTagName("input");
 
     var lightBulb = document.getElementById("light-bulb");
 
@@ -59,6 +61,20 @@ function changeToDark(){
         }
     }
 
+    if(selects != null){
+        for(var i = 0; i < selects.length; i++){
+            selects[i].classList.remove("dark-mode");
+            selects[i].classList.add("dark-mode");
+        }
+    }
+
+    if(inputs != null){
+        for(var i = 0; i < inputs.length; i++){
+            inputs[i].classList.remove("dark-mode");
+            inputs[i].classList.add("dark-mode");
+        }
+    }
+
 }
 
 function changeToLight(){
@@ -68,6 +84,8 @@ function changeToLight(){
     var allAccounts = document.getElementById("all-accounts");
     var allIncomes = document.getElementsByClassName("income");
     var allExpenses = document.getElementsByClassName("expense");
+    var selects = document.getElementsByTagName("select");
+    var inputs = document.getElementsByTagName("input");
 
     var lightBulb = document.getElementById("light-bulb");
 
@@ -111,6 +129,18 @@ function changeToLight(){
     if(allExpenses != null){
         for(var i = 0; i < allExpenses.length; i++){
             allExpenses[i].classList.remove("dark-mode");
+        }
+    }
+
+    if(selects != null){
+        for(var i = 0; i < selects.length; i++){
+            selects[i].classList.remove("dark-mode");
+        }
+    }
+
+    if(inputs != null){
+        for(var i = 0; i < inputs.length; i++){
+            inputs[i].classList.remove("dark-mode");
         }
     }
 

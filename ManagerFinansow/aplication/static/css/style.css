@@ -28,6 +28,9 @@ nav.nav{
     padding-left: 4vw;
     padding-right: 4vw;
 }
+.no-display{
+    display: none;
+}
 #logo-link{
     padding: 0;
 }
@@ -231,6 +234,11 @@ span.field{
 }
 select, input{
     min-width: 200px;
+    background-color: rgba(250, 250, 210, 0.5);
+    color: #800080;
+}
+select option:hover{
+    box-shadow: 0 0 10px 100px #000000 inset;
 }
 .mam-niemam{
     margin-top: 10px;
@@ -591,7 +599,8 @@ tr.transaction > td{
 }
 
 /*Screen size 330px*/
-@media screen and (max-width: 400px) {
+/* @media screen and (max-width: 400px) { */
+@media screen and (max-width: 1000px) {
     /* top menu */
     #nav{
         width: fit-content;
@@ -677,4 +686,14 @@ button.dark-mode{
 
 .purple.dark-mode, #tr-acc-link.dark-mode{
     color: rgba(197, 39, 197, 0.8);
+}
+
+select.dark-mode{
+    background-color: hsl(259, 90%, 19%);
+    color: #fff;
+}
+
+input.dark-mode{
+    background-color: hsl(259, 90%, 19%);
+    color: #fff;
 }

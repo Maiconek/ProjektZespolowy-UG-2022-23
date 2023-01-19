@@ -9,11 +9,11 @@
 <div class="title">
     <h1>Dodaj 
     {% if 'expense' in request.get_full_path %}
-    Wydatek
+    wydatek
     {% elif 'income' in request.get_full_path %}
-    Przychód
+    przychód
     {% else %}
-    Transakcję
+    transakcję
     {% endif %}
     </h1>
 </div>

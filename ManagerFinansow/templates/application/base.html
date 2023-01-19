@@ -29,6 +29,8 @@
             {% comment %} <li class="nav-item"><a class="nav-link" href="{% url 'all-categories' %}">Kategorie</a></li> {% endcomment %}
             <li class="nav-item mobile-menu"><a class="nav-link" href="{% url 'summary' %}">Podsumowania</a></li>
             <li class="nav-item mobile-menu"><a class="nav-link" href="{% url 'budget' %}">Budżet</a></li>
+            <li class="nav-item mobile-menu no-display"><a class="nav-link" href="{% url 'login' %}">Zaloguj się</a></li>
+            <li class="nav-item mobile-menu no-display"><a class="nav-link" href="{% url 'register' %}">Rejestracja</a></li>
         </ul>
         <ul class="nav justify-content-end user-image">
             {% comment %} logged user image instead of placeholder {% endcomment %}
