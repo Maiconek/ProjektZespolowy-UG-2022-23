@@ -589,8 +589,15 @@ tr.transaction > td{
 
     #mobile-menu-button{
         display: block;
-        max-width: calc((100% - 250px)/2);
+        width: calc((100% - 250px)/2);
         overflow: hidden;
+        align-items:flex-start;
+        display: flex;
+        justify-content: flex-start;
+    }
+    #mobile-menu-button > img{
+        flex:0 ;
+        margin-left: 0;
     }
 
 }
