@@ -224,3 +224,18 @@ function darkMode() {
     subcatDisplay_AfterClick();
     checkColorMode();
  }
+
+ function showMenu(){
+    var menu = document.getElementsByClassName("mobile-menu");
+
+    if(menu[0].style.display == "flex"){
+        for (var i = 0; i < menu.length; i++) {
+            menu[i].style.display = "none";
+        }
+    } else{
+        for (var i = 0; i < menu.length; i++) {
+            menu[i].style.display = "flex";
+            menu[i].style.flex = "100%";
+        }
+    }
+ }

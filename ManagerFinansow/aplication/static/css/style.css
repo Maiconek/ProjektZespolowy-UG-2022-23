@@ -34,6 +34,7 @@ nav.nav{
 #mobile-menu-button{
     display: none;
 }
+
 #app-logo{
     width: 250px;
 }
@@ -382,6 +383,18 @@ td{
     #do-not-display{
         display: block;
         width: 100%;
+    }
+    
+
+    #mobile-menu-button{
+        display: block;
+        /* width: calc((100% - 250px)/2); */
+        overflow: hidden;
+        display: block;
+    }
+    #mobile-menu-button > img{
+        flex:0 ;
+        margin-left: 0;
     }
 
 }

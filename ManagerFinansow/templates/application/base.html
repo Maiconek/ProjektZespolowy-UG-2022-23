@@ -21,14 +21,14 @@
     <nav class="nav" id="navigation">
         {% if user.is_authenticated %}
         <ul class="nav justify-content-start">
-            <li id="mobile-menu-button"><img src="{% static 'images/icons/menu-button.png' %}"/></li>
+            <li id="mobile-menu-button" onclick="showMenu()"><img src="{% static 'images/icons/menu-button.png' %}"/></li>
             <li class="nav-item" id="logo-li"><a id="logo-link" class="nav-link" href="{% url 'home' %}">
                 <img onmouseover="logoHover()" onmouseout="logoOut()" id="app-logo" src="{% static 'images/logo.png' %}">
             </a>
-            <li class="nav-item"><a class="nav-link" href="{% url 'all-accounts' %}">Konta</a></li>
+            <li class="nav-item mobile-menu"><a class="nav-link" href="{% url 'all-accounts' %}">Konta</a></li>
             {% comment %} <li class="nav-item"><a class="nav-link" href="{% url 'all-categories' %}">Kategorie</a></li> {% endcomment %}
-            <li class="nav-item"><a class="nav-link" href="{% url 'summary' %}">Podsumowania</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'budget' %}">Budżet</a></li>
+            <li class="nav-item mobile-menu"><a class="nav-link" href="{% url 'summary' %}">Podsumowania</a></li>
+            <li class="nav-item mobile-menu"><a class="nav-link" href="{% url 'budget' %}">Budżet</a></li>
         </ul>
         <ul class="nav justify-content-end user-image">
             {% comment %} logged user image instead of placeholder {% endcomment %}
