@@ -36,21 +36,21 @@
                         <span id="transaction-subcategory"></span>
                         {% endif %}
                     </td>
-                    {% if tr.description %}
-                    <td id="transaction-description">{{ tr.description }}</td>
-                    {% else %}
-                    <td id="transaction-description"></td>
-                    {% endif %}
-                    <td id="do-not-display"></td>
+                    <!-- <td id="do-not-display"></td> -->
                     {% if tr.converted_amount >= 0 %}
                         <td id="transaction-amount" class="income">{{ tr.amount }} {{ tr.currency.sign }}</td>
                     {% else %}
                         <td id="transaction-amount" class="expense">{{ tr.amount }} {{ tr.currency.sign }}</td>
                     {% endif %}
-                    <td><a class="purple" href="{% url 'showTransaction' tr.id 1 %}">Szczegóły</a></td>
-                    <td id="transaction-account">
+                    <td class="last-in-one-row"><a class="purple" href="{% url 'showTransaction' tr.id 1 %}">Szczegóły</a></td>
+                    <td id="transaction-account" class="last-in-one-row">
                         <a id="tr-acc-link" class="purple" href="{% url 'account' pk=tr.id_account.id %}">{{ tr.id_account.name }}</a>
                     </td>
+                    {% if tr.description %}
+                    <td id="transaction-description">{{ tr.description }}</td>
+                    {% else %}
+                    <td id="transaction-description"></td>
+                    {% endif %}
                 </tr>
             {% endfor %}
         {% endfor %}
@@ -94,21 +94,21 @@
                         <span id="transaction-subcategory"></span>
                         {% endif %}
                     </td>
-                    {% if tr.description %}
-                    <td id="transaction-description">{{ tr.description }}</td>
-                    {% else %}
-                    <td id="transaction-description"></td>
-                    {% endif %}
-                    <td id="do-not-display"></td>
+                    <!-- <td id="do-not-display"></td> -->
                     {% if tr.converted_amount >= 0 %}
                         <td id="transaction-amount" class="income">{{ tr.amount }} {{ tr.currency.sign }}</td>
                     {% else %}
                         <td id="transaction-amount" class="expense">{{ tr.amount }} {{ tr.currency.sign }}</td>
                     {% endif %}
-                    <td><a class="purple" href="{% url 'showTransaction' tr.id 1 %}">Szczegóły</a></td>
-                    <td id="transaction-account">
+                    <td class="last-in-one-row"><a class="purple" href="{% url 'showTransaction' tr.id 1 %}">Szczegóły</a></td>
+                    <td id="transaction-account" class="last-in-one-row">
                         <a id="tr-acc-link" class="purple" href="{% url 'account' pk=tr.id_account.id %}">{{ tr.id_account.name }}</a>
                     </td>
+                    {% if tr.description %}
+                    <td id="transaction-description">{{ tr.description }}</td>
+                    {% else %}
+                    <td id="transaction-description"></td>
+                    {% endif %}
                 </tr>
             {% endfor %}
         {% endfor %}

@@ -233,7 +233,7 @@ p.buttons{
 p.buttons-close{
     margin: 7px 0px;
 }
-.button {
+.style-button {
     background-color: rgba(163, 31, 163, 0.8);
     color: white;
     /* opacity: 0.8; */
@@ -398,13 +398,15 @@ td{
 
 }
 
+#transaction-description{
+    /* display: none;  */
+    max-height: 30px;
+    overflow: hidden;
+}
+
 /*Screen size 700px*/
 @media screen and (max-width: 700px) {    
     /*Transactions adjusting*/
-    #transaction-description{
-        display: none; 
-
-    }
 /* 
     #transaction-amount{
         width: 100%;
@@ -415,43 +417,137 @@ td{
 
 
 
+
+
+
+
+#do-not-display{
+    display: none;
+  }
+
+/* Force table to not be like tables anymore */
+table, thead, tbody, th, td, tr { 
+    display: flex; 
+    flex-wrap: wrap;
+    flex-direction:row;
+    align-items: flex-start;
+    justify-content:flex-start;
+    padding-left: 5px;
+
+}
+table{
+    width: 100%;
+}
+tr { 
+    border: 1px solid #ccc; 
+    justify-content: left;
+    width: 100%;
+
+}
+
+/* get first td */
+tr > td:first-child{
+    flex: 30%;
+    min-width: fit-content;
+    border: none;
+}
+
+/* get second td */
+tr > td:nth-child(2){
+    flex: 30%;
+    min-width: fit-content;
+    border: none;
+    text-align: left;
+}
+
+/* get third td */
+tr > td:nth-child(3){
+    flex: 20%;
+    min-width: fit-content;
+    border: none;
+    text-align: left;
+}
+
+/* get fourth td */
+tr > td:nth-child(4){
+    flex: 20%;
+    min-width: fit-content;
+    border: none;
+}
+
+/* get fifth td */
+tr > td:nth-child(5){
+    flex: 100%;
+    min-width: fit-content;
+    border: none;
+}
+
+/* td { 
+    flex: 50%;
+    min-width: fit-content;
+    border: none;
+} */
+
+tr.transaction{
+    border-bottom: 5px solid #081132; 
+}
+
+tr.transaction > td{
+    border: none;
+    padding: 0;
+}
+
+
+
+
+
+
+
 /* @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px)  { */
-@media screen and (max-width: 600px){
 
+@media screen and (max-width: 700px) {  
+    tr > td:first-child{
+        flex: 40%;
+        min-width: fit-content;
+        border: none;
+    } 
 
-    #do-not-display{
-        display: none;
-      }
-
-	/* Force table to not be like tables anymore */
-	table, thead, tbody, th, td, tr { 
-		display: flex; 
-        flex-wrap: wrap;
-        flex-direction:row;
-        align-items: center;
-        justify-content: center;
-        /* width: 100%; */
-
-	}
-	table{
-        width: 100%;
+    tr > td:nth-child(2){
+        flex: 41%;
+        min-width: fit-content;
+        border: none;
+        text-align: left;
     }
-	tr { 
-        border: 1px solid #ccc; 
+}
+
+
+@media screen and (max-width: 450px){
+
+
+    tr > td:first-child{
+        flex: 49%;
+        min-width: fit-content;
+        border: none;
+    } 
+
+    tr > td:nth-child(2){
+        flex: 51%;
+        min-width: fit-content;
+        border: none;
+        text-align: left;
     }
-	
-	td { 
+
+    tr > td:nth-child(3){
         flex: 50%;
         min-width: fit-content;
-		/* Behave  like a "row" */
-		border: none;
-		/* position: relative; */
-		/* padding-left: 50%;  */
-        /* width: 40%; */
-	}
+        border: none;
+        text-align: left;
+    }
 
-    tr.transaction{
-		border-bottom: 5px solid #081132; 
+    tr > td:nth-child(4){
+        flex: 50%;
+        min-width: fit-content;
+        border: none;
     }
 }
 
@@ -478,6 +574,5 @@ td{
     .user-image{
         display: none;
     }
-
 
 }
