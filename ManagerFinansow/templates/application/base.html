@@ -40,7 +40,7 @@
         {% else %}
         <ul class="nav justify-content-start">
             <li class="nav-item"><a id="logo-link" class="nav-link" href="{% url 'home' %}">
-                <img id="app-logo" src="{% static 'images/logo.png' %}">
+                <img onmouseover="logoHover()" onmouseout="logoOut()" id="app-logo" src="{% static 'images/logo.png' %}">
             </a>
         </ul>
         <ul class="nav justify-content-end">
