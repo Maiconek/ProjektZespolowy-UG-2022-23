@@ -31,6 +31,9 @@ nav.nav{
 #logo-link{
     padding: 0;
 }
+#mobile-menu-button{
+    display: none;
+}
 #app-logo{
     width: 250px;
 }
@@ -558,7 +561,7 @@ tr.transaction > td{
 }
 
 /*Screen size 330px*/
-@media screen and (max-width: 330px) {
+@media screen and (max-width: 400px) {
     /* top menu */
     #nav{
         width: fit-content;
@@ -570,15 +573,24 @@ tr.transaction > td{
         justify-content: center;
         align-items: center;
         height: auto;
+        padding: 0;
     }
 
     #logo-li{
         /* center */
-        margin: auto;
+        /* margin: auto; */
+        /* make content centered */
+        /* nie działa */
     }
 
     .user-image{
         display: none;
+    }
+
+    #mobile-menu-button{
+        display: block;
+        max-width: calc((100% - 250px)/2);
+        overflow: hidden;
     }
 
 }
@@ -624,4 +636,8 @@ button.dark-mode{
 
 .income.dark-mode{
     color: #5be379;
+}
+
+.purple.dark-mode, #tr-acc-link.dark-mode{
+    color: rgba(197, 39, 197, 0.8);
 }

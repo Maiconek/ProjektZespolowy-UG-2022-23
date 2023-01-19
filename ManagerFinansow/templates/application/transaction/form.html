@@ -61,7 +61,8 @@
                 </tr>
             {% endfor %}
             <script type="text/javascript">
-                window.onload = subcatDisplay_AfterClick();
+                // window.onload = subcatDisplay_AfterClick();
+                window.onload = subCat_DarkMode();
                 var subcategory = document.getElementById("id_subcategory")
                 if ('{{ form.id_subcategory.value }}' != 'None')
                     subcategory.value = '{{ form.id_subcategory.value }}';

@@ -14,6 +14,14 @@ function changeToDark(){
     var allTransactions = document.getElementsByClassName("transaction");
     var linkButton = document.getElementsByClassName("button");
 
+    var purple = document.getElementsByClassName("purple");
+    if(purple != null){
+        for(var i = 0; i < purple.length; i++){
+            purple[i].classList.remove("dark-mode");
+            purple[i].classList.add("dark-mode");
+        }
+    }
+
     background.classList.remove("dark-mode");
     background.classList.add("dark-mode");
 
@@ -68,6 +76,13 @@ function changeToLight(){
     //WOJTEK
     var allTransactions = document.getElementsByClassName("transaction");
     var linkButton = document.getElementsByClassName("button");
+
+    var purple = document.getElementsByClassName("purple");
+    if(purple != null){
+        for(var i = 0; i < purple.length; i++){
+            purple[i].classList.remove("dark-mode");
+        }
+    }
 
     background.classList.remove("dark-mode");
 
@@ -203,4 +218,9 @@ function darkMode() {
     }
     var subcategory = document.getElementById("id_subcategory")
     subcategory.options[0].selected = 'selected';
+ }
+
+ function subCat_DarkMode(){
+    subcatDisplay_AfterClick();
+    checkColorMode();
  }
