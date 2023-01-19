@@ -58,12 +58,7 @@
                         {% else %}
                             <td id="transaction-subcategory"></td>
                         {% endif %}
-                        {% if tr.description %}
-                            <td id="transaction-description">{{ tr.description }}</td>
-                        {% else %}
-                            <td id="transaction-description"></td>
-                        {% endif %}
-                        <td id="do-not-display"></td>
+                        <!-- <td id="do-not-display"></td> -->
                         <td id="transaction-subcategory">{{ tr.subcategory }}</td>
                         {% if tr.converted_amount >= 0 %}
                             <td id="transaction-amount" class="income">{{ tr.amount }} {{ tr.currency.sign }}</td>
@@ -80,6 +75,11 @@
                         <td></td><td></td>
                         {% endif %}
 
+                        {% if tr.description %}
+                            <td id="transaction-description">{{ tr.description }}</td>
+                        {% else %}
+                            <td id="transaction-description"></td>
+                        {% endif %}
                         </tr>
                 {% endfor %}
             {% endfor %}
@@ -115,12 +115,7 @@
                         {% else %}
                             <td id="transaction-subcategory"></td>
                         {% endif %}
-                        {% if tr.description %}
-                            <td id="transaction-description">{{ tr.description }}</td>
-                        {% else %}
-                            <td id="transaction-description"></td>
-                        {% endif %}
-                        <td id="do-not-display"></td>
+                        <!-- <td id="do-not-display"></td> -->
                         <td id="transaction-subcategory">{{ tr.subcategory }}</td>
                         {% if tr.converted_amount >= 0 %}
                             <td id="transaction-amount" class="income">{{ tr.amount }} {{ tr.currency.sign }}</td>
@@ -137,6 +132,11 @@
                         <td></td><td></td>
                         {% endif %}
                     
+                        {% if tr.description %}
+                            <td id="transaction-description">{{ tr.description }}</td>
+                        {% else %}
+                            <td id="transaction-description"></td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
             {% empty %}
