@@ -58,9 +58,9 @@
                             {% else %}
                                 <span id="transaction-subcategory"></span>
                             {% endif %}
+                            <span id="transaction-subcategory">{{ tr.subcategory }}</span>
                         </td>
                         <!-- <td id="do-not-display"></td> -->
-                        <td id="transaction-subcategory">{{ tr.subcategory }}</td>
                         {% if tr.converted_amount >= 0 %}
                             <td id="transaction-amount" class="income">{{ tr.amount }} {{ tr.currency.sign }}</td>
                         {% else %}
@@ -116,9 +116,10 @@
                             {% else %}
                                 <span id="transaction-subcategory"></span>
                             {% endif %}
+                        <span id="transaction-subcategory">{{ tr.subcategory }}</span>
+
                         </td>
                         <!-- <td id="do-not-display"></td> -->
-                        <td id="transaction-subcategory">{{ tr.subcategory }}</td>
                         {% if tr.converted_amount >= 0 %}
                             <td id="transaction-amount" class="income">{{ tr.amount }} {{ tr.currency.sign }}</td>
                         {% else %}

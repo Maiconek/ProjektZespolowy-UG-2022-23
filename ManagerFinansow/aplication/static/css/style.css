@@ -467,6 +467,27 @@ tr > td:nth-child(5){
     border: none;
 }
 
+/* get second td */
+.table-in-account > tbody > tr > td:nth-child(4){
+    flex: 10%;
+    min-width: fit-content;
+    border: none;
+    text-align: left;
+}
+.table-in-account > tbody > tr > td:nth-child(5){
+    flex: 10%;
+    min-width: fit-content;
+    border: none;
+    text-align: left;
+}
+/* Opis transakcji w koncie */
+.table-in-account > tbody > tr > td:nth-child(6){
+    flex: 100%;
+    min-width: fit-content;
+    border: none;
+    text-align: left;
+}
+
 /* td { 
     flex: 50%;
     min-width: fit-content;
