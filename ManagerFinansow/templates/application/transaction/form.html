@@ -7,7 +7,15 @@
 
 {% if option == "add" %}
 <div class="title">
-    <h1>Dodaj transakcję</h1>
+    <h1>Dodaj 
+    {% if 'expense' in request.get_full_path %}
+    Wydatek
+    {% elif 'income' in request.get_full_path %}
+    Przychód
+    {% else %}
+    Transakcję
+    {% endif %}
+    </h1>
 </div>
 {% elif option == "edit" %}
 <div class="title">
