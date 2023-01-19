@@ -1,6 +1,7 @@
 {% extends 'application/base.html' %}
 
 {% block title %}Strona domowa{% endblock %}
+{%load static%}
 
 {% block content %}
 
@@ -11,8 +12,9 @@
     </div>
     <div class="content-pc">
         <p class="buttons">
-            <a class="button" href="{% url 'addAccountless' type='expense' %}">Nowy Wydatek</a>
-            <a class="button" href="{% url 'addAccountless' type='income' %}">Nowy Przychód</a>
+            <a href="{% url 'addAccountless' type='income' %}"><img id="plus-icon" src="{% static 'images/icons/plus.png' %}"/></a>
+            <a href="#"><img id="transfer-icon" src="{% static 'images/icons/arrows.png' %}"/></a>
+            <a  href="{% url 'addAccountless' type='expense' %}"><img id="minus-icon" src="{% static 'images/icons/minus.png' %}"/></a>
         </p>
 
         <table>
