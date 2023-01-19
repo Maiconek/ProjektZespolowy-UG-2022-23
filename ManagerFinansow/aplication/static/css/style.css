@@ -233,7 +233,7 @@ p.buttons{
 p.buttons-close{
     margin: 7px 0px;
 }
-.style-button {
+.button {
     background-color: rgba(163, 31, 163, 0.8);
     color: white;
     /* opacity: 0.8; */
