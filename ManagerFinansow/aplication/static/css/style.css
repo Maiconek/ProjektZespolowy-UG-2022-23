@@ -610,5 +610,18 @@ button.dark-mode{
     background-color: rgb(12, 6, 35);
 }
 
+.transaction.dark-mode{
+    background-color: #23377e;
+}
 
-/* LIGHT MODE */
+.transaction.dark-mode > #transaction-description{
+    color:rgba(255, 255, 255, 0.6);
+}
+
+.transaction.dark-mode > #transaction-category > #transaction-subcategory{
+    color:rgba(216, 216, 216, 0.6);
+}
+
+.income.dark-mode{
+    color: #5be379;
+}
