@@ -582,3 +582,33 @@ tr.transaction > td{
     }
 
 }
+
+/* DARK MODE */
+
+body.dark-mode{
+    background-color: #2d428f;
+    color: #fff;
+}
+
+button.dark-mode{
+    color: #fff;
+}
+
+#all-accounts > .dark-mode .account-description{
+    color: rgba(255, 255, 255, 0.6);
+}
+
+#all-accounts > .dark-mode span{
+    color: white;
+}
+
+#site-content.dark-mode{
+    background-color: #081132;
+}
+
+#all-accounts > .dark-mode{
+    background-color: rgb(12, 6, 35);
+}
+
+
+/* LIGHT MODE */

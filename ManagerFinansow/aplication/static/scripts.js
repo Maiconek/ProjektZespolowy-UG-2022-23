@@ -14,52 +14,90 @@ function changeToDark(){
     var allTransactions = document.getElementsByClassName("transaction");
     var linkButton = document.getElementsByClassName("button");
 
-    background.style.backgroundColor = "#2d428f";
-    background.style.color = "white";
-    content.style.backgroundColor = "#081132";
-    //button.style.backgroundColor = "darkblue";
-    button.style.color = "white";
-    //button.innerHTML = "Jasny motyw";
+    background.classList.remove("dark-mode");
+    background.classList.add("dark-mode");
 
+    content.classList.remove("dark-mode");
+    content.classList.add("dark-mode");
     
-    //poszczególne banki (kolejne dzieci elementu all-accounts)
+    button.classList.remove("dark-mode");
+    button.classList.add("dark-mode");
+
     if(allAccounts != null){
-        for (var i = 0; i < allAccounts.children.length; i++) {
-            var description = allAccounts.children[i].querySelector(".account-description");
-            description.style.color = "rgba(255, 255, 255, 0.6)";
-            if(i%2 == 0){
-                allAccounts.children[i].style.backgroundColor = "rgb(12, 6, 35)";
-            }
-            else{
-                allAccounts.children[i].style.backgroundColor = "rgb(34, 15, 8)";
-            }
-            allAccounts.children[i].getElementsByClassName("account-link")[0].style.color = "white";
+        for(var i = 0; i < allAccounts.children.length; i++){
+            allAccounts.children[i].classList.remove("dark-mode");
+            allAccounts.children[i].classList.add("dark-mode");
         }
     }
+
+    if(allTransactions != null){
+        for(var i = 0; i < allTransactions.length; i++){
+            allTransactions[i].classList.remove("dark-mode");
+            allTransactions[i].classList.add("dark-mode");
+        }
+    }
+
+    if(allIncomes != null){
+        for(var i = 0; i < allIncomes.length; i++){
+            allIncomes[i].classList.remove("dark-mode");
+            allIncomes[i].classList.add("dark-mode");
+        }
+    }
+
+    if(allExpenses != null){
+        for(var i = 0; i < allExpenses.length; i++){
+            allExpenses[i].classList.remove("dark-mode");
+            allExpenses[i].classList.add("dark-mode");
+        }
+    }
+
+}
+
+function changeToLight(){
+    var background = document.body;
+    var button = document.getElementById("dark-mode-button");
+    var content = document.getElementById("site-content");
+    var allAccounts = document.getElementById("all-accounts");
+    var allIncomes = document.getElementsByClassName("income");
+    var allExpenses = document.getElementsByClassName("expense");
+
+    var lightBulb = document.getElementById("light-bulb");
+
+    lightBulb.src = "/static/images/bulb_off.png";
 
     //WOJTEK
-    //transakcje
-    if(allTransactions != null){
-        for (var i = 0; i < allTransactions.length; i++) {
-            allTransactions[i].style.backgroundColor = "rgb(161, 161, 119)";
-        }
-    }
+    var allTransactions = document.getElementsByClassName("transaction");
+    var linkButton = document.getElementsByClassName("button");
+
+    background.classList.remove("dark-mode");
+
+    content.classList.remove("dark-mode");
     
-    //przychody
-    if(allIncomes != null){
-        for (var i = 0; i < allIncomes.length; i++) {
-            // allIncomes[i].style.backgroundColor = "rgb(37, 73, 37)";
-            allIncomes[i].style.color = "rgb(37, 73, 37)";
+    button.classList.remove("dark-mode");
+
+    if(allAccounts != null){
+        for(var i = 0; i < allAccounts.children.length; i++){
+            allAccounts.children[i].classList.remove("dark-mode");
         }
     }
 
-    //wydatki
+    if(allTransactions != null){
+        for(var i = 0 ; i < allTransactions.length; i++){
+            allTransactions[i].classList.remove("dark-mode");
+        }
+    }
+
+    if(allIncomes != null){
+        for(var i = 0; i < allIncomes.length; i++){
+            allIncomes[i].classList.remove("dark-mode");
+        }
+    }
+
     if(allExpenses != null){
-        for (var i = 0; i < allExpenses.length; i++) {
-            // allExpenses[i].style.backgroundColor = "rgb(73, 37, 37)";
-            allExpenses[i].style.color = "rgb(73, 37, 37)";
+        for(var i = 0; i < allExpenses.length; i++){
+            allExpenses[i].classList.remove("dark-mode");
         }
-        }
+    }
 
 }
 
@@ -88,55 +126,55 @@ function darkMode() {
         changeToDark();
         sessionStorage.setItem("darkmode", "true");
     } else {    //ustawianie jasnego motywu
-        background.style.backgroundColor = "white";
-        background.style.color = "black";
+
+        changeToLight();
 
         lightBulb.src = "/static/images/bulb_off.png";
 
         //poszczególne banki (kolejne dzieci elementu all-accounts)
-        if(allAccounts != null){
-            for (var i = 0; i < allAccounts.children.length; i++) {
-                var description = allAccounts.children[i].querySelector(".account-description");
-                description.style.color = "rgba(0, 0, 0, 0.6)";
-                if(i%2 == 0){
-                    allAccounts.children[i].style.backgroundColor = "lightgoldenrodyellow";
-                }
-                else{
-                    allAccounts.children[i].style.backgroundColor = "lightsalmon";
-                }
-                allAccounts.children[i].getElementsByClassName("account-link")[0].style.color = "black";
-            }
-        }
+        // if(allAccounts != null){
+        //     for (var i = 0; i < allAccounts.children.length; i++) {
+        //         var description = allAccounts.children[i].querySelector(".account-description");
+        //         description.style.color = "rgba(0, 0, 0, 0.6)";
+        //         if(i%2 == 0){
+        //             allAccounts.children[i].style.backgroundColor = "lightgoldenrodyellow";
+        //         }
+        //         else{
+        //             allAccounts.children[i].style.backgroundColor = "lightsalmon";
+        //         }
+        //         allAccounts.children[i].getElementsByClassName("account-link")[0].style.color = "black";
+        //     }
+        // }
 
         //WOJTEK
-        //transakcje
-        if(allTransactions != null){
-            for (var i = 0; i < allTransactions.length; i++) {
-                allTransactions[i].style.backgroundColor = "lightgoldenrodyellow";
-            }
-        }
+        // //transakcje
+        // if(allTransactions != null){
+        //     for (var i = 0; i < allTransactions.length; i++) {
+        //         allTransactions[i].style.backgroundColor = "lightgoldenrodyellow";
+        //     }
+        // }
         
         //przychody
-        if(allIncomes != null){
-            for (var i = 0; i < allIncomes.length; i++) {
-                // allIncomes[i].style.backgroundColor = "lightgreen";
-                allIncomes[i].style.color = "green";
-            }
-        }
+        // if(allIncomes != null){
+        //     for (var i = 0; i < allIncomes.length; i++) {
+        //         // allIncomes[i].style.backgroundColor = "lightgreen";
+        //         allIncomes[i].style.color = "green";
+        //     }
+        // }
 
-        //wydatki
-        if(allExpenses != null){
-            for (var i = 0; i < allExpenses.length; i++) {
-                // allExpenses[i].style.backgroundColor = "lightcoral";
-                allExpenses[i].style.color = "red";
-            }
-        }
+        // //wydatki
+        // if(allExpenses != null){
+        //     for (var i = 0; i < allExpenses.length; i++) {
+        //         // allExpenses[i].style.backgroundColor = "lightcoral";
+        //         allExpenses[i].style.color = "red";
+        //     }
+        // }
 
-        content.style.backgroundColor = "whitesmoke";
+        // content.style.backgroundColor = "whitesmoke";
 
-        //button.style.backgroundColor = "rgba(163, 31, 163, 0.8)";
-        button.style.color = "white";
-        //button.innerHTML = "Ciemny motyw";
+        // //button.style.backgroundColor = "rgba(163, 31, 163, 0.8)";
+        // button.style.color = "white";
+        // //button.innerHTML = "Ciemny motyw";
         sessionStorage.setItem("darkmode", "false");
     }
  }
