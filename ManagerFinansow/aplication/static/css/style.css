@@ -69,6 +69,7 @@ div.title h1{
     color: purple;
     font-size: 40px;
     font-weight: bold;
+    text-align: center;
 }
 div.content-pc{
     margin-top: 15px;
@@ -454,10 +455,29 @@ td{
     }
 }
 
+/*Screen size 330px*/
+@media screen and (max-width: 330px) {
+    /* top menu */
+    #nav{
+        width: fit-content;
+    }
+
+    nav#navigation.nav{
+        display: block;
+        /* make content centered */
+        justify-content: center;
+        align-items: center;
+        height: auto;
+    }
+
+    #logo-li{
+        /* center */
+        margin: auto;
+    }
+
+    .user-image{
+        display: none;
+    }
 
 
-
-
-
-
-
+}
