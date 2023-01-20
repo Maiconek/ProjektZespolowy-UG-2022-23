@@ -465,10 +465,10 @@ table{
     width: 100%;
 }
 tr { 
-    border: 1px solid #ccc; 
+    /* border: 1px solid #ccc;  */
     justify-content: left;
     width: 100%;
-
+    /* gap: 10px; */
 }
 
 /* get first td */
