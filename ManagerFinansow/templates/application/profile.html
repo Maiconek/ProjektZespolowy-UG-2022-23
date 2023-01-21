@@ -5,9 +5,34 @@
     <div class="title">
         <h1>Strona Profilu</h1>
     </div>
-    <div class="content">
+    <div class="content-pc">
         <p>Witaj {{ user.username }} na swojej stronie profilu</p>
         <p>Tutaj możesz zarządzać swoim profilem</p>
+        <a class="button" href="{% url 'edit-profile' %}">Edytuj swój profil</a>
         <a class="button" href="{% url 'all-categories' %}">Zarządzaj kategoriami</a>
+        <a class="button" href="{% url 'change-password' %}">Zmień hasło</a>
+
+        
+        
+        <h5>Aktualne dane profilu</h5>
+        <p>Dane osobowe: {{profile.name}}</p>
+        <p>Nickname: {{profile.username}}</p>
+        <p>Adres email: {{profile.email}}</p>
+        <p>Aktualnie wybrana waluta: {{profile.currency}}</p>
+            
+        
+        
+        {% for m in mes %}
+            {% if profile == m.userTo %}
+                <p>Użytkownik {{ m.userFrom }} zaprasza cię do dołączenia do konta {{ m.id_account }}!
+                <a href="{% url 'joinAccount' m.id %}">Kliknij by dołączyć</a>
+                <a href="{% url 'deleteInvitation' m.id %}" onclick=
+                "return confirm('Czy napewno chcesz usunąć?')">Odrzuć Zaproszenie</a></p>
+            {% elif profile == m.userFrom %}
+                <p>Wysłano zaproszenie do użytkownika {{ m.userTo }} do dołączenia do konta {{ m.id_account }}
+                <a href="{% url 'deleteInvitation' m.id %}" onclick=
+                "return confirm('Czy napewno chcesz usunąć?')">Usuń Zaproszenie</a></p>
+            {% endif %}
+        {% endfor %}
     </div>
 {% endblock  %} 

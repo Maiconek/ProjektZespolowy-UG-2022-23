@@ -1,0 +1,31 @@
+{% extends 'application/base.html' %}
+
+{% block title %}
+Edytuj profil
+{% endblock %}
+
+{% block content %}
+<div class="title">
+    <h1>Edytuj swój profil</h1>
+</div>
+
+<div class="content-pc">
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+        {% for field in form %}
+        <tr>
+            <td><label>{{field.label}}</label></td>
+            <td><span class="field">{{field}}</span></td>
+        </tr>
+        {% endfor %}
+        </table>
+    <div class="center">
+        <button class="button" type="submit">Edytuj</button>
+    </div>
+    <div class="mam-niemam">
+        <span><a class="purple" href="{% url 'profile' %}">Wróć do strony profilowej</a></span>
+    </div>    
+</form>
+</div>
+{% endblock %}

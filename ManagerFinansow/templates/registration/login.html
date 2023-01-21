@@ -9,14 +9,14 @@
   <h1>Rejestracja</h1>
 </div>
 
-<div class="content site-with-form-content">
+<div class="content-pc site-with-form-content">
   <form action="/register" method="POST">
     {% csrf_token %}
     {{ form.non_field_errors }}
     <table>
       <tr>
         <td>
-          <label>Nazwa użytkownika</label>
+          <label class="bold">Nazwa użytkownika</label>
         </td> 
         <td>
           <span class="field"><input type="text" name="username" maxlength="150" autofocus required id="id_username"></span>
@@ -26,7 +26,7 @@
       
       <tr>
         <td>
-          <label>Imię</label>
+          <label class="bold">Imię</label>
         </td> 
         <td>
           <span class="field"><input type="text" name="first_name" maxlength="150" id="id_first_name"></span>
@@ -36,7 +36,7 @@
       
       <tr>
         <td>
-          <label>Email</label>
+          <label class="bold">Email</label>
         </td> 
         <td>
           <span class="field"><input type="email" name="email" maxlength="254" id="id_email"></span>
@@ -46,7 +46,7 @@
       
       <tr>
         <td>
-          <label>Hasło</label>
+          <label class="bold">Hasło</label>
         </td> 
         <td>
           <span class="field"><input type="password" name="password1" autocomplete="new-password" required id="id_password1"></span>
@@ -56,7 +56,7 @@
       
       <tr>
         <td>
-          <label>Potwierdź hasło</label>
+          <label class="bold">Potwierdź hasło</label>
         </td> 
         <td>
           <span class="field"><input type="password" name="password2" autocomplete="new-password" required id="id_password2"></span>
@@ -80,13 +80,13 @@
 <div class="title">
   <h1>Logowanie</h1>
 </div>
-<div class="content site-with-form-content">
+<div class="content-pc site-with-form-content">
   <form action="{% url 'login' %}" method="POST">
     {% csrf_token %}
     <table>
       <tr>
         <td>
-          <label>Nazwa użytkownika</label>
+          <label class="bold">Nazwa użytkownika</label>
         </td> 
         <td>
           <span class="field">
@@ -100,7 +100,7 @@
       </tr>
       <tr>
         <td>
-          <label>Hasło</label>
+          <label class="bold">Hasło</label>
         </td>
         <td>
           <span class="field">
@@ -119,6 +119,8 @@
   <div class="mam-niemam">
     <span>Nie masz konta?</span>
     <span><a class="purple" href="{% url 'register' %}">Zarejestruj się</a></span>
+    <span>Zapomniałeś hasła?</span>
+    <span><a class="purple" href="{% url 'reset_password' %}">Resetuj hasło</a></span>
   </div>
 </div>
 {% endif %}

@@ -1,77 +1,167 @@
 {% extends 'application/base.html' %}
 
 {% block title %}{{ account }}{% endblock %}
+{%load static%}
 
 {% block content %}
 {% comment %} Strona z informacjami o danym koncie {% endcomment %}
 
     <div class="title">
         <h1>{{ account }}</h1>
-        <h1>{{ account.calculate_balance }} {{ account.currency.sign }}</h1>
-        <h4>{{ account.description }}</h4>
+        <h1>{{ balance }} {{ account.currency.sign }}</h1>
+        {% if account.secription %}
+            <h4>{{ account.description }}</h4>
+        {% endif %}
     </div>
     
-    <div class="content">
+    <div class="content-pc">
         <p class="buttons">
-            <a class="button" href="{% url 'addExpense' account.id %}">Nowy Wydatek</a>
-            <a class="button" href="{% url 'addIncome' account.id %}">Nowy Przychód</a>
+            <a href="{% url 'add' account.id 'income' %}"><img id="plus-icon" src="{% static 'images/icons/plus.png' %}"/></a>
+            <a href="#"><img id="transfer-icon" src="{% static 'images/icons/arrows.png' %}"/></a>
+            <a  href="{% url 'add' account.id 'expense' %}"><img id="minus-icon" src="{% static 'images/icons/minus.png' %}"/></a>
         </p>
+        
         <p class="buttons">
+            {% if fullAccess %}
             <a class="button" href="{% url 'editAccount' account.id %}">Edytuj informacje o koncie</a>
-            <a class="button" href="{% url 'delAccount' account.id %}" onclick=
-            "return confirm('Czy napewno chcesz usunąć konto {{account}}?')">Usuń to konto</a>
+            {% else %}
+            <a class="button">Nie możesz edytować konta</a>
+            {% endif %}
+        </p>
+
+        <!-- <p class="buttons">
+            <a class="button" href="{% url 'invite' account.id %}">Zaproś użytkownika do współdzielenia</a>
+        </p> -->
+        <p class="buttons">
+            {% if fullAccess %}
+            <a class="add_user" href="{% url 'invite' account.id %}" title="Zaproś do współdzielenia"></a>
+            {% else %}
+            <a class="button">Nie możesz zapraszać</a>
+            {% endif %}
         </p>
         <p class="buttons">
-        <a class="button" href="{% url 'all-accounts' %}">Wszystkie Konta</a>
+            <a class="button" href="{% url 'profiles' %}">Lista użytkowników</a>
         </p>
-    
-        <table>
-            {% if account.transactions %}
-            {% else %}
-                <tr><h3>Wygląda na to, że nie dodałeś jeszcze żadnych transakcji na tym koncie</h3></tr>
-            {% endif %}
-            {% if account.is_shared %}
-                <div>
-                    <span>To konto jest ustawione jako współdzielone.<span>
-                    <br/>
-                    <span>Aby zaprosić innego użytkownika do współdzielenia konta, przekaż mu ten URL:<span>
-                    <br/>
-                    <code id="url">{{ request.build_absolute_uri }}/join</code>
-                </div>
-            {% endif %}
-            {% for date in dates %}
+        {% for usr in users %}
+            <p>Wspólnik: {{ usr.id_user }}</p>
+        {% endfor %}
+
+        <table class="table-in-account">
+            {% for date, transactions, value in future %}
                 <tr id="date">
-                    <td colspan="7">{{ date }}</td>
+                    <td colspan="4">{{ date }}</td>
+                    <td>{{ value }} {{ account.currency.sign }}</td>
                 </tr>
-                {% for tr in account.transactions %}
-                    {% if tr.transaction_date == date %}
-                        <tr class="transaction">                        
-                        <td id="transaction-category">{{ tr.id_category }}</td>
-                        {% if tr.id_subcategory %}
-                            <td id="transaction-subcategory">{{ tr.id_subcategory }}</td>
+                {% for tr in transactions %}
+                    <tr class="transaction">                        
+                        <td id="transaction-category">{{ tr.id_category }}
+                            {% if tr.id_subcategory %}
+                                <span id="transaction-subcategory">({{ tr.id_subcategory }})</span>
+                            {% else %}
+                                <span id="transaction-subcategory"></span>
+                            {% endif %}
+                            <span id="transaction-subcategory">{{ tr.subcategory }}</span>
+                        </td>
+                        <!-- <td id="do-not-display"></td> -->
+                        {% if tr.converted_amount >= 0 %}
+                            <td id="transaction-amount" class="income">{{ tr.amount }} {{ tr.currency.sign }}</td>
                         {% else %}
-                            <td id="transaction-subcategory"></td>
+                            <td id="transaction-amount" class="expense">{{ tr.amount }} {{ tr.currency.sign }}</td>
                         {% endif %}
-                        <td id="transaction-name">{{ tr.name }}</td>
+                        <td><a class="purple" href="{% url 'showTransaction' tr.id 0 %}">Szczegóły</a></td>
+
+                        {% if fullAccess %}
+                        <td><a class="copy" href="{% url 'duplicateTransaction' tr.id 0 %}" title="Duplikuj"></a></td>
+                        <td><a class="delete" href="{% url 'delTransaction' tr.id 0 %}" title="Usuń" onclick=
+                            "return confirm('Czy napewno chcesz usunąć tę transakcję?')"></a></td>
+                        {% else %}
+                        <td></td><td></td>
+                        {% endif %}
+
                         {% if tr.description %}
                             <td id="transaction-description">{{ tr.description }}</td>
                         {% else %}
                             <td id="transaction-description"></td>
                         {% endif %}
-                        <td id="transaction-subcategory">{{ tr.subcategory }}</td>
-                        {% if tr.converted_amount >= 0 %}
-                            <td id="transaction-amount" class="income">{{ tr.converted_amount }} {{ tr.currency.sign }}</td>
-                        {% else %}
-                            <td id="transaction-amount" class="expense">{{ tr.converted_amount }} {{ tr.currency.sign }}</td>
-                        {% endif %}
-                        <td><a class="purple" href="{% url 'showTransaction' tr.id %}">Szczegóły</a></td>
-                        <td><a class="purple" href="{% url 'duplicateTransaction' tr.id %}">Duplikuj</a></td>
-                        <td><span class="name"><a class="purple" href="{% url 'delTransaction' tr.id %}" onclick=
-                            "return confirm('Czy napewno chcesz usunąć tę transakcję?')">Usuń</a></span></td>
                         </tr>
-                    {% endif %}
                 {% endfor %}
             {% endfor %}
         </table>
+    
+        <p>Zaplanowanych transakcji w tym miesiącu: {{ count }}</p>
+
+        {% if page_obj.has_previous %}
+        <a href="?page=1">&laquo; first</a>
+        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+
+        <table class="table-in-account">
+            {% for date, transactions, value in daily %}
+                <tr id="date">
+                    <td colspan="4">{{ date }}</td>
+                    <td>{{ value }} {{ account.currency.sign }}</td>
+                </tr>
+                {% for tr in transactions %}
+                    <tr class="transaction">                        
+                        <td id="transaction-category">{{ tr.id_category }}
+                            {% if tr.id_subcategory %}
+                                <span id="transaction-subcategory">({{ tr.id_subcategory }})</span>
+                            {% else %}
+                                <span id="transaction-subcategory"></span>
+                            {% endif %}
+                        <span id="transaction-subcategory">{{ tr.subcategory }}</span>
+
+                        </td>
+                        <!-- <td id="do-not-display"></td> -->
+                        {% if tr.converted_amount >= 0 %}
+                            <td id="transaction-amount" class="income">{{ tr.amount }} {{ tr.currency.sign }}</td>
+                        {% else %}
+                            <td id="transaction-amount" class="expense">{{ tr.amount }} {{ tr.currency.sign }}</td>
+                        {% endif %}
+                        <td><a class="purple" href="{% url 'showTransaction' tr.id 0 %}">Szczegóły</a></td>
+
+                        {% if fullAccess %}
+                        <td><a class="copy" href="{% url 'duplicateTransaction' tr.id 0 %}" title="Duplikuj"></a></td>
+                        <td><a class="delete" href="{% url 'delTransaction' tr.id 0 %}" title="Usuń" onclick=
+                            "return confirm('Czy napewno chcesz usunąć tę transakcję?')"></a></td>
+                        {% else %}
+                        <!-- <td></td><td></td> -->
+                        {% endif %}
+                    
+                        {% if tr.description %}
+                            <td id="transaction-description">{{ tr.description }}</td>
+                        {% else %}
+                            <td id="transaction-description"></td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            {% empty %}
+            <h3>Wygląda na to, że nie dodałeś jeszcze żadnych transakcji na tym koncie</h3>
+            {% endfor %}
+        </table>
+
+        {% if page_obj.has_previous %}
+        <a href="?page=1">&laquo; first</a>
+        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+        
     </div>
 {% endblock %}

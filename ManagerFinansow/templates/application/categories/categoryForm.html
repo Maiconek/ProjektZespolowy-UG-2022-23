@@ -6,16 +6,16 @@
 <div class="title">
     <h1>Utwórz nową kategorie</h1>
 </div>
-<div class="content">
+<div class="content-pc site-with-form-content">
     <form method="POST">
         {% csrf_token %}
         <table>
         <tr>
-            <td><label>Nazwa</label></td>
+            <td><label class="bold">Nazwa</label></td>
             <td><span class="field"><input type="text" name="name" maxlength="255" required id="id_name"></span></td>
         </tr>
         <tr>
-            <td><label>Rodzaj</label></td>
+            <td><label class="bold">Rodzaj</label></td>
             <td><span class="field">
                 <select name="scope" required id="id_scope">
 
@@ -39,16 +39,16 @@
     <h1>Edytuj kategorie</h1>
 </div>
 
-<div class="content">
+<div class="content-pc">
     <form method="POST">
         {% csrf_token %}
         <table>
         <tr>
-            <td><label>Nazwa</label></td>
+            <td><label class="bold">Nazwa</label></td>
             <td><span class="field"><input type="text" name="name" value="{{ category.name }}" maxlength="255" required id="id_name"></span></td>
         </tr>
         <tr>
-            <td><label>Rodzaj</label></td>
+            <td><label class="bold">Rodzaj</label></td>
             <td><span class="field">
                 <select name="scope" required id="id_scope">
                     {% if category.scope == 'INCOME' %}

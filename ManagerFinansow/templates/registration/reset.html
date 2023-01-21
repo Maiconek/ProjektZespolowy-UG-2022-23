@@ -1,0 +1,23 @@
+{% extends 'application/base.html' %}
+{% block title %}Nowe hasło{% endblock %}
+
+{% block content %}
+
+<div class="title">
+    <h1>Nowe hasło</h1>
+</div>
+
+<div class="content-pc site-with-form-content">
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        {{form}}
+        <button class="button" type="submit">Potwierdź</button> 
+</form>
+
+<div class="mam-niemam">
+    <span><a class="purple" href="{% url 'logout' %}">Wróć do domu</a></span>
+  </div>
+</div>
+
+{% endblock %}

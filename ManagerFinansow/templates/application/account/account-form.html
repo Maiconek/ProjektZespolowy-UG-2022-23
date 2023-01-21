@@ -6,13 +6,13 @@
 <div class="title">
     <h1>Utwórz konto</h1>
 </div>
-<div class="content">
+<div class="content-pc">
     <form method="POST">
         {% csrf_token %}
         <table>
         {% for field in form %}
         <tr>
-            <td>{{field.label}}</td>
+            <td><label class="bold">{{field.label}}</label></td>
             <td><span class="field">{{field}}</span></td>
         </tr>
         {% endfor %}
@@ -29,21 +29,28 @@
 <div class="title">
     <h1>Edytuj konto</h1>
 </div>
-<div class="content">
+<div class="content-pc">
     <form method="POST">
         {% csrf_token %}
         <table>
             {% for field in form %}
             <tr>
-                <td>{{field.label}}</td>
+                <td><label class="bold">{{field.label}}</label></td>
                 <td><span class="field">{{field}}</span></td>
             </tr>
             {% endfor %}
             </table>
-        <div>
+        <p class="buttons-close">
             <button class="button" type="submit">Zapisz</button>
             <button type="button" class="button"><a class="inbutton" href="{% url 'account' account.id %}">Anuluj</a></button>
-        </div>
+        </p>
+        <p class="buttons-close">
+            <button class="button" type="button">
+                <a class="inbutton" href="{% url 'delAccount' account.id %}" onclick=
+        "return confirm('Czy napewno chcesz usunąć konto {{account}}?')">Usuń to konto</a>
+            </button>
+    </p>
+        
     </form>
 </div>
 

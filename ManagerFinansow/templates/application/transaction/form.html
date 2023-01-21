@@ -7,63 +7,88 @@
 
 {% if option == "add" %}
 <div class="title">
-    <h1>Dodaj transakcję</h1>
+    <h1>Dodaj 
+    {% if 'expense' in request.get_full_path %}
+    wydatek
+    {% elif 'income' in request.get_full_path %}
+    przychód
+    {% else %}
+    transakcję
+    {% endif %}
+    </h1>
 </div>
-<div class="content">
-    <form method="POST">
-        {% csrf_token %}
-        <table>
-            {% for f in form %}
-                <tr>
-                    <td><label>{{f.label}}</label></td>
-                    <td><span class="field">{{f}}</span></td>
-                </tr>
-            {% endfor %}
-            <tr>
-                <td><label>Date:</label></td>
-                <td><span class="field"><input type="date" name="date", value="{{ today }}"></span></td>
-            </tr>
-        </table>
-        <div class="center">
-            <button class="form-button" type="submit">Dodaj</button> 
-            {% if account is not None %}
-            <button><a class="account-link" href="{% url 'account' pk=account.id %}">Anuluj</a></button>
-            {% else %}
-            <button><a class="account-link" href="{% url 'login' %}">Anuluj</a></button>
-            {% endif %}
-        </div>
-    </form>
-</div>
-
 {% elif option == "edit" %}
 <div class="title">
     <h1>Edytuj transakcję</h1>
 </div>
-<div class="content">
+{% endif %}
+
+<div class="content-pc">
     <form method="POST">
         {% csrf_token %}
         <table>
             {% for f in form %}
                 <tr>
-                    <td><label>{{f.label}}</label></td>
-                    <td><span class="field">{{f}}</span></td>
+                    <td><label class="bold">{{f.label}}</label></td>
+                    <td><span class="field">
+                        {% if f.name == "id_category" %}
+                        <select name="id_category" required id="id_category" onchange="subcatDisplay_AfterClick()">
+                            {% for value, text in form.fields.id_category.choices %}
+                                {% if value == f.value %}
+                                <option selected value="{{value}}">{{ text }}</option>
+                                {% else %}
+                                <option value="{{value}}">{{ text }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                        {% elif f.name == "id_subcategory" %}
+                        <select name="id_subcategory" id="id_subcategory">
+                            <option value="">---------</option>
+                            {% for value, text in form.fields.id_subcategory.choices %}
+                                {% for subcategory in subcategories %}
+                                    {% if subcategory.id == value %}
+                                        {% if value == f.value %}
+                                            <option class="{{subcategory.id_category.id}} subcategory-element" selected value="{{value}}">{{text}}</option>
+                                        {% else %}
+                                            <option class="{{subcategory.id_category.id}} subcategory-element" value="{{value}}">{{text}}</option>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        </select>
+                        {% elif f.name == "transaction_date" %}
+                            {% if option == "add" %}
+                            <input name="transaction_date" id="transaction_date" type="date" name="date" value="{{ today }}">
+                            {% elif option == "edit" %}
+                            <input name="transaction_date" id="transaction_date" type="date" name="date" value="{{ transaction.transaction_date|date:'Y-m-d' }}">
+                            {% endif %}
+                        {% else %}
+                            {{ f }}
+                        {% endif %}
+                    </span></td>
                 </tr>
             {% endfor %}
-            <tr>
-                <td><label>Date:</label></td>
-                <td><span class="field"><input type="date" name="date" value="{{ transaction.transaction_date|date:'Y-m-d' }}"></span></td>
-            </tr>
+            <script type="text/javascript">
+                // window.onload = subcatDisplay_AfterClick();
+                window.onload = subCat_DarkMode();
+                var subcategory = document.getElementById("id_subcategory")
+                if ('{{ form.id_subcategory.value }}' != 'None')
+                    subcategory.value = '{{ form.id_subcategory.value }}';
+            </script>
         </table>
         <div class="center">
-            <button class="form-button" type="submit">Zapisz</button> 
-            {% if account is not None %}
-            <button><a class="account-link" href="{% url 'account' pk=account.id %}">Anuluj</a></button>
+            {% if option == "add" %}
+            <button class="button" type="submit">Dodaj</button> 
+            {% elif option == "edit" %}
+            <button class="button" type="submit">Zapisz</button> 
+            {% endif %}
+            {% if accountless == '0' %}
+            <button type="button" class="button"><a class="inbutton" href="{% url 'account' pk=account.id %}">Anuluj</a></button>
             {% else %}
-            <button><a class="account-link" href="{% url 'login' %}">Anuluj</a></button>
+            <button type="button" class="button"><a class="inbutton" href="{% url 'login' %}">Anuluj</a></button>
             {% endif %}
         </div>
     </form>
 </div>
-{% endif %}
 
 {% endblock %}

@@ -3,11 +3,12 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.db.models import Q
 
-from UsersApp.forms import CustomUserCreationForm
+from UsersApp.forms import CustomUserCreationForm, ProfileForm, SetPasswordForm
 from UsersApp.models import *
+from aplication.models import Invitation
 
-#Create your views here.
 def loginUser(request):
     page = "login"
 
@@ -50,11 +51,6 @@ def registerUser(request):
             login(request, user)
             print(user)
             return redirect("home")
-        else:
-            if form.data['password1'] != form.data['password2']: 
-                messages.error(request, 'Hasło powinno być identyczne')
-            if len(form.data['password1']) < 8: 
-                messages.error(request, 'Hasło powinno mieć przynajmniej 8 znaków')
     context = {"page" : page, 'form': form}
     return render(request, "registration/login.html", context)
 
@@ -63,10 +59,52 @@ def logoutUser(request):
     messages.info(request, 'User was logout')
     return redirect("home")
 
+def changePassword(request):
+    user = request.user
+    form = SetPasswordForm(user)
+    
+    if request.method == "POST":
+        form = SetPasswordForm(user, request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("profile")
+    context = {"form" : form}
+    return render(request, "registration/password-change.html", context)
+
+@login_required(login_url='login')
+def allProfiles(request):
+    profiles = Profile.objects.all()
+    search_query = ''
+
+    if request.GET.get('search_query'):
+        search_query = request.GET.get('search_query')
+
+    profiles= Profile.objects.filter(username__icontains=search_query)
+    context = {'search_query' : search_query, 'profiles' : profiles}
+
+    return render(request, 'application/profiles-list.html', context)
+
+
+    
+
 @login_required(login_url='login')
 def profile(request):
     profile = request.user.profile
-    context = {'profile': profile}
+    context = {'profile': profile, 'mes': Invitation.objects.filter(Q(userTo=profile) | Q(userFrom=profile))}
     return render(request, 'application/profile.html', context)
+
+@login_required(login_url='login')
+def editProfile(request):
+    profile = request.user.profile
+    form = ProfileForm(instance=profile)
+
+    if request.method == "POST":
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+    context = {"form" : form}
+    return render(request, "application/edit-profile.html", context)
+
 
 

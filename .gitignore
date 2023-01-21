@@ -143,4 +143,9 @@ myvenv/Scripts/python.exe
 myvenv/Scripts/pythonw.exe
 myvenv/Scripts/sqlformat.exe
 myvenv/Scripts/currency_converter.exe
+<<<<<<< HEAD
+=======
+
+ManagerFinansow/ManagerFinansow/local_settings/*
+>>>>>>> origin/main
 myvenv/Scripts/normalizer.exe

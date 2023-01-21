@@ -12,19 +12,32 @@
         <button class="button">Dodaj nowe konto</button>
     </a>
 
-    <div class="content tiles" id="all-accounts">
+    <div class="content-pc tiles" id="all-accounts">
         
-        {% for acc in accounts %}
+        {% for acc, sum in page_obj %}
             <div class="account">
                 <a class="account-link" href={% url 'account' pk=acc.id %}>
                 <span class="name">{{ acc }}</span>
                 <span class="account-description">{{ acc.print_description }}</span>
-                <span class="balance">Saldo: {{ acc.calculate_balance }} {{acc.currency.sign}}</span>
+                <span class="balance">Saldo: {{ sum }} {{acc.currency.sign}}</span>
                 <span class="balance">Waluta: {{ acc.currency }}</span>
                 </a>
             </div>
         {% endfor %}
 
     </div>
+    {% if page_obj.has_previous %}
+            <a class="button" href="?page=1">&laquo; pierwsza</a>
+            <a class="button" href="?page={{ page_obj.previous_page_number }}">poprzednia</a>
+    {% endif %}
+
+        <span class="current">
+            Strona {{ page_obj.number }} z {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a class="button" href="?page={{ page_obj.paginator.num_pages }}">poprzednia</a>
+            <a class="button" href="?page={{ page_obj.next_page_number }}">następna &raquo;</a>
+        {% endif %}
     
 {% endblock %}

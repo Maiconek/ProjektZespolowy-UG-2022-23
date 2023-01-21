@@ -4,7 +4,7 @@
 <div class="title">
     <h1>Kategorie</h1>
 </div>
-<div class="content">
+<div class="content-pc">
 
     <div id="default-cat">
         <h3 class="purple">Kategorie domyślne</h3>
@@ -39,7 +39,7 @@
             {% for uc in userCategory %}
                 {% if uc.scope == "INCOME" %}
                     <li id="category">
-                        <span class="bold income">{{uc.name}}</span>
+                        <span class="bold cat-income">{{uc.name}}</span>
                         <p class="buttons-close"><a class="button" href="{% url 'all-subcategories' uc.id %}">Podkategorie</a></p>
                         <p class="buttons-close">
                             <a class="button" href="{% url 'edit-category' uc.id %}">Edytuj</a>
@@ -55,7 +55,7 @@
             {% for uc in userCategory %}
                 {% if uc.scope == "EXPENSE" %}
                     <li id="category">
-                        <span class="bold expense">{{uc.name}}</span>
+                        <span class="bold cat-expense">{{uc.name}}</span>
                         <p class="buttons-close"><a class="button" href="{% url 'all-subcategories' uc.id %}">Podkategorie</a></p>
                         <p class="buttons-close">
                             <a class="button" href="{% url 'edit-category' uc.id %}">Edytuj</a>
@@ -67,6 +67,7 @@
             {% endfor %}
         </ul>
     </div>
+<a class="button" href="{% url 'profile' %}">Wróć</a>
 </div>
 
 {% endblock %}

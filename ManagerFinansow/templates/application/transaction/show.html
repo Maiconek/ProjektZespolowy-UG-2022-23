@@ -21,7 +21,7 @@
     <h5>{{ tr.id_subcategory }}</h5>
     {% endif %}
 </div>
-<div class="content center">
+<div class="content-pc center">
     {% if tr.converted_amount >= 0 %}
         <h2 class="income">{{ tr.converted_amount }} {{ tr.currency.sign }}</h2>
     {% else %}
@@ -36,16 +36,18 @@
     {% else %}
         <p>Cykliczna: <input type="checkbox" onclick="return false;"></p>
     {% endif %} {% endcomment %}
-    {% if tr.is_periodic == True %}
-        <p>Cykliczna: TAK</p>
+    Powtarzanie: {{ tr.repeat }}
+    <p class="buttons"><a class="button" href="{% url 'editTransaction' tr.id accountless %}">Edytuj</a>
+    <a class="button" href="{% url 'duplicateTransaction' tr.id accountless %}">Duplikuj</a>
+    {% if tr.transaction_date > today %}<a class="button" href="{% url 'showTransaction' tr.id accountless %}?action=move">Dodaj dzisiaj</a>{% endif %}
+    {% if tr.repeat is not None %}<a class="button" href="{% url 'showTransaction' tr.id accountless %}?action=skip">Pomiń</a>{% endif %}
+    <a class="button" href="{% url 'delTransaction' tr.id accountless %}" onclick=
+        "return confirm('Czy napewno chcesz usunąć tę transakcję?')">Usuń</a></p>
+    {% if accountless == '0' %}
+        <p class="buttons"><a class="button" href="{% url 'account' tr.id_account.id %}">Powrót do konta</a></p>
     {% else %}
-        <p>Cykliczna: NIE</p>
+        <p class="buttons"><a class="button" href="{% url 'login' %}">Powrót</a></p>
     {% endif %}
-    <p class="buttons"><a class="button" href="{% url 'editTransaction' tr.id %}">Edytuj</a>
-    <a class="button" href="{% url 'duplicateTransaction' tr.id %}">Duplikuj</a>
-    <a class="button" href="{% url 'delTransaction' tr.id %}" onclick=
-        "return confirm('Czy napewno chcesz usunąć tę transakcję?')">Usuń</a>
-    <p class="buttons"><a class="button" href="{% url 'account' tr.id_account.id %}">Powrót do konta</a></p>
     <br>
 </div>
 

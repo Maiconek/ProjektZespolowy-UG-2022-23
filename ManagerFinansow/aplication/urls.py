@@ -17,19 +17,24 @@ from django.urls import path
 from aplication.views import *
 
 urlpatterns = [
-    path('', home, name='home'),
+    path('', Home.as_view(), name='home'),
+    #accounts
     path('all-accounts', allAccounts, name='all-accounts'),
     path('create-account', createAccount, name='create-account'),
-    path('account/<pk>', showAccount, name='account'),
-    path('account/<pk>/del', delAccount, name='delAccount'),
-    path('account/<pk>/edit', editAccount, name='editAccount'),
-    path('account/<pk>/income-add', addIncome, name='addIncome'),
-    path('income-add', addIncome, name='addIncomeAccountless'),
-    path('account/<pk>/expense-add', addExpense, name='addExpense'),
-    path('expense-add', addExpense, name='addExpenseAccountless'),
-    path('account/transaction/<pk>', showTransaction, name='showTransaction'),
-    path('account/transaction-del/<pk>', delTransaction, name='delTransaction'),
-    path('account/transaction-edit/<pk>', editTransaction, name='editTransaction'),
-    path('account/transaction-duplicate/<pk>', duplicate, name='duplicateTransaction'),
-    path('account/<pk>/join', joinAccount, name='joinAccount'),
+    path('account/<uuid:pk>', showAccount, name='account'),
+    path('account/<uuid:pk>/del', delAccount, name='delAccount'),
+    path('account/<uuid:pk>/edit', editAccount, name='editAccount'),
+    path('account/<uuid:pk>/invite', invite, name='invite'),
+    path('invitation/<uuid:pk>/join', joinAccount, name='joinAccount'),
+    path('invitation/<uuid:pk>/del', deleteInvitation, name='deleteInvitation'),
+    #transactions
+    path('account/<uuid:pk>/add/<str:type>', TransactionAdd.as_view(), name='add'),
+    path('add/<str:type>', TransactionAdd.as_view(), name='addAccountless'),
+    path('account/transaction/<uuid:pk>/<str:accountless>/', showTransaction, name='showTransaction'),
+    path('account/transaction-del/<uuid:pk>/<str:accountless>', delTransaction, name='delTransaction'),
+    path('account/transaction-edit/<uuid:pk>/<str:accountless>', TransactionEdit.as_view(), name='editTransaction'),
+    path('account/transaction-duplicate/<uuid:pk>/<str:accountless>', TransactionDuplicate.as_view(), name='duplicateTransaction'),
+    #other
+    path('budget', budget, name='budget'),
+    path('summary', summary, name='summary'),
 ]
