@@ -6,6 +6,23 @@
         <h1>Podsumowania</h1>
     </div>
     <div class="content-pc">
-        <p>Tu będą podsumowania jak ktoś ogarnie js-a</p>
+        Wydatki:
+        <ul type="none">
+            {% for category, sum, perc in object_list %}
+                {% if category.scope == 'EXPENSE' %}
+                <li>{{ category }}: {{ sum }} {{ request.user.profile.currency.sign }}&emsp;&emsp;{{ perc }}%</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        Przychody:
+        <ul type="none">
+            {% for category, sum, perc in object_list %}
+                {% if category.scope == 'INCOME' %}
+                <li>{{ category }}: {{ sum }} {{ request.user.profile.currency.sign }}&emsp;&emsp;{{ perc }}%</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+
+        <a class="button" href="{% url 'all-categories' %}">Zarządzanie kategoriami</a>
     </div>
 {% endblock  %} 

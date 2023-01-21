@@ -36,5 +36,5 @@ urlpatterns = [
     path('account/transaction-duplicate/<uuid:pk>/<str:accountless>', TransactionDuplicate.as_view(), name='duplicateTransaction'),
     #other
     path('budget', budget, name='budget'),
-    path('summary', summary, name='summary'),
+    path('summary', Summary.as_view(), name='summary'),
 ]
