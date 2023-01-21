@@ -42,13 +42,13 @@ nav.nav{
     width: 250px;
 }
 #plus-icon{
-    width: 50px;
+    width: 30px;
 }
 #minus-icon{
-    width: 50px;
+    width: 30px;
 }
 #transfer-icon{
-    width: 50px;
+    width: 30px;
 }
 
 /* CONTENT */
@@ -351,8 +351,8 @@ a.copy:hover{
 }
 a.add_user{
     display: block;
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     background-image: url("/static/images/icons/add_user.png");
     background-repeat: no-repeat;
     background-position: center;
