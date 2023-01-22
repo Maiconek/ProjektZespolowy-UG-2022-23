@@ -7,7 +7,9 @@ from aplication.services import prepareTransactions, updateTransactions, sumCurr
 from django.core.paginator import Paginator
 from django.views.generic.base import TemplateView
 from django.db.models import Q
-from django.http import HttpResponseForbidden
+
+def error404(request, exception):
+    return render(request, 'application/error/404.html')
 
 class Home(TemplateView):
     template_name = 'application/home/home-logout.html'
@@ -39,14 +41,12 @@ def showAllTransactions(request):
 @permission_required_account('FULL')
 def showAccount(request, pk):
     account = Account.objects.get(id=pk)
-    users = User_Account.objects.filter(id_account=account).exclude(id_user=request.user.profile)
     updateTransactions(Transaction.objects.filter(id_account=account))
     transactions = Transaction.objects.filter(id_account=account)
     page_number = request.GET.get('page')
     prepared = prepareTransactions(transactions, account.currency, page_number, 20)
     context = {
         'account': account, 
-        'users': users,
         'daily': prepared[0],  
         'balance': prepared[1],
         'future': prepared[2],
@@ -108,53 +108,10 @@ def editAccount(request, pk):
     return render(request, 'application/account/account-form.html', context)
 
 @login_required(login_url='login')
-def joinAccount(request, pk):
-    invitation = get_object_or_404(Invitation, id=pk)
-    if invitation.userTo.id != request.user.profile.id:
-        return HttpResponseForbidden
-    context = {'invitation': invitation}
-    if request.method == 'POST':
-        account_user = User_Account(request.user.profile.id, invitation.id_account.id, invitation.access_level)
-        account_user.save()
-        invitation.delete()
-        return redirect('account', pk=invitation.id_account.id)
-    return render(request, 'application/account/account-join.html', context)
-
-def error404(request, exception):
-    return render(request, 'application/error/404.html')
-
-@login_required(login_url='login')
 @permission_required_account('LIMITED')
 def delAccount(request, pk):
     account = get_object_or_404(Account, id=pk)
     if account.owner == request.user.profile:
         account.delete()
     return redirect('all-accounts')
-
-@login_required(login_url='login')
-@permission_required_account('LIMITED')
-def invite(request, pk):
-    account = get_object_or_404(Account, id=pk)
-    form = InviteForm(account=account)
-    if request.method == "POST":
-        form = InviteForm(data=request.POST, account=account)
-        if form.is_valid():
-            invitation = Invitation(
-                userFrom = request.user.profile,
-                userTo = form.cleaned_data['profile'].profile,
-                id_account =account,
-                access_level = form.cleaned_data['access_level']
-            )
-            invitation.save()
-            return redirect('account', pk=account.id)
-    context = {'account': account, 'form': form}
-    return render(request, 'application/account/account-invite.html', context)
-
-@login_required(login_url='login')
-def deleteInvitation(request, pk):
-    invitation = get_object_or_404(Invitation, id=pk)
-    if invitation.userTo.id != request.user.profile.id and invitation.userFrom.id != request.user.profile.id:
-        return HttpResponseForbidden()
-    invitation.delete()
-    return redirect('profile')
 

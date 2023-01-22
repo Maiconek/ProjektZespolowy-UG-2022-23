@@ -40,7 +40,8 @@
             {% endif %}
         </p>
         <p class="buttons">
-            <a class="button" href="{% url 'profiles' %}">Lista użytkowników</a>
+            <a class="button" href="{% url 'users' account.id %}">Lista użytkowników</a>
+            <a class="button" href="{% url 'profiles' %}">Wyszukiwarka?</a>
         </p>
         {% for usr in users %}
             <p>Wspólnik: {{ usr.id_user }}</p>

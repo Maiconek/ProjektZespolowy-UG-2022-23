@@ -24,7 +24,11 @@ urlpatterns = [
     path('account/<uuid:pk>', showAccount, name='account'),
     path('account/<uuid:pk>/del', delAccount, name='delAccount'),
     path('account/<uuid:pk>/edit', editAccount, name='editAccount'),
+    #sharing
     path('account/<uuid:pk>/invite', invite, name='invite'),
+    path('account/<uuid:pk>/users', ManageUsers.as_view(), name='users'),
+    path('account/<uuid:pk>/users/del/<uuid:pk1>', deleteUserAccount, name='delUser'),
+    #invitations
     path('invitation/<uuid:pk>/join', joinAccount, name='joinAccount'),
     path('invitation/<uuid:pk>/del', deleteInvitation, name='deleteInvitation'),
     #transactions

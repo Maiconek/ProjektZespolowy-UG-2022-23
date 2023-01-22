@@ -1,0 +1,21 @@
+{% extends 'application/base.html' %}
+
+{% block title %}Użytkownicy{% endblock %}
+
+{% block content %}
+    <div class="title">
+        <h1>Użytkownicy konta</h1>
+    </div>
+    <div class="content-pc">
+        {%if not owner %}
+        <a class="button" href="{% url 'delUser' account.id request.user.profile.id %}" onclick=
+        "return confirm('Czy napewno chcesz opuścić konto {{account}}?')">Opuść Konto</a>
+        {% endif %}
+        <ul type="None">
+        {% for user in object_list %}
+        <li>{{ user }} <a class="button" href="{% url 'delUser' account.id user.id %}" onclick=
+            "return confirm('Czy napewno chcesz usunąć użytkownika {{user}}?')">Usuń</a></li>
+        {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
