@@ -9,11 +9,11 @@ from django.db.models import Q
 class AccountForm(ModelForm):
     class Meta:
         model = Account
-        fields = ['name', 'currency','is_shared' ,'description']
+        fields = ['name', 'currency', 'description']
         labels = {
             'name' : 'Nazwa',
             'currency' : 'Waluta',
-            'is_shared' : 'Współdzielone?',
+            # 'is_shared' : 'Współdzielone?',
             'description' : 'Opis'
         }
 

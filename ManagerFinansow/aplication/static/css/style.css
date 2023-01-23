@@ -41,7 +41,7 @@ nav.nav{
 #app-logo{
     width: 250px;
 }
-#plus-icon{
+/* #plus-icon{
     width: 50px;
 }
 #minus-icon{
@@ -49,11 +49,20 @@ nav.nav{
 }
 #transfer-icon{
     width: 50px;
+} */
+#plus-icon{
+    width: 40px;
+}
+#minus-icon{
+    width: 40px;
+}
+#transfer-icon{
+    width: 40px;
 }
 
 /* CONTENT */
 #site-content{
-    min-height: calc(100vh - 60px - 4vh - (60px - 4vh) - 30px); 
+    min-height: calc(100vh - 4vh - (60px + 4vh) - 30px); 
     /* 100vh - nav height - marginBottom - marginTop - footer height */
     margin-top: calc(60px + 4vh);
     margin-bottom: 4vh;
@@ -360,6 +369,10 @@ a.add_user{
 }
 a.add_user:hover{
     background-image: url("/static/images/icons/add_user_hover.png");
+}
+a.square-30px{
+    width: 30px;
+    height: 30px;
 }
 
 input[type='email'], input[type='password2'] {

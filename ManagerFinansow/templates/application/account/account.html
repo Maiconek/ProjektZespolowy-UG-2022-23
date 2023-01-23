@@ -24,23 +24,20 @@
         <p class="buttons">
             {% if fullAccess %}
             <a class="button" href="{% url 'editAccount' account.id %}">Edytuj informacje o koncie</a>
-            {% else %}
-            <a class="button">Nie możesz edytować konta</a>
+            {% comment %} {% else %}
+            <a class="button">Nie możesz edytować konta</a> {% endcomment %}
             {% endif %}
         </p>
 
-        <!-- <p class="buttons">
-            <a class="button" href="{% url 'invite' account.id %}">Zaproś użytkownika do współdzielenia</a>
-        </p> -->
         <p class="buttons">
             {% if fullAccess %}
             <a class="add_user" href="{% url 'invite' account.id %}" title="Zaproś do współdzielenia"></a>
-            {% else %}
-            <a class="button">Nie możesz zapraszać</a>
+            {% comment %} {% else %}
+            <a class="button">Nie możesz zapraszać</a> {% endcomment %}
             {% endif %}
+            <a class="button" href="{% url 'users' account.id %}">Lista użytkowników</a>
         </p>
         <p class="buttons">
-            <a class="button" href="{% url 'users' account.id %}">Lista użytkowników</a>
             <a class="button" href="{% url 'profiles' %}">Wyszukiwarka?</a>
         </p>
         {% for usr in users %}

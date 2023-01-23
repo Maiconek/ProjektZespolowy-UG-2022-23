@@ -36,13 +36,15 @@
     {% else %}
         <p>Cykliczna: <input type="checkbox" onclick="return false;"></p>
     {% endif %} {% endcomment %}
-    Powtarzanie: {{ tr.repeat }}
+    {% if tr.repeat is not none %}
+        Powtarzanie: {{ tr.repeat }}
+    {% endif %}
     <p class="buttons"><a class="button" href="{% url 'editTransaction' tr.id accountless %}">Edytuj</a>
-    <a class="button" href="{% url 'duplicateTransaction' tr.id accountless %}">Duplikuj</a>
+    <a class="copy square-30px" href="{% url 'duplicateTransaction' tr.id accountless %}" title="Duplikuj"></a>
     {% if tr.transaction_date > today %}<a class="button" href="{% url 'showTransaction' tr.id accountless %}?action=move">Dodaj dzisiaj</a>{% endif %}
     {% if tr.repeat is not None %}<a class="button" href="{% url 'showTransaction' tr.id accountless %}?action=skip">Pomiń</a>{% endif %}
-    <a class="button" href="{% url 'delTransaction' tr.id accountless %}" onclick=
-        "return confirm('Czy napewno chcesz usunąć tę transakcję?')">Usuń</a></p>
+    <a class="delete square-30px" href="{% url 'delTransaction' tr.id accountless %}" title="Usuń" onclick=
+        "return confirm('Czy napewno chcesz usunąć tę transakcję?')"></a></p>
     {% if accountless == '0' %}
         <p class="buttons"><a class="button" href="{% url 'account' tr.id_account.id %}">Powrót do konta</a></p>
     {% else %}
