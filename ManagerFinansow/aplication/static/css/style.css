@@ -710,3 +710,19 @@ input.dark-mode{
     background-color: hsl(259, 90%, 19%);
     color: #fff;
 }
+
+/* SUMMARY */
+/* #summary-span{
+    display: grid;
+    grid-template-columns: auto, auto, auto;
+}
+#sum-category{
+    grid-column: 1 / 3;
+}
+#sum-amount{
+    grid-column: 3 / 5;
+
+}
+#sum-percentage{
+    grid-column: 5 / 7;
+} */
