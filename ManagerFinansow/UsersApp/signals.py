@@ -16,8 +16,8 @@ def createProfile(sender, instance, created, **kwargs):
             name = user.first_name,
         )
 
-        subject = "Welcome to Cointrol!"
-        message = "We are glad you are here!"
+        subject = f"Welcome to Cointrol {user.username}!"
+        message = f"Hello {user.username}! We are glad thay you've decided to join us! With Coinlify you will be able to control your finances and plan your next expenses."
 
         send_mail(
             subject,
