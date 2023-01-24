@@ -6,7 +6,7 @@
         <h1>Podsumowania</h1>
     </div>
     <div class="content-pc">
-        Wydatki:
+        {% comment %} Wydatki:
         <ul type="none">
             {% for category, sum, perc in object_list %}
                 {% if category.scope == 'EXPENSE' and sum > 0 %}
@@ -21,13 +21,13 @@
                 <li>{{ category }}: {{ sum }} {{ request.user.profile.currency.sign }}&emsp;&emsp;{{ perc }}%</li>
                 {% endif %}
             {% endfor %}
-        </ul>
+        </ul> {% endcomment %}
 
         {% comment %} TMP {% endcomment %}
         <table id="summary-span">
             <th>Wydatki:</th>
             {% for category, sum, perc in object_list %}
-                {% if category.scope == 'EXPENSE' and sum > 0 %}
+                {% if category.scope == 'EXPENSE' and sum != 0 %}
                 <tr>
                     <td id="sum-category">{{ category }}:</td>
                     <td id="sum-amount">{{ sum }} {{ request.user.profile.currency.sign }}</td>
@@ -37,7 +37,7 @@
             {% endfor %}
             <th>Przychody:</th>
             {% for category, sum, perc in object_list %}
-                {% if category.scope == 'INCOME' and sum > 0 %}
+                {% if category.scope == 'INCOME' and sum != 0 %}
                 <tr>
                     <td id="sum-category">{{ category }}:</td>
                     <td id="sum-amount">{{ sum }} {{ request.user.profile.currency.sign }}</td>
@@ -48,7 +48,7 @@
         </table>
 
         {% comment %} TMP {% endcomment %}
-
+        <br>
         <a class="button" href="{% url 'all-categories' %}">Zarządzanie kategoriami</a>
     </div>
 {% endblock  %} 

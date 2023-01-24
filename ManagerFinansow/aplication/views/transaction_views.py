@@ -133,8 +133,6 @@ def showTransaction(request, pk, accountless=0):
 @permission_required_transaction('LIMITED')
 def delTransaction(request, pk, accountless=0):
     transaction = get_object_or_404(Transaction, id=pk)
-    if transaction.id_account.owner != request.user.profile:
-        raise Http404
     account = transaction.id_account
     transaction.delete()
     if accountless == '0':
