@@ -58,6 +58,14 @@
     </nav> 
     <div id = "site-content">
         <button onclick="darkMode()" id="dark-mode-button"><img id="light-bulb" src="{% static 'images/bulb_off.png' %}" /></button>
+        {% if messages %}
+            <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+            </ul>
+        {% endif %}
+        
         {% block content %}
         {% endblock %}
     </div>
