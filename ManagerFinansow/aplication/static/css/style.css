@@ -473,7 +473,7 @@ td{
 
 #do-not-display{
     display: none;
-  }
+}
 
 /* Force table to not be like tables anymore */
 thead, th, td, tr { 
@@ -511,6 +511,7 @@ tr > td:nth-child(2){
     margin-right: 10px;
     border: none;
     text-align: left;
+    justify-content:flex-end;
 }
 
 /* get third td */
@@ -750,3 +751,25 @@ input.dark-mode{
 #sum-percentage{
     grid-column: 5 / 7;
 } */
+
+.site-with-form-content > form > table{ 
+    display: flex; 
+    flex-wrap: wrap;
+    flex-direction:row;
+    align-items: flex-start;
+    justify-content:flex-start;
+    padding-left: 5px;
+}
+
+.site-with-form-content > form > table > tbody{ 
+    display: flex; 
+    flex-wrap: wrap;
+    flex-direction:row;
+    align-items: flex-start;
+    justify-content:flex-start;
+    padding-left: 5px;
+}
+
+.site-with-form-content > form > table > tbody > tr >td:nth-child(2){ 
+    max-width: none;
+}
