@@ -27,9 +27,9 @@
             </a>
             <li class="nav-item mobile-menu no-display"><a class="nav-link" href="{% url 'profile' %}">{{ user.username }}</a></li>
             <li class="nav-item mobile-menu"><a class="nav-link" href="{% url 'all-accounts' %}">Konta</a></li>
-            {% comment %} <li class="nav-item"><a class="nav-link" href="{% url 'all-categories' %}">Kategorie</a></li> {% endcomment %}
             <li class="nav-item mobile-menu"><a class="nav-link" href="{% url 'summary' %}">Podsumowania</a></li>
-            <li class="nav-item mobile-menu"><a class="nav-link" href="{% url 'budget' %}">Budżet</a></li>
+            {% comment %} <li class="nav-item mobile-menu"><a class="nav-link" href="{% url 'budget' %}">Budżet</a></li> {% endcomment %}
+            <li class="nav-item mobile-menu"><a class="nav-link" href="{% url 'all-categories' %}">Kategorie</a></li>
             <li class="nav-item mobile-menu no-display"><a class="nav-link" href="{% url 'logout' %}">Wyloguj</a></li>
         </ul>
         <ul class="nav justify-content-end user-image">

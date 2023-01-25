@@ -170,9 +170,11 @@ a.account-link > span.account-description{
     /* ACCOUNT */
 #date{
     text-align: center;
+    font-size:14pt;
 }
 tr.transaction{
-    border: 1px solid rgb(236, 182, 19);
+    min-height:32px;
+    /* border: 1px solid rgb(236, 182, 19); */
     border-collapse: collapse;
     background-color: rgba(250, 250, 210, 0.5);
 }
@@ -249,8 +251,8 @@ span.field{
 }
 select, input{
     min-width: 200px;
-    background-color: rgba(250, 250, 210, 0.5);
-    color: #800080;
+    background-color: rgba(255, 255, 255, 0.5);
+    color: #000000;
 }
 select option:hover{
     box-shadow: 0 0 10px 100px #000000 inset;
@@ -485,6 +487,11 @@ thead, th, td, tr {
     padding-left: 5px;
 
 }
+
+.sum > thead, .sum > tbody > th, .sum > tbody > td, .sum > tbody > tr { 
+    padding-left: 0;
+}
+
 table{
     width: 88%;
     margin:auto;
@@ -564,8 +571,7 @@ tr > td:nth-child(5){
 } */
 
 tr.transaction{
-    border-bottom: 2px solid #e8c44c;  
-    border-right: 2px solid #e8c44c;  
+    border: 2px solid #e8dcb8;  
 }
 
 tr.transaction > td{
@@ -573,7 +579,28 @@ tr.transaction > td{
     padding: 0;
 }
 
+.site-with-form-content > form > table{ 
+    display: flex; 
+    flex-wrap: wrap;
+    flex-direction:row;
+    align-items: flex-end;
+    justify-content:flex-end;
+    padding-left: 5px;
+    max-width:60%;
+}
 
+.site-with-form-content > form > table > tbody{ 
+    display: flex; 
+    flex-wrap: wrap;
+    flex-direction:row;
+    align-items: flex-end;
+    justify-content:flex-end;
+    padding-left: 5px;
+}
+
+.site-with-form-content > form > table > tbody > tr >td:nth-child(2){ 
+    max-width: none;
+}
 
 
 
@@ -671,10 +698,16 @@ tr.transaction > td{
     #site-content {
         width:100%;
         margin-top:20px;
+        min-height: 93vh;
+        border:none;
+        margin-bottom:0;
     }
 
     table {
         width:95%;
+    }
+    .site-with-form-content > form > table{ 
+        max-width: 100%;
     }
 
 }
@@ -682,7 +715,7 @@ tr.transaction > td{
 /* DARK MODE */
 
 body.dark-mode{
-    background-color: #2d428f;
+    background-color: #0b0f12;
     color: #fff;
 }
 
@@ -699,15 +732,16 @@ button.dark-mode{
 }
 
 #site-content.dark-mode{
-    background-color: #081132;
+    background-color: #212329;
 }
 
 #all-accounts > .dark-mode{
-    background-color: rgb(12, 6, 35);
+    background-color: rgb(69, 19, 88);
 }
 
 .transaction.dark-mode{
-    background-color: #23377e;
+    background-color: #191b27;
+    border-color:#080c12;
 }
 
 .transaction.dark-mode > #transaction-description{
@@ -719,7 +753,11 @@ button.dark-mode{
 }
 
 .income.dark-mode{
-    color: #5be379;
+    color: #25a140c0;
+}
+
+.expense.dark-mode{
+    color: #c72020dd;
 }
 
 .purple.dark-mode, #tr-acc-link.dark-mode{
@@ -727,12 +765,12 @@ button.dark-mode{
 }
 
 select.dark-mode{
-    background-color: hsl(259, 90%, 19%);
+    background-color: hsl(217, 29%, 18%);
     color: #fff;
 }
 
 input.dark-mode{
-    background-color: hsl(259, 90%, 19%);
+    background-color: hsl(215, 31%, 20%);
     color: #fff;
 }
 
@@ -752,24 +790,3 @@ input.dark-mode{
     grid-column: 5 / 7;
 } */
 
-.site-with-form-content > form > table{ 
-    display: flex; 
-    flex-wrap: wrap;
-    flex-direction:row;
-    align-items: flex-start;
-    justify-content:flex-start;
-    padding-left: 5px;
-}
-
-.site-with-form-content > form > table > tbody{ 
-    display: flex; 
-    flex-wrap: wrap;
-    flex-direction:row;
-    align-items: flex-start;
-    justify-content:flex-start;
-    padding-left: 5px;
-}
-
-.site-with-form-content > form > table > tbody > tr >td:nth-child(2){ 
-    max-width: none;
-}
