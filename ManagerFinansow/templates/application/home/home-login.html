@@ -7,7 +7,6 @@
 
 {% comment %} Strona Domowa użytkownika {% endcomment %}
     <div class="title">
-        <h1>Saldo</h1>
         <h1>{{ balance }} {{ profile.currency.sign }}</h1>
     </div>
     <div class="content-pc">
@@ -24,7 +23,7 @@
                 <td>{{ value }} {{ profile.currency.sign }}</td>
             </tr>
             {% for tr in transactions %}
-                <tr class="transaction">
+                <tr class="transaction" {% if not forloop.last %} style="border-bottom:none;" {% endif %}>
                     <!-- <td id="transaction-category" class="bold">{{ tr.id_category }}</td>
                     {% if tr.id_subcategory %}
                     <td id="transaction-subcategory">({{ tr.id_subcategory }})</td>
@@ -81,7 +80,7 @@
                 <td>{{ value }} {{ profile.currency.sign }}</td>
             </tr>
             {% for tr in transactions %}
-                <tr class="transaction">
+                <tr class="transaction" {% if not forloop.last %} style="border-bottom:none;" {% endif %}>
                     <!-- <td id="transaction-category" class="bold">{{ tr.id_category }}</td>
                     {% if tr.id_subcategory %}
                     <td id="transaction-subcategory">({{ tr.id_subcategory }})</td>

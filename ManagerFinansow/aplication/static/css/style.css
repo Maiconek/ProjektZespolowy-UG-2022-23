@@ -72,6 +72,10 @@ nav.nav{
     padding-right: 1vw;
     padding-top: 1vh;
     padding-bottom: 1vh;
+    width:73%;
+    margin:auto;
+    margin-top: calc(60px + 4vh);
+    margin-bottom: 4vh;
     border: 3px solid purple;
     border-radius: 10px;
     background-color: whitesmoke;
@@ -79,10 +83,12 @@ nav.nav{
 }
 #dark-mode-button{
     position: absolute;
-    top: 20px;
+    top: 16px;
+    left: 97%;
+    float:right;
 }
 #dark-mode-button > img{
-    width: 30px;
+    width: 16px;
 }
 div.title{
     padding-top: 5vh;
@@ -435,6 +441,11 @@ td{
         margin-left: 0;
     }
 
+    #dark-mode-button{
+        top: 6px;
+        left: 92%;
+    }
+
 }
 
 #transaction-description{
@@ -465,7 +476,7 @@ td{
   }
 
 /* Force table to not be like tables anymore */
-table, thead, tbody, th, td, tr { 
+thead, th, td, tr { 
     display: flex; 
     flex-wrap: wrap;
     flex-direction:row;
@@ -475,7 +486,8 @@ table, thead, tbody, th, td, tr {
 
 }
 table{
-    width: 100%;
+    width: 88%;
+    margin:auto;
 }
 tr { 
     /* border: 1px solid #ccc;  */
@@ -495,6 +507,8 @@ tr > td:first-child{
 tr > td:nth-child(2){
     flex: 30%;
     min-width: fit-content;
+    max-width: 20%;
+    margin-right: 10px;
     border: none;
     text-align: left;
 }
@@ -549,7 +563,8 @@ tr > td:nth-child(5){
 } */
 
 tr.transaction{
-    border-bottom: 5px solid #081132; 
+    border-bottom: 2px solid #e8c44c;  
+    border-right: 2px solid #e8c44c;  
 }
 
 tr.transaction > td{
@@ -650,6 +665,15 @@ tr.transaction > td{
     #mobile-menu-button > img{
         flex:0 ;
         margin-left: 0;
+    }
+
+    #site-content {
+        width:100%;
+        margin-top:20px;
+    }
+
+    table {
+        width:95%;
     }
 
 }

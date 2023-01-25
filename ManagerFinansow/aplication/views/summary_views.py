@@ -23,4 +23,4 @@ class Summary(ListView):
         for c in categories:
             s_c = sumCurrency(Transaction.objects.filter(Q(id_category=c.id) & Q(id_user=self.request.user.profile)), currency)
             categories_with_sum.append((c, -s_c if c.scope == 'EXPENSE' else s_c, round(100 * s_c / (sum_exp if c.scope == 'EXPENSE' else sum_inc), 2)))
-        return categories_with_sum
+        return sorted(categories_with_sum, key=lambda tup: tup[1], reverse=True)

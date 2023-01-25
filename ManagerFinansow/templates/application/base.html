@@ -54,10 +54,10 @@
             <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Rejestracja</a></li>
         </ul>
         {% endif %}
-        
+        <button onclick="darkMode()" id="dark-mode-button"><img id="light-bulb" src="{% static 'images/bulb_off.png' %}" /></button>
     </nav> 
     <div id = "site-content">
-        <button onclick="darkMode()" id="dark-mode-button"><img id="light-bulb" src="{% static 'images/bulb_off.png' %}" /></button>
+        
         {% if messages %}
             <ul class="messages">
             {% for message in messages %}

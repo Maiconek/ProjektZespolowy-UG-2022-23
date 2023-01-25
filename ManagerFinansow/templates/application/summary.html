@@ -5,6 +5,7 @@
     <div class="title">
         <h1>Podsumowania</h1>
     </div>
+
     <div class="content-pc">
         {% comment %} Wydatki:
         <ul type="none">
@@ -24,24 +25,43 @@
         </ul> {% endcomment %}
 
         {% comment %} TMP {% endcomment %}
-        <table id="summary-span">
-            <th>Wydatki:</th>
+        <a class="button" style="margin-left:80px;" href="{% url 'all-categories' %}">Zarządzanie kategoriami</a><br><br>
+        <table id="summary-span" style="font-family: Arial, Helvetica, sans-serif;">
+            <th style="font-size:16pt;">Wydatki:</th>
             {% for category, sum, perc in object_list %}
                 {% if category.scope == 'EXPENSE' and sum != 0 %}
-                <tr>
+                <tr style="font-size:13pt;">
                     <td id="sum-category">{{ category }}:</td>
                     <td id="sum-amount">{{ sum }} {{ request.user.profile.currency.sign }}</td>
-                    <td id="sum-percentage">{{ perc }}%</td>
+                </tr>
+                <tr>
+                <td>
+                    <div class="progress" style="height:20px; width:95%; ">
+                        <div class="progress-bar" role="progressbar" style="background-color: rgb(22, 110, 224); width: {{ perc }}%;" aria-valuenow="{{ perc }}" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </td>
+                </tr>
+                <tr>
+                    <td>{{ perc }}%</td>
                 </tr>
                 {% endif %}
             {% endfor %}
-            <th>Przychody:</th>
+            <th style="font-size:16pt;">Przychody:</th>
             {% for category, sum, perc in object_list %}
                 {% if category.scope == 'INCOME' and sum != 0 %}
-                <tr>
+                <tr style="font-size:13pt;">
                     <td id="sum-category">{{ category }}:</td>
                     <td id="sum-amount">{{ sum }} {{ request.user.profile.currency.sign }}</td>
-                    <td id="sum-percentage">{{ perc }}%</td>
+                </tr>
+                <tr>
+                <td>
+                    <div class="progress" style="height:20px; width:95%;">
+                        <div class="progress-bar" role="progressbar" style="background-color: rgb(25, 179, 35); width: {{ perc }}%;" aria-valuenow="{{ perc }}" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </td>
+                </tr>
+                <tr>
+                    <td>{{ perc }}%</td>
                 </tr>
                 {% endif %}
             {% endfor %}
@@ -49,6 +69,5 @@
 
         {% comment %} TMP {% endcomment %}
         <br>
-        <a class="button" href="{% url 'all-categories' %}">Zarządzanie kategoriami</a>
     </div>
 {% endblock  %} 
