@@ -16,6 +16,40 @@
             <a  href="{% url 'addAccountless' type='expense' %}"><img id="minus-icon" src="{% static 'images/icons/minus.png' %}"/></a>
         </p>
 
+        {% if page_obj.paginator.num_pages > 1 %}
+        <nav aria-label="...">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                <a class="page-link" href="?page=1" tabindex="-1">&laquo;</a></li>
+                <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&lt;</a></li>
+                {% else %}
+                <li class="page-item disabled">
+                <a class="page-link" href="" tabindex="-1">&laquo;</a></li>
+                <li class="page-item disabled">
+                <a class="page-link" href="">&lt;</a></li>
+                {% endif %}
+
+                <li class="page-item active">
+                <a class="page-link" href="">{{ page_obj.number }}/{{ page_obj.paginator.num_pages }}</a></li>
+
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">&gt;</a></li>
+                <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a></li> 
+                {% else %}
+                <li class="page-item disabled">
+                <a class="page-link" href="">&gt;</a></li> 
+                <li class="page-item disabled">
+                <a class="page-link" href="" tabindex="-1">&raquo;</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+
+        <div id="myDIV" style="display:none;">
         <table>
         {% for date, transactions, value in future %}
             <tr id="date">
@@ -23,7 +57,12 @@
                 <td id="transaction-amount"{% if value >= 0 %}class='income' {% else %}class='expense' {% endif %}>{{ value }} {{ profile.currency.sign }}</td>
             </tr>
             {% for tr in transactions %}
-                <tr class="transaction" {% if not forloop.last %} style="border-bottom:none;" {% endif %}>
+                <tr class="transaction"                 
+                style="{% if not forloop.last %} border-bottom:none;{% endif %}
+                {% if forloop.last %} border-bottom-left-radius:10px;border-bottom-right-radius:10px;
+                {% endif %}
+                {% if forloop.first %} border-top-left-radius:10px;border-top-right-radius:10px;
+                {% endif %}">
                     <!-- <td id="transaction-category" class="bold">{{ tr.id_category }}</td>
                     {% if tr.id_subcategory %}
                     <td id="transaction-subcategory">({{ tr.id_subcategory }})</td>
@@ -56,24 +95,28 @@
             {% endfor %}
         {% endfor %}
         </table>
+        </div>
+        <br>
         
         {% if count > 0 %}
-        <p>Zaplanowanych transakcji w tym miesiącu: {{ count }}</p>
+
+        <button onclick="myFunction()" class="clickable">
+        Zaplanowanych transakcji: {{ count }} (rozwiń)
+        </button>
+        <br>
         {% endif %}
 
-        {% if page_obj.has_previous %}
-        <a href="?page=1">&laquo; first</a>
-        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-        {% endif %}
-
-        <span class="current">
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-        </span>
-
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">next</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-        {% endif %}
+        <script>
+            function myFunction() {
+                var x = document.getElementById("myDIV");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
+                window.scrollTo(0, x.offsetHeight);
+            }
+        </script>
 
         <table>
         {% for date, transactions, value in daily %}
@@ -82,7 +125,12 @@
                 <td  id="transaction-amount"{% if value >= 0 %}class='income' {% else %}class='expense' {% endif %}>{{ value }} {{ profile.currency.sign }}</td>
             </tr>
             {% for tr in transactions %}
-                <tr class="transaction" {% if not forloop.last %} style="border-bottom:none;" {% endif %}>
+                <tr class="transaction" 
+                style="{% if not forloop.last %} border-bottom:none;{% endif %}
+                {% if forloop.last %} border-bottom-left-radius:10px;border-bottom-right-radius:10px;
+                {% endif %}
+                {% if forloop.first %} border-top-left-radius:10px;border-top-right-radius:10px;
+                {% endif %}">
                     <!-- <td id="transaction-category" class="bold">{{ tr.id_category }}</td>
                     {% if tr.id_subcategory %}
                     <td id="transaction-subcategory">({{ tr.id_subcategory }})</td>
@@ -117,20 +165,38 @@
         {% endfor %}
         </table>
     </div>
+    <br>
+    {% if page_obj.paginator.num_pages > 1 %}
+    <nav aria-label="...">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+            <a class="page-link" href="?page=1" tabindex="-1">&laquo;</a></li>
+            <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&lt;</a></li>
+            {% else %}
+            <li class="page-item disabled">
+            <a class="page-link" href="" tabindex="-1">&laquo;</a></li>
+            <li class="page-item disabled">
+            <a class="page-link" href="">&lt;</a></li>
+            {% endif %}
 
+            <li class="page-item active">
+            <a class="page-link" href="">{{ page_obj.number }}/{{ page_obj.paginator.num_pages }}</a></li>
 
-    {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-    {% endif %}
-
-    <span class="current">
-        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-    </span>
-
-    {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}">next</a>
-        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% if page_obj.has_next %}
+            <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}">&gt;</a></li>
+            <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a></li> 
+            {% else %}
+            <li class="page-item disabled">
+            <a class="page-link" href="">&gt;</a></li> 
+            <li class="page-item disabled">
+            <a class="page-link" href="" tabindex="-1">&raquo;</a></li>
+            {% endif %}
+        </ul>
+    </nav>
     {% endif %}
     
 {% endblock  %}

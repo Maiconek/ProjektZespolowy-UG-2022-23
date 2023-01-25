@@ -97,7 +97,7 @@ div.title{
     flex-direction: column;
 }
 div.title h1{
-    color: purple;
+    color: #9a279a;
     font-size: 40px;
     font-weight: bold;
     text-align: center;
@@ -602,7 +602,17 @@ tr.transaction > td{
     max-width: none;
 }
 
-
+.clickable {
+    color: white;
+    width:88%;
+    margin:0 auto;
+    display:block;
+    background-color:#9a279a;
+    text-align:center;
+    position:static;
+    font-style:italic;
+    border-radius: 7px;
+}
 
 
 
@@ -710,6 +720,10 @@ tr.transaction > td{
         max-width: 100%;
     }
 
+    .clickable {
+        width:95%;
+    }
+
 }
 
 /* DARK MODE */
@@ -789,4 +803,20 @@ input.dark-mode{
 #sum-percentage{
     grid-column: 5 / 7;
 } */
+
+.pagination > .page-item > a{
+    color: #c83cc8;
+    background-color: #e7e7e7;
+}
+
+.pagination > .disabled > a{
+    color: #afafaf;
+}
+
+.pagination > .active > a
+{
+    color: white;
+    background-color:#9a279a; 
+    border: solid 1px #9a279a; 
+}
 
