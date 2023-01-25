@@ -593,13 +593,14 @@ tr.transaction > td{
     display: flex; 
     flex-wrap: wrap;
     flex-direction:row;
-    align-items: flex-end;
-    justify-content:flex-end;
+    align-items: flex-start;
+    justify-content:flex-start;
     padding-left: 5px;
 }
 
 .site-with-form-content > form > table > tbody > tr >td:nth-child(2){ 
     max-width: none;
+    justify-content:flex-start;
 }
 
 .clickable {

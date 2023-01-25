@@ -25,7 +25,7 @@
         </ul> {% endcomment %}
 
         {% comment %} TMP {% endcomment %}
-        <a class="button" style="margin-left:65px;" href="{% url 'all-categories' %}">Zarządzanie kategoriami</a><br><br>
+        {% comment %} <a class="button" style="margin-left:65px;" href="{% url 'all-categories' %}">Zarządzanie kategoriami</a><br><br> {% endcomment %}
         <table id="summary-span" class="sum" style="font-family: Arial, Helvetica, sans-serif;">
             <th style="font-size:16pt;">Wydatki:</th>
             {% for category, sum, perc in object_list %}
