@@ -28,7 +28,7 @@ def loginUser(request):
         #return user instance or none, jezeli hasło się zgadza to zostaniemy zalogowani
 
         if user is not None:
-            messages.success(request, 'You are logged in')
+            #messages.success(request, 'You are logged in')
             login(request, user)
             return redirect("home")
         else:
@@ -56,7 +56,7 @@ def registerUser(request):
 
 def logoutUser(request):
     logout(request)
-    messages.info(request, 'User was logout')
+    #messages.info(request, 'User was logout')
     return redirect("home")
 
 def changePassword(request):
