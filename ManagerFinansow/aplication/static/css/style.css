@@ -419,6 +419,18 @@ a.return{
 a.return:hover{
     background-image: url("/static/images/icons/return_hover.png");
 }
+a.accept{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url("/static/images/icons/accept.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+}
+a.accept:hover{
+    background-image: url("/static/images/icons/accept_hover.png");
+}
 a.square-30px{
     width: 30px;
     height: 30px;
@@ -848,6 +860,12 @@ input.dark-mode{
 #sum-percentage{
     grid-column: 5 / 7;
 } */
+#pagination{
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
 
 .pagination > .page-item > a{
     color: #c83cc8;
@@ -865,3 +883,11 @@ input.dark-mode{
     border: solid 1px #9a279a; 
 }
 
+/* INVITAIONS */
+p.invitation{
+    display: flex;
+    align-items: center;
+}
+.space-margin{
+    margin: 0 5px;
+}
