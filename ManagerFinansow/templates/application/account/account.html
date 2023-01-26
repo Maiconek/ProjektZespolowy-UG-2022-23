@@ -32,8 +32,8 @@
             {% comment %} {% else %}
             <a class="button">Nie możesz zapraszać</a> {% endcomment %}
             {% endif %}
-            <a class="button" href="{% url 'users' account.id %}">Lista użytkowników</a>
-            <a class="button" href="{% url 'profiles' %}">Wyszukiwarka?</a>
+            <a class="user-list" href="{% url 'users' account.id %}" title="Lista użytkowników"></a>
+            {% comment %} <a class="button" href="{% url 'profiles' %}">Wyszukiwarka?</a> {% endcomment %}
         </p>
 
         <div id="myDIV" style="display:none">
