@@ -65,13 +65,13 @@
                             <td id="transaction-amount" class="expense" style="font-weight:500;">{{ tr.amount }} {{ tr.currency.sign }}</td>
                         {% endif %}
                         <td><a class="purple" href="{% url 'showTransaction' tr.id 0 %}">Szczegóły</a></td>
+                        <td><a class="copy" href="{% url 'duplicateTransaction' tr.id 0 %}" title="Duplikuj"></a></td>
 
                         {% if fullAccess %}
-                        <td><a class="copy" href="{% url 'duplicateTransaction' tr.id 0 %}" title="Duplikuj"></a></td>
                         <td><a class="delete" href="{% url 'delTransaction' tr.id 0 %}" title="Usuń" onclick=
                             "return confirm('Czy napewno chcesz usunąć tę transakcję?')"></a></td>
                         {% else %}
-                        <td></td><td></td>
+                        <td></td>
                         {% endif %}
 
                         {% if tr.description %}
@@ -168,13 +168,13 @@
                             <td id="transaction-amount" class="expense" style="font-weight:500;">{{ tr.amount }} {{ tr.currency.sign }}</td>
                         {% endif %}
                         <td><a class="purple" href="{% url 'showTransaction' tr.id 0 %}">Szczegóły</a></td>
+                        <td><a class="copy" href="{% url 'duplicateTransaction' tr.id 0 %}" title="Duplikuj"></a></td>
 
                         {% if fullAccess %}
-                        <td><a class="copy" href="{% url 'duplicateTransaction' tr.id 0 %}" title="Duplikuj"></a></td>
                         <td><a class="delete" href="{% url 'delTransaction' tr.id 0 %}" title="Usuń" onclick=
                             "return confirm('Czy napewno chcesz usunąć tę transakcję?')"></a></td>
                         {% else %}
-                        <!-- <td></td><td></td> -->
+                        <td></td>
                         {% endif %}
                     
                         {% if tr.description %}

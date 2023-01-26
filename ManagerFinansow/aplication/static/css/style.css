@@ -64,10 +64,6 @@ nav.nav{
 #site-content{
     min-height: calc(100vh - 4vh - (60px + 4vh) - 30px); 
     /* 100vh - nav height - marginBottom - marginTop - footer height */
-    margin-top: calc(60px + 4vh);
-    margin-bottom: 4vh;
-    margin-left: 4vw;
-    margin-right: 4vw;
     padding-left: 1vw;
     padding-right: 1vw;
     padding-top: 1vh;
@@ -142,11 +138,12 @@ div.account{
     background-color: lightgoldenrodyellow;
     width: 300px;
 }
-div.account:nth-child(even){
+/* div.account:nth-child(even){
     background-color: lightsalmon;
-}
+} */
 a.account-link{
     width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     text-decoration: none;
@@ -321,6 +318,14 @@ footer{
     padding-left: 4vw;
     padding-right: 4vw;
 }
+a.email{
+    --bs-text-opacity: 1;
+    color: inherit;
+    text-decoration: none;
+}
+a.email:hover{
+    color: #abb6c0
+}
 
 button{
     background-color: rgba(0, 0, 0, 0);
@@ -401,6 +406,18 @@ a.edit{
 }
 a.edit:hover{
     background-image: url("/static/images/icons/edit_hover.png");
+}
+a.return{
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background-image: url("/static/images/icons/return.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+}
+a.return:hover{
+    background-image: url("/static/images/icons/return_hover.png");
 }
 a.square-30px{
     width: 30px;
@@ -637,6 +654,9 @@ tr.transaction > td{
     position:static;
     font-style:italic;
     border-radius: 7px;
+}
+.clickable:hover {
+    background-color:#b000b0;
 }
 
 
