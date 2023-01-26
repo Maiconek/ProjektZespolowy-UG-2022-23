@@ -4,16 +4,18 @@ from django.core.mail import send_mail
 from django.conf import settings
 
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile, Currency
 
 def createProfile(sender, instance, created, **kwargs):
     if created:
         user = instance
+        currency = Currency.objects.get(access_name="PLN")
         profile = Profile.objects.create(
             user = user,
             username = user.username,
             email = user.email,
             name = user.first_name,
+            currency = currency
         )
 
         subject = f"Welcome to Cointrol {user.username}!"
