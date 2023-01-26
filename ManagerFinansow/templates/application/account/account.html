@@ -191,7 +191,9 @@
 
         <br>
         {% if page_obj.paginator.num_pages > 1 %}
-        <nav aria-label="...">
+        </br>
+        </br>
+        <nav id="pagination" aria-label="...">
             <ul class="pagination justify-content-center">
                 {% if page_obj.has_previous %}
                 <li class="page-item">

@@ -28,18 +28,24 @@
 
             
         
-        
+        <span> 
+            <h5>Zaproszenia:</h5>
         {% for m in mes %}
             {% if profile == m.userTo %}
-                <p>Użytkownik {{ m.userFrom }} zaprasza cię do dołączenia do konta {{ m.id_account }}!
-                <a href="{% url 'joinAccount' m.id %}">Kliknij by dołączyć</a>
-                <a href="{% url 'deleteInvitation' m.id %}" onclick=
-                "return confirm('Czy napewno chcesz usunąć?')">Odrzuć Zaproszenie</a></p>
+                <p class="invitation">
+                    Użytkownik <span class="bold space-margin">{{ m.userFrom }}</span> zaprasza cię do dołączenia do konta <span class="bold space-margin">{{ m.id_account }}</span>
+                    <a class="accept" href="{% url 'joinAccount' m.id %}" title="Kliknij by dołączyć"></a>
+                    <a class="delete" href="{% url 'deleteInvitation' m.id %}" onclick=
+                    "return confirm('Czy napewno chcesz usunąć?')" title="Odrzuć Zaproszenie"></a>
+                </p>
             {% elif profile == m.userFrom %}
-                <p>Wysłano zaproszenie do użytkownika {{ m.userTo }} do dołączenia do konta {{ m.id_account }}
-                <a href="{% url 'deleteInvitation' m.id %}" onclick=
-                "return confirm('Czy napewno chcesz usunąć?')">Usuń Zaproszenie</a></p>
+                <p class="invitation">
+                    Wysłano zaproszenie do użytkownika<span class="bold space-margin">{{ m.userTo }}</span>do dołączenia do konta <span class="bold space-margin">{{ m.id_account }}</span>
+                    <a class="delete" href="{% url 'deleteInvitation' m.id %}" onclick=
+                    "return confirm('Czy napewno chcesz usunąć?')" title="Usuń Zaproszenie"></a>
+                </p>
             {% endif %}
         {% endfor %}
+        </span>
     </div>
 {% endblock  %} 
