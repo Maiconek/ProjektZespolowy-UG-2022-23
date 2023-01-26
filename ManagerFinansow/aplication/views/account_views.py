@@ -7,6 +7,7 @@ from aplication.services import prepareTransactions, updateTransactions, sumCurr
 from django.core.paginator import Paginator
 from django.views.generic.base import TemplateView
 from django.db.models import Q
+from django.db.models import Count
 
 def error404(request, exception):
     return render(request, 'application/error/404.html')
@@ -23,7 +24,8 @@ class Home(TemplateView):
 @login_required(login_url='login')
 def showAllTransactions(request):
     updateTransactions(Transaction.objects.filter(id_user=request.user.profile))
-    transactions = Transaction.objects.filter(id_user=request.user.profile).exclude(id_account__in=Account.objects.filter(~Q(owner=request.user.profile)).values_list('id'))
+    transactions = Transaction.objects.filter(id_user=request.user.profile).exclude(
+        id_account__in=User_Account.objects.values('id_account').annotate(Count('id')).order_by().filter(id__count__gt=1).values_list('id_account'))
     page_number = request.GET.get('page')
     prepared = prepareTransactions(transactions, request.user.profile.currency, page_number, 20)
 
