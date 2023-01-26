@@ -141,6 +141,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'cointrolapp@gmail.com'
 EMAIL_HOST_PASSWORD = PASSWORD
 
+PASSWORD_RESET_TIMEOUT = 14400
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
