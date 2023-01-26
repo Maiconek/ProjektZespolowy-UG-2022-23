@@ -53,7 +53,6 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
 
-        messages.success(request, 'Thanks for your email confirmation. Now you can login to your account')
         return redirect("login")
     else:
         messages.error(request, 'Activation link is invalid')
@@ -69,8 +68,7 @@ def activateEmail(request, user, to_email):
         'uid' : urlsafe_base64_encode(force_bytes(user.pk)),
         'token' : account_activation_token.make_token(user),
         'protocol' : "https" if request.is_secure() else 'http'
-    }
-    )
+    })
 
     email = EmailMessage(mail_subject, message, to=[to_email])
     if email.send():
@@ -88,7 +86,6 @@ def registerUser(request):
         if form.is_valid():
             user = form.save(commit=False)
             user.is_active = False
-            # user.username = user.username.lower()
             user.save()
             activateEmail(request, user, form.cleaned_data.get('email'))
             messages.success(request, 'User account was created')
@@ -101,7 +98,6 @@ def registerUser(request):
 
 def logoutUser(request):
     logout(request)
-    #messages.info(request, 'User was logout')
     return redirect("home")
 
 def changePassword(request):
