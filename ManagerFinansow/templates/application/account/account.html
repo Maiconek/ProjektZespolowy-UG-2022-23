@@ -23,7 +23,7 @@
         
         <p class="buttons">
             {% if fullAccess %}
-            <a class="button" href="{% url 'editAccount' account.id %}">Edytuj informacje o koncie</a>
+            <a class="edit" href="{% url 'editAccount' account.id %}" title="Edytuj informacje o koncie"></a>
             {% comment %} {% else %}
             <a class="button">Nie możesz edytować konta</a> {% endcomment %}
             {% endif %}

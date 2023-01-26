@@ -343,7 +343,7 @@ button{
 
 /* BUTTONS */
 a.delete{
-    display: block;
+    display: inline-block;
     width: 20px;
     height: 20px;
     background-image: url("/static/images/icons/delete.png");
@@ -355,7 +355,7 @@ a.delete:hover{
     background-image: url("/static/images/icons/delete_hover.png");
 }
 a.copy{
-    display: block;
+    display: inline-block;
     width: 20px;
     height: 20px;
     background-image: url("/static/images/icons/copy_v2.png");
@@ -367,7 +367,7 @@ a.copy:hover{
     background-image: url("/static/images/icons/copy_hover_v2.png");
 }
 a.add_user{
-    display: block;
+    display: inline-block;
     width: 40px;
     height: 40px;
     background-image: url("/static/images/icons/add_user.png");
@@ -379,7 +379,7 @@ a.add_user:hover{
     background-image: url("/static/images/icons/add_user_hover.png");
 }
 a.user-list{
-    display: block;
+    display: inline-block;
     width: 40px;
     height: 40px;
     background-image: url("/static/images/icons/user_list.png");
@@ -389,6 +389,18 @@ a.user-list{
 }
 a.user-list:hover{
     background-image: url("/static/images/icons/user_list_hover.png");
+}
+a.edit{
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-image: url("/static/images/icons/edit.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+}
+a.edit:hover{
+    background-image: url("/static/images/icons/edit_hover.png");
 }
 a.square-30px{
     width: 30px;

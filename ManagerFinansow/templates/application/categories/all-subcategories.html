@@ -7,6 +7,7 @@
 <div class="content-pc">
     <div id="custom-cat">
         <h3 class="purple">Podkategorie</h3>
+        <p class="buttons"><a class="button" href="{% url 'create-subcategory' category.id %}">Dodaj nową podkategorie</a></p>
         <ul id="cat-list">
             {% for sc in subcategory %}
                 <li id="category">
@@ -17,14 +18,13 @@
                     {% endif %}
                     
                     <p class="buttons-close">
-                        <a class="button" href="{% url 'edit-subcategory' category.id sc.id %}">Edytuj</a>
-                        <a class="button" href="{% url 'delete-subcategory' category.id sc.id %}" onclick=
-                        "return confirm('Are you sure you want to delete {{sc.name}}?')">Usuń</a>
+                        <a class="edit square-30px" href="{% url 'edit-subcategory' category.id sc.id %}" title="Edytuj"></a>
+                        <a class="delete square-30px" href="{% url 'delete-subcategory' category.id sc.id %}" onclick=
+                        "return confirm('Are you sure you want to delete {{sc.name}}?')" title="Usuń"></a>
                     </p>
                 </li>
             {% endfor %}
         </ul>
-        <p class="buttons"><a class="button" href="{% url 'create-subcategory' category.id %}">Dodaj nową podkategorie</a></p>
         <p class="buttons"><a class="button" href="{% url 'all-categories' %}">Wróć do kategorii</a></p>
     </div>
 </div>

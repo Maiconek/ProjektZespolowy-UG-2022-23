@@ -40,12 +40,12 @@
                 {% if uc.scope == "INCOME" %}
                     <li id="category">
                         <span class="bold cat-income">{{uc.name}}</span>
-                        <p class="buttons-close"><a class="button" href="{% url 'all-subcategories' uc.id %}">Podkategorie</a></p>
                         <p class="buttons-close">
-                            <a class="button" href="{% url 'edit-category' uc.id %}">Edytuj</a>
-                            <a class="button" href="{% url 'delete-category' uc.id %}" onclick=
-                            "return confirm('Are you sure you want to delete {{uc.name}}?')">Usuń</a>
+                            <a class="edit square-30px" href="{% url 'edit-category' uc.id %}" title="Edytuj"></a>
+                            <a class="delete square-30px" href="{% url 'delete-category' uc.id %}" onclick=
+                            "return confirm('Are you sure you want to delete {{uc.name}}?')" title="Usuń"></a>
                         </p>
+                        <p class="buttons-close"><a class="button" href="{% url 'all-subcategories' uc.id %}">Podkategorie</a></p>
                     </li>
                 {% endif %}
             {% endfor %}
@@ -56,12 +56,12 @@
                 {% if uc.scope == "EXPENSE" %}
                     <li id="category">
                         <span class="bold cat-expense">{{uc.name}}</span>
-                        <p class="buttons-close"><a class="button" href="{% url 'all-subcategories' uc.id %}">Podkategorie</a></p>
                         <p class="buttons-close">
-                            <a class="button" href="{% url 'edit-category' uc.id %}">Edytuj</a>
-                            <a class="button" href="{% url 'delete-category' uc.id %}" onclick=
-                            "return confirm('Are you sure you want to delete {{uc.name}}?')">Usuń</a>
+                            <a class="edit square-30px" href="{% url 'edit-category' uc.id %}" title="Edytuj"></a>
+                            <a class="delete square-30px" href="{% url 'delete-category' uc.id %}" onclick=
+                            "return confirm('Are you sure you want to delete {{uc.name}}?')" title="Usuń"></a>
                         </p>
+                        <p class="buttons-close"><a class="button" href="{% url 'all-subcategories' uc.id %}">Podkategorie</a></p>
                     </li>
                 {% endif %}
             {% endfor %}

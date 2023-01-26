@@ -24,12 +24,12 @@ class SetPasswordForm(SetPasswordForm):
 class ProfileForm(ModelForm):
     class Meta:
         model = Profile
-        fields = ['name', 'username', 'email', 'image', 'currency']
+        fields = ['name', 'username', 'email', 'currency']
         labels = {
             'name' : 'Imię',
             'username' : 'Nazwa użytkownika',
             'email' : 'Email',
-            'image' : 'Zdjęcie',
+            # 'image' : 'Zdjęcie',
             'currency' : 'Waluta'
         }
 
