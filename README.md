@@ -31,4 +31,15 @@ Potencjalne pomysły:
 
 Projekt zostanie wykonany w środowisku Django przy użyciu języka Python.
 
+-:
+Rzeczy zaplanowane do dodania:
+- wylogowana strona głowna (dopracowanie treści i wyglądu)\
+- dopracowanie ciemnego motywu (niektóre strony źle działają)
+- zdjęcie profilowe?
+- ograniczenie możliwości tworzenia wielu kont na jednego maila
+- wyszukiwarka w dodawaniu do współdzielenia (Frontowo zrobiona?)
+- rozwijanie transakcji (accordion)
+- strona profilowa (coś tam dodać)
+- przelewy między kontami
+
 Autorzy: *Marcin Baranowski, Wojciech Knopp, Cezary Kwella oraz Michał Marcinkowski*.
