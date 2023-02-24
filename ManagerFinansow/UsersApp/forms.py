@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, SetPasswordForm
 from django.forms import ModelForm
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from .models import Profile, Category, Subcategory
 
 class CustomUserCreationForm(UserCreationForm):
@@ -15,6 +16,11 @@ class CustomUserCreationForm(UserCreationForm):
             'password1' : 'Hasło',
             'password2': 'Powtórz hasło'
         }
+    def clean_email(self):
+        email = self.cleaned_data["email"]
+        if User.objects.filter(email=email).exists():
+            raise ValidationError("An user with this email already exists!")
+        return email  
 
 class SetPasswordForm(SetPasswordForm):
     class Meta:
