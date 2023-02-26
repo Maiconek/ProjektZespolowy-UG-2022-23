@@ -33,10 +33,10 @@ Projekt zostanie wykonany w środowisku Django przy użyciu języka Python.
 
 -:
 Rzeczy zaplanowane do dodania:
-- wylogowana strona głowna (dopracowanie treści i wyglądu)\
+- wylogowana strona głowna (dopracowanie treści i wyglądu)
 - dopracowanie ciemnego motywu (niektóre strony źle działają)
-- zdjęcie profilowe?
-- ograniczenie możliwości tworzenia wielu kont na jednego maila
+- zdjęcie profilowe? :white_check_mark:
+- ograniczenie możliwości tworzenia wielu kont na jednego maila :white_check_mark:
 - wyszukiwarka w dodawaniu do współdzielenia (Frontowo zrobiona?)
 - rozwijanie transakcji (accordion)
 - strona profilowa (coś tam dodać)
