@@ -28,6 +28,10 @@ nav.nav{
     padding-left: 4vw;
     padding-right: 4vw;
 }
+#user-image{
+    border-radius: 50%;
+    width: 40px;
+}
 .no-display{
     display: none;
 }
