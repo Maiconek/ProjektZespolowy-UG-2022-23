@@ -44,7 +44,8 @@ class TransactionAdd(View, TransactionMixin):
     def get(self, request, _type, pk=None):
         account = self.get_account(pk)
         if _type == "transfer":
-            form = TransferForm(owner=request.user.profile)
+            form = TransferForm(owner=request.user.profile, initial={'currency': request.user.profile.currency if pk is None else account.currency,
+                                                                     'account_from': account if pk is not None else None})
         else:
             form = self.form_class(
                 scope=_type.upper(), owner=request.user.profile, 

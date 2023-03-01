@@ -206,6 +206,9 @@ tr.transaction > td{
 .expense{
     color: red;
 }
+.neutral{
+    color: rgb(98, 94, 94);
+}
 .cat-income{
     color: green;
 }
@@ -677,6 +680,9 @@ tr.transaction > td{
     background-color:#b000b0;
 }
 
+.right-text{
+    float: right;
+}
 
 
 /* @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px)  { */
@@ -785,6 +791,10 @@ tr.transaction > td{
 
     .clickable {
         width:95%;
+    }
+
+    .right-text{
+        float: none;
     }
 
 }
@@ -897,3 +907,4 @@ p.invitation{
 .space-margin{
     margin: 0 5px;
 }
+

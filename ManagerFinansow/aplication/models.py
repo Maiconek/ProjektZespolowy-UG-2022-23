@@ -4,6 +4,8 @@ from django.db import models
 from django.contrib.auth.models import User
 import uuid
 from polymorphic.models import PolymorphicModel
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 
 from UsersApp.models import Profile, Currency, Category, Subcategory
 
@@ -95,7 +97,6 @@ class Transfer(Transaction):
     def save(self, *args, **kwargs):
         self.id_account = self.account_from
         self.id_category = Category.objects.get(name='Inne przychody')
-        print("tak")
         return super(Transaction, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -103,3 +104,11 @@ class Transfer(Transaction):
                 f"{self.id_subcategory} - {self.repeat} - {self.amount} - "
                 f"{self.transaction_date} - {self.description} - "
                 f"{self.account_from} - {self.account_to}")
+    
+    def clean(self, *args, **kwargs):
+        if self.account_from == self.account_to:
+            raise ValidationError(
+            _('%(self.account_from) is both account from and to'),
+            params={'account': self.account_from},
+        )
+        super().clean(*args, **kwargs)

@@ -43,10 +43,10 @@ def showAllTransactions(request):
 @permission_required_account('FULL')
 def showAccount(request, pk):
     account = Account.objects.get(id=pk)
-    updateTransactions(Transaction.objects.filter(id_account=account))
-    transactions = Transaction.objects.filter(id_account=account)
+    updateTransactions(Transaction.objects.filter(Q(id_account=account) | Q(Transfer___account_to = account)))
+    transactions = Transaction.objects.filter(Q(id_account=account) | Q(Transfer___account_to = account))
     page_number = request.GET.get('page')
-    prepared = prepareTransactions(transactions, account.currency, page_number, 20)
+    prepared = prepareTransactions(transactions, account.currency, page_number, 20, account)
     context = {
         'account': account, 
         'daily': prepared[0],  
@@ -67,10 +67,9 @@ def allAccounts(request):
     for ua in user_accounts:
         accounts.append(Account.objects.get(id=ua.id_account.id))
     for account in accounts:
-        transactions = Transaction.objects.filter(id_account=account)
-        updateTransactions(transactions)
-        transactions = Transaction.objects.filter(id_account=account).filter(transaction_date__lte=today)
-        accountAndSum.append((account, sumCurrency(transactions, account.currency)))
+        updateTransactions(Transaction.objects.filter(Q(id_account=account) | Q(Transfer___account_to = account)))
+        transactions = Transaction.objects.filter(Q(id_account=account) | Q(Transfer___account_to = account)).filter(transaction_date__lte=today)
+        accountAndSum.append((account, sumCurrency(transactions, account.currency, account)))
     
     paginator = Paginator(accountAndSum, 6)
     page_number = request.GET.get('page')

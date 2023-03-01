@@ -19,7 +19,7 @@
                 <a class="account-link" href={% url 'account' pk=acc.id %}>
                 <span class="name">{{ acc }}</span>
                 <span class="account-description">{{ acc.print_description }}</span>
-                <span class="balance"><text id="transaction-amount"{% if sum >= 0 %}class='income' {% else %}class='expense' {% endif %} >{{ sum }} {{acc.currency.sign}}</text></span>
+                <span class="balance"><text id="transaction-amount" {% if sum > 0 %}class='income' {% elif sum == 0 %}class='neutral' {% else %}class='expense' {% endif %} >{{ sum }} {{acc.currency.sign}}</text></span>
                 <span class="balance">Waluta: {{ acc.currency }}</span>
                 </a>
             </div>
