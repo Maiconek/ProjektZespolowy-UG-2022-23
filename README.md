@@ -40,6 +40,6 @@ Rzeczy zaplanowane do dodania:
 - wyszukiwarka w dodawaniu do współdzielenia (Frontowo zrobiona?)
 - rozwijanie transakcji (accordion)
 - strona profilowa (coś tam dodać)
-- przelewy między kontami
+- przelewy między kontami :white_check_mark:
 
 Autorzy: *Marcin Baranowski, Wojciech Knopp, Cezary Kwella oraz Michał Marcinkowski*.
