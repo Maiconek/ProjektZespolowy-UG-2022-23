@@ -12,6 +12,8 @@
     wydatek
     {% elif 'income' in request.get_full_path %}
     przychód
+    {% elif 'transfer' in request.get_full_path %}
+    przelew
     {% else %}
     transakcję
     {% endif %}

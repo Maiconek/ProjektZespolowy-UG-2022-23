@@ -7,25 +7,29 @@
 
 <div class="title">
     <h1>{{ tr.name }}</h1>
+    {% if tr.account_from %}
+    <h3>Przelew</h3>
+    {% else %}
     <h3>{{ tr.id_category }}</h3>
-    {% if tr.id_category.scope == "EXPENSE" and tr.converted_amount > 0 or tr.id_category.scope == "INCOME" and tr.converted_amount < 0 %}
+    {% if tr.id_category.scope == "EXPENSE" and tr.amount > 0 or tr.id_category.scope == "INCOME" and tr.amount < 0 %}
     <h3>Zwrot Pieniędzy</h3>
     {% else %}
         {% if tr.id_category.scope == "EXPENSE" %}
         <h3>Wydatek</h3>
-        {% else %}
+        {% elif tr.id_category.scope == "INCOME" %}
         <h3>Przychód</h3>
         {% endif %}
     {% endif %}
     {% if tr.id_subcategory %}
     <h5>{{ tr.id_subcategory }}</h5>
     {% endif %}
+    {% endif %}
 </div>
 <div class="content-pc center">
-    {% if tr.converted_amount >= 0 %}
-        <h2 class="income">{{ tr.converted_amount }} {{ tr.currency.sign }}</h2>
+    {% if tr.amount >= 0 %}
+        <h2 class="income">{{ tr.amount }} {{ tr.currency.sign }}</h2>
     {% else %}
-        <h2 class="expense">{{ tr.converted_amount }} {{ tr.currency.sign }}</h2>
+        <h2 class="expense">{{ tr.amount }} {{ tr.currency.sign }}</h2>
     {% endif %}
     <p>Data: {{ tr.transaction_date }}</p>
     {% if tr.description is not None %}

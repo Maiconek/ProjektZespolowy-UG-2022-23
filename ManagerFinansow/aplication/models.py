@@ -3,6 +3,7 @@ from dateutil.relativedelta import relativedelta
 from django.db import models
 from django.contrib.auth.models import User
 import uuid
+from polymorphic.models import PolymorphicModel
 
 from UsersApp.models import Profile, Currency, Category, Subcategory
 
@@ -54,7 +55,7 @@ class Invitation(models.Model):
     def __str__(self):
         return f"od: {self.userFrom} do: {self.userTo}, konto: {self.id_account}, poziom dostępu: {self.access_level}"
 
-class Transaction(models.Model):
+class Transaction(PolymorphicModel):
     intervals = {
         'daily': (lambda x: x + timedelta(days=1), 'Codziennie'),
         'weekly': (lambda x: x + timedelta(weeks=1), 'Co tydzień'),
@@ -68,7 +69,6 @@ class Transaction(models.Model):
     currency = models.ForeignKey(Currency, on_delete=models.SET_NULL, null=True)
     repeat = models.CharField(null=True, blank=True, choices=tuple([(k, v[1]) for k, v in intervals.items()]), max_length=50)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    converted_amount = models.DecimalField(max_digits=10, decimal_places=2)
     transaction_date = models.DateField()
     description = models.CharField(max_length=255, blank=True, null=True)
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
@@ -85,4 +85,21 @@ class Transaction(models.Model):
     def __str__(self):
         return (f"{self.id_account.name} - {self.id_user} - {self.id_category} - "
                 f"{self.id_subcategory} - {self.repeat} - {self.amount} - "
-                f"{self.converted_amount} - {self.transaction_date} - {self.description}")
+                f"{self.transaction_date} - {self.description}")
+    
+class Transfer(Transaction):
+    account_from = models.ForeignKey(Account, related_name='from+', on_delete=models.SET_NULL, null=True)
+    account_to = models.ForeignKey(Account, related_name='to+', on_delete=models.CASCADE)
+    id_subcategory = None
+
+    def save(self, *args, **kwargs):
+        self.id_account = self.account_from
+        self.id_category = Category.objects.get(name='Inne przychody')
+        print("tak")
+        return super(Transaction, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return (f"{self.id_account.name} - {self.id_user} - {self.id_category} - "
+                f"{self.id_subcategory} - {self.repeat} - {self.amount} - "
+                f"{self.transaction_date} - {self.description} - "
+                f"{self.account_from} - {self.account_to}")

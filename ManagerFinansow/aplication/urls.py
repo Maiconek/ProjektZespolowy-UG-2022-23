@@ -32,8 +32,8 @@ urlpatterns = [
     path('invitation/<uuid:pk>/join', joinAccount, name='joinAccount'),
     path('invitation/<uuid:pk>/del', deleteInvitation, name='deleteInvitation'),
     #transactions
-    path('account/<uuid:pk>/add/<str:type>', TransactionAdd.as_view(), name='add'),
-    path('add/<str:type>', TransactionAdd.as_view(), name='addAccountless'),
+    path('account/<uuid:pk>/add/<str:_type>', TransactionAdd.as_view(), name='add'),
+    path('add/<str:_type>', TransactionAdd.as_view(), name='addAccountless'),
     path('account/transaction/<uuid:pk>/<str:accountless>/', showTransaction, name='showTransaction'),
     path('account/transaction-del/<uuid:pk>/<str:accountless>', delTransaction, name='delTransaction'),
     path('account/transaction-edit/<uuid:pk>/<str:accountless>', TransactionEdit.as_view(), name='editTransaction'),

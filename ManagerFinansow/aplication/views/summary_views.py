@@ -27,7 +27,7 @@ class Summary(ListView):
         categories = super().get_queryset().filter(Q(owner=self.request.user.profile) | Q(owner=None))
         updateTransactions(Transaction.objects.filter(id_user=self.request.user.profile))
         transactions = Transaction.objects.filter(id_user=self.request.user.profile).exclude(
-            id_account__in=User_Account.objects.values('id_account').annotate(Count('id')).order_by().filter(id__count__gt=1).values_list('id_account'))
+            id_account__in=User_Account.objects.values('id_account').annotate(Count('id')).order_by().filter(id__count__gt=1).values_list('id_account')).not_instance_of(Transfer)
         self.sum_exp = sumCurrency(transactions.filter(id_category__in=Category.objects.filter(scope='EXPENSE')).filter(transaction_date__lte=today), currency)
         self.sum_inc = sumCurrency(transactions.filter(id_category__in=Category.objects.filter(scope='INCOME')).filter(transaction_date__lte=today), currency)
         categories_with_sum = []

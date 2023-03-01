@@ -11,9 +11,9 @@
     </div>
     <div class="content-pc">
         <p class="buttons">
-            <a href="{% url 'addAccountless' type='income' %}"><img id="plus-icon" src="{% static 'images/icons/plus.png' %}"/></a>
-            <a href="#"><img id="transfer-icon" src="{% static 'images/icons/arrows.png' %}"/></a>
-            <a  href="{% url 'addAccountless' type='expense' %}"><img id="minus-icon" src="{% static 'images/icons/minus.png' %}"/></a>
+            <a href="{% url 'addAccountless' _type='income' %}"><img id="plus-icon" src="{% static 'images/icons/plus.png' %}"/></a>
+            <a href="{% url 'addAccountless' _type='transfer' %}"><img id="transfer-icon" src="{% static 'images/icons/arrows.png' %}"/></a>
+            <a  href="{% url 'addAccountless' _type='expense' %}"><img id="minus-icon" src="{% static 'images/icons/minus.png' %}"/></a>
         </p>
 
         {% if page_obj.paginator.num_pages > 1 %}
@@ -69,7 +69,12 @@
                     {% else %}
                     <td id="transaction-subcategory"></td>
                     {% endif %}                  -->
-                    <td id="transaction-category" class="bold">{{ tr.id_category }}
+                    <td id="transaction-category" class="bold">
+                        {% if tr.account_from is not None %}
+                        Przelew
+                        {% else %}
+                        {{ tr.id_category }}
+                        {% endif %}
                         {% if tr.id_subcategory %}
                         <span id="transaction-subcategory">({{ tr.id_subcategory }})</span>
                         {% else %}
@@ -77,7 +82,7 @@
                         {% endif %}
                     </td>
                     <!-- <td id="do-not-display"></td> -->
-                    {% if tr.converted_amount >= 0 %}
+                    {% if tr.amount >= 0 %}
                         <td id="transaction-amount" class="income" style="font-weight:600;">{{ tr.amount }} {{ tr.currency.sign }}</td>
                     {% else %}
                         <td id="transaction-amount" class="expense" style="font-weight:600;">{{ tr.amount }} {{ tr.currency.sign }}</td>
@@ -86,6 +91,9 @@
                     <td id="transaction-account" class="last-in-one-row">
                         <a id="tr-acc-link" class="purple" href="{% url 'account' pk=tr.id_account.id %}">{{ tr.id_account.name }}</a>
                     </td>
+                    {% if tr.account_from is not None %}
+                    <td id="transaction-description">{{ tr.account_from }} &#8594; {{ tr.account_to }}</td>
+                    {% endif %}
                     {% if tr.description %}
                     <td id="transaction-description">{{ tr.description }}</td>
                     {% else %}
@@ -138,7 +146,12 @@
                     <td id="transaction-subcategory"></td>
                     {% endif %}                  -->
                     
-                    <td id="transaction-category" class="bold">{{ tr.id_category }}
+                    <td id="transaction-category" class="bold">
+                        {% if tr.account_from is not None %}
+                        Przelew
+                        {% else %}
+                        {{ tr.id_category }}
+                        {% endif %}
                         {% if tr.id_subcategory %}
                         <span id="transaction-subcategory">({{ tr.id_subcategory }})</span>
                         {% else %}
@@ -146,7 +159,7 @@
                         {% endif %}
                     </td>
                     <!-- <td id="do-not-display"></td> -->
-                    {% if tr.converted_amount >= 0 %}
+                    {% if tr.amount >= 0 %}
                         <td id="transaction-amount" class="income" style="font-weight:600;">{{ tr.amount }} {{ tr.currency.sign }}</td>
                     {% else %}
                         <td id="transaction-amount" class="expense" style="font-weight:600;">{{ tr.amount }} {{ tr.currency.sign }}</td>
@@ -155,6 +168,9 @@
                     <td id="transaction-account" class="last-in-one-row">
                         <a id="tr-acc-link" class="purple" href="{% url 'account' pk=tr.id_account.id %}">{{ tr.id_account.name }}</a>
                     </td>
+                    {% if tr.account_from is not None %}
+                    <td id="transaction-description">{{ tr.account_from }} &#8594; {{ tr.account_to }}</td>
+                    {% endif %}
                     {% if tr.description %}
                     <td id="transaction-description">{{ tr.description }}</td>
                     {% else %}

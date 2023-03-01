@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views import View
 from aplication.models import *
-from aplication.forms import TransactionForm
+from aplication.forms import TransactionForm, TransferForm
 from datetime import date
 from django.http import Http404  
 from aplication.decorators import permission_required_transaction
@@ -29,7 +29,7 @@ class TransactionMixin(object):
         context['form'] = form
         context['today'] = date.today().strftime("%Y-%m-%d")
         context['option'] = kwargs.get('option', None)
-        context['subcategories'] = form.fields['id_subcategory'].queryset
+        context['subcategories'] = form.fields['id_subcategory'].queryset if isinstance(form, TransactionForm) else None
         if accountless is None:
             context['accountless'] = '1' if id is None else '0' 
         else:
@@ -41,18 +41,24 @@ class TransactionAdd(View, TransactionMixin):
     template_name = 'application/transaction/form.html'
     form_class = TransactionForm
     
-    def get(self, request, type, pk=None):
+    def get(self, request, _type, pk=None):
         account = self.get_account(pk)
-        form = self.form_class(
-            scope=type.upper(), owner=request.user.profile, 
-            initial={'currency': request.user.profile.currency if pk is None else account.currency,
-            'id_account': account if pk is not None else None})
+        if _type == "transfer":
+            form = TransferForm(owner=request.user.profile)
+        else:
+            form = self.form_class(
+                scope=_type.upper(), owner=request.user.profile, 
+                initial={'currency': request.user.profile.currency if pk is None else account.currency,
+                'id_account': account if pk is not None else None})
 
         context = self.get_context_data(form=form, id=pk, option='add')
         return render(request, self.template_name, context)
         
-    def post(self, request, type, pk=None):
-        form = self.form_class(data=request.POST or None, scope = type.upper(), owner=request.user.profile)
+    def post(self, request, _type, pk=None):
+        if _type == "transfer":
+            form = TransferForm(data=request.POST or None, owner=request.user.profile)
+        else:
+            form = self.form_class(data=request.POST or None, scope = _type.upper(), owner=request.user.profile)
         context = self.get_context_data(form=form, id=pk, option='add')
         if form.is_valid():
             transaction = form.save(commit=False)
@@ -73,13 +79,19 @@ class TransactionEdit(View, TransactionMixin):
 
     def get(self, request, pk, accountless=0):
         transaction = get_object_or_404(Transaction, id=pk)
-        form = TransactionForm(scope = transaction.id_category.scope, owner=transaction.id_account.owner, instance = transaction)
+        if isinstance(transaction, Transfer):
+            form = TransferForm(owner=request.user.profile, instance=transaction)
+        else:
+            form = TransactionForm(scope = transaction.id_category.scope, owner=transaction.id_account.owner, instance = transaction)
         context = self.get_context_data(form=form, transaction=transaction, option=self.option, accountless=accountless)
         return render(request, self.template_name, context)
         
     def post(self, request, pk, accountless=0):
         transaction = get_object_or_404(Transaction, id=pk)
-        form = TransactionForm(data=request.POST or None, scope = transaction.id_category.scope, 
+        if isinstance(transaction, Transfer):
+            form = TransferForm(owner=request.user.profile, data=request.POST or None, instance=transaction)
+        else:
+            form = TransactionForm(data=request.POST or None, scope = transaction.id_category.scope, 
                                 owner=transaction.id_account.owner, instance = transaction)
         context = self.get_context_data(form=form, transaction=transaction, option=self.option, accountless=accountless)
         if form.is_valid():
@@ -92,12 +104,16 @@ class TransactionDuplicate(TransactionEdit):
 
     def post(self, request, pk, accountless=0):
         transaction = get_object_or_404(Transaction, id=pk)
-        form = TransactionForm(data=request.POST or None, scope = transaction.id_category.scope, 
+        if isinstance(transaction, Transfer):
+            form = TransferForm(owner=request.user.profile, data=request.POST or None, instance=transaction)
+        else:
+            form = TransactionForm(data=request.POST or None, scope = transaction.id_category.scope, 
                                 owner=transaction.id_account.owner, instance = transaction)
         context = self.get_context_data(form=form, transaction=transaction, option=self.option, accountless=accountless)
         if form.is_valid():
             newTransaction = form.save(commit=False)
             newTransaction.id = None
+            newTransaction.pk = None
             newTransaction.save()
             if accountless == '0':
                 return  redirect('account', pk=transaction.id_account.id)
@@ -119,6 +135,7 @@ def showTransaction(request, pk, accountless=0):
             if transaction.repeat is not None:
                 newTransaction = copy.copy(transaction)
                 newTransaction.id = None
+                newTransaction.pk = None
                 newTransaction.repeat = None
                 newTransaction.transaction_date = date.today()
                 newTransaction.save()

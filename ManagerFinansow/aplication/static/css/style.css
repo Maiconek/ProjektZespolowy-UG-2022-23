@@ -355,6 +355,7 @@ a.delete{
     display: inline-block;
     width: 20px;
     height: 20px;
+    margin-top: 4px;
     background-image: url("/static/images/icons/delete.png");
     background-repeat: no-repeat;
     background-position: center;
@@ -367,6 +368,7 @@ a.copy{
     display: inline-block;
     width: 20px;
     height: 20px;
+    margin-top: 4px;
     background-image: url("/static/images/icons/copy_v2.png");
     background-repeat: no-repeat;
     background-position: center;

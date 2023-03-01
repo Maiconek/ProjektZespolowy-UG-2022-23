@@ -17,7 +17,7 @@
     <div class="content-pc">
         <p class="buttons">
             <a href="{% url 'add' account.id 'income' %}"><img id="plus-icon" src="{% static 'images/icons/plus.png' %}"/></a>
-            <a href="#"><img id="transfer-icon" src="{% static 'images/icons/arrows.png' %}"/></a>
+            <a href="{% url 'add' account.id 'transfer' %}"><img id="transfer-icon" src="{% static 'images/icons/arrows.png' %}"/></a>
             <a  href="{% url 'add' account.id 'expense' %}"><img id="minus-icon" src="{% static 'images/icons/minus.png' %}"/></a>
         </p>
         
@@ -50,16 +50,20 @@
                         {% endif %}
                         {% if forloop.first %} border-top-left-radius:10px;border-top-right-radius:10px;
                         {% endif %}">                        
-                        <td id="transaction-category">{{ tr.id_category }}
-                            {% if tr.id_subcategory %}
-                                <span id="transaction-subcategory">({{ tr.id_subcategory }})</span>
+                        <td id="transaction-category" class="bold">
+                            {% if tr.account_from is not None %}
+                            Przelew
                             {% else %}
-                                <span id="transaction-subcategory"></span>
+                            {{ tr.id_category }}
                             {% endif %}
-                            <span id="transaction-subcategory">{{ tr.subcategory }}</span>
+                            {% if tr.id_subcategory %}
+                            <span id="transaction-subcategory">({{ tr.id_subcategory }})</span>
+                            {% else %}
+                            <span id="transaction-subcategory"></span>
+                            {% endif %}
                         </td>
                         <!-- <td id="do-not-display"></td> -->
-                        {% if tr.converted_amount >= 0 %}
+                        {% if tr.amount >= 0 %}
                             <td id="transaction-amount" class="income" style="font-weight:500;">{{ tr.amount }} {{ tr.currency.sign }}</td>
                         {% else %}
                             <td id="transaction-amount" class="expense" style="font-weight:500;">{{ tr.amount }} {{ tr.currency.sign }}</td>
@@ -74,10 +78,13 @@
                         <td></td>
                         {% endif %}
 
+                        {% if tr.account_from is not None %}
+                        <td id="transaction-description">{{ tr.account_from }} &#8594; {{ tr.account_to }}</td>
+                        {% endif %}
                         {% if tr.description %}
-                            <td id="transaction-description">{{ tr.description }}</td>
+                        <td id="transaction-description">{{ tr.description }}</td>
                         {% else %}
-                            <td id="transaction-description"></td>
+                        <td id="transaction-description"></td>
                         {% endif %}
                         </tr>
                 {% endfor %}
@@ -152,17 +159,22 @@
                         {% endif %}
                         {% if forloop.first %} border-top-left-radius:10px;border-top-right-radius:10px;
                         {% endif %}">                        
-                        <td id="transaction-category" class="bold">{{ tr.id_category }}
-                            {% if tr.id_subcategory %}
-                                <span id="transaction-subcategory">({{ tr.id_subcategory }})</span>
+                        <td id="transaction-category" class="bold">
+                            {% if tr.account_from is not None %}
+                            Przelew
                             {% else %}
-                                <span id="transaction-subcategory"></span>
+                            {{ tr.id_category }}
                             {% endif %}
-                        <span id="transaction-subcategory">{{ tr.subcategory }}</span>
+                            {% if tr.id_subcategory %}
+                            <span id="transaction-subcategory">({{ tr.id_subcategory }})</span>
+                            {% else %}
+                            <span id="transaction-subcategory"></span>
+                            {% endif %}
+                        </td>
 
                         </td>
                         <!-- <td id="do-not-display"></td> -->
-                        {% if tr.converted_amount >= 0 %}
+                        {% if tr.amount >= 0 %}
                             <td id="transaction-amount" class="income" style="font-weight:500;">{{ tr.amount }} {{ tr.currency.sign }}</td>
                         {% else %}
                             <td id="transaction-amount" class="expense" style="font-weight:500;">{{ tr.amount }} {{ tr.currency.sign }}</td>
@@ -177,10 +189,13 @@
                         <td></td>
                         {% endif %}
                     
+                        {% if tr.account_from is not None %}
+                        <td id="transaction-description">{{ tr.account_from }} &#8594; {{ tr.account_to }}</td>
+                        {% endif %}
                         {% if tr.description %}
-                            <td id="transaction-description">{{ tr.description }}</td>
+                        <td id="transaction-description">{{ tr.description }}</td>
                         {% else %}
-                            <td id="transaction-description"></td>
+                        <td id="transaction-description"></td>
                         {% endif %}
                     </tr>
                 {% endfor %}

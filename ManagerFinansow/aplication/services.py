@@ -15,7 +15,6 @@ def sumCurrency(all_transactions, currency):
     today = date.today()
     for tr in all_transactions.filter(~Q(currency=currency)):
         if tr.id_category.scope == 'EXPENSE' and tr.transaction_date < today:
-            #tr.converted_amount = round(c.convert(tr.currency.access_name, currency.access_name, tr.amount, tr.transaction_date), 2)
             sum += c.convert(tr.amount, tr.currency.access_name, currency.access_name, date=tr.transaction_date)
         else:
             sum += c.convert(tr.amount, tr.currency.access_name, currency.access_name)
