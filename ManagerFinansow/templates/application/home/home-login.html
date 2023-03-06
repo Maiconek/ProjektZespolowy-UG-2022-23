@@ -134,7 +134,7 @@
         {% for date, transactions, value in daily %}
             <tr id="date">
                 <td class="center" colspan="4">{{ date }}</td>
-                <td id="transaction-amount"{% if value > 0 %}class='income' {% elif value == 0 %}class='neutral' {% else %}class='expense' {% endif %}>{{ value }} {{ account.currency.sign }}</td>
+                <td id="transaction-amount"{% if value > 0 %}class='income' {% elif value == 0 %}class='neutral' {% else %}class='expense' {% endif %}>{{ value }} {{ profile.currency.sign }}</td>
             </tr>
             {% for tr in transactions %}
                 <tr class="transaction" 

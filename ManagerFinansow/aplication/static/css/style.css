@@ -28,9 +28,15 @@ nav.nav{
     padding-left: 4vw;
     padding-right: 4vw;
 }
+#profile-nav-link{
+    display: grid;
+    grid-template-columns: auto auto;
+    column-gap: 10px;
+}
 #user-image{
     border-radius: 50%;
     width: 40px;
+    align-self: center;
 }
 .no-display{
     display: none;
