@@ -1,5 +1,7 @@
 {% extends 'application/base.html' %}
 
+{% load thumbnail %}
+
 {% block title %}Strona domowa{% endblock %}
 {% block content %}
     <div class="title">
@@ -27,6 +29,7 @@
         <strong><p>Konto założono w dniu:</strong> {{profile.created}}</p>
         <strong><p>Zdjecie profilowe:</p></strong>
         <img id="user-image" src="{{ profile.image.url }}" alt="user image">
+        <img src="{{ profile.image.url|thumbnail_url:'profile_image' }}" alt="test user image">
 
             
         

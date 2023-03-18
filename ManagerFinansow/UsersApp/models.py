@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from easy_thumbnails.fields import ThumbnailerImageField
 import uuid
 
 from aplication.models import *
@@ -10,7 +11,8 @@ class Profile(models.Model):
     email = models.EmailField(max_length=400, null=True, blank=True)
     username = models.CharField(max_length=200, blank=True, null=True)
     currency = models.ForeignKey('Currency', on_delete=models.SET_NULL, null=True)
-    image = models.ImageField(null=True, blank=True, upload_to="images/", default="images/default-user.png")
+    # image = models.ImageField(null=True, blank=True, upload_to="images/", default="images/default-user.png")
+    image = ThumbnailerImageField(null=True, blank=True, upload_to="images/", default="images/default-user.png")
     created = models.DateTimeField(auto_now_add=True)
     id = models.UUIDField(default=uuid.uuid4, unique=True, 
                             primary_key=True, editable=False)

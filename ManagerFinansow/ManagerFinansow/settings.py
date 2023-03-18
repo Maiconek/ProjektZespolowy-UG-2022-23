@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'aplication',
     'UsersApp.apps.UsersappConfig',
+    'easy_thumbnails',
     #'rest_framework'
 ]
 
@@ -163,3 +164,10 @@ try:
     from .local_settings import *
 except ImportError:
     pass
+
+# Easy Thumbnails (square thumbnails)
+THUMBNAIL_ALIASES = {
+    '': {
+        'profile_image': {'size': (200, 200), 'crop': 'smart'},
+    },
+}
