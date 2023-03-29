@@ -5,36 +5,29 @@
 {% block title %}Strona domowa{% endblock %}
 {% block content %}
     <div class="title">
-        <h1>Strona Profilu</h1>
+        <h1>Witaj {{ user.username }}</h1>
     </div>
     <div class="content-pc">
-        <p>Witaj {{ user.username }} na swojej stronie profilu</p>
-        <p>Tutaj możesz zarządzać swoim profilem</p>
-        <a class="button" href="{% url 'edit-profile' %}">Edytuj swój profil</a>
-        <a class="button" href="{% url 'all-categories' %}">Zarządzaj kategoriami</a>
+        <a class="button" href="{% url 'edit-profile' %}">Edytuj profil</a>
         <a class="button" href="{% url 'change-password' %}">Zmień hasło</a>
 
         
         
         <h5>Aktualne dane profilu</h5>
 
-        <strong><p>Dane osobowe:</strong> {{profile.name}}</p>
+        <strong><p>Imię:</strong> {{profile.name}}</p>
 
-        <strong><p>Nickname:</strong> {{profile.username}}</p>
+        <strong><p>Nazwa użytkownika:</strong> {{profile.username}}</p>
 
         <strong><p>Adres email:</strong> {{profile.email}}</p>
 
-        <strong><p>Aktualnie wybrana waluta:</strong> {{profile.currency}}</p>
+        <strong><p>Waluta:</strong> {{profile.currency}}</p>
 
-        <strong><p>Konto założono w dniu:</strong> {{profile.created}}</p>
-        <strong><p>Zdjecie profilowe:</p></strong>
-        <img id="user-image" src="{{ profile.image.url }}" alt="user image">
-        <img src="{{ profile.image.url|thumbnail_url:'profile_image' }}" alt="test user image">
-
-            
+        <strong><p>Członek od:</strong> {{profile.created}}</p>            
         
         <span> 
             <h5>Zaproszenia:</h5>
+            {% comment %} if nie ma powiedz że nie ma {% endcomment %}
         {% for m in mes %}
             {% if profile == m.userTo %}
                 <p class="invitation">

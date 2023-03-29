@@ -35,7 +35,9 @@ nav.nav{
 }
 #user-image{
     border-radius: 50%;
-    width: 40px;
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
     align-self: center;
 }
 .no-display{
