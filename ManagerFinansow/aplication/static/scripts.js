@@ -8,6 +8,7 @@ function changeToDark(){
     var selects = document.getElementsByTagName("select");
     var inputs = document.getElementsByTagName("input");
     var textMuted = document.getElementsByClassName("text-muted");
+    var elements = document.getElementsByClassName("element");
 
     var categories = document.getElementsByClassName("category");
 
@@ -35,6 +36,13 @@ function changeToDark(){
     
     button.classList.remove("dark-mode");
     button.classList.add("dark-mode");
+
+    if(elements != null){
+        for(var i = 0; i < elements.length; i++){
+            elements[i].classList.remove("dark-mode");
+            elements[i].classList.add("dark-mode");
+        }
+    }
 
     if(textMuted != null){
         for(var i = 0; i < textMuted.length; i++){
@@ -104,6 +112,7 @@ function changeToLight(){
     var selects = document.getElementsByTagName("select");
     var inputs = document.getElementsByTagName("input");
 
+    var elements = document.getElementsByClassName("element");
     var textMuted = document.getElementsByClassName("text-muted");
 
     var categories = document.getElementsByClassName("category");
@@ -129,6 +138,12 @@ function changeToLight(){
     
     button.classList.remove("dark-mode");
 
+    if(elements != null){
+        for(var i = 0; i < elements.length; i++){
+            elements[i].classList.remove("dark-mode");
+        }
+    }
+    
     if(textMuted != null){
         for(var i = 0; i < textMuted.length; i++){
             textMuted[i].classList.remove("dark-mode");

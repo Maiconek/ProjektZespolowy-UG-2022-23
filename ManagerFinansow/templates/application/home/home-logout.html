@@ -3,6 +3,7 @@
 {% block title %}Strona domowa{% endblock %}
 
 {% block content %}
+{% load static %}
 
 {% comment %} Strona startowa aplikacji {% endcomment %}
     <div class="title">
@@ -12,16 +13,18 @@
         <div id="overview">
             <span class="element">
                 <h4>Konta</h4>
-                <p>
+                <!-- <p>
                     Dzięki możliwości stworzenia wielu wirtualnych kont, 
                     łatwiej będzie ci kontrolować gdzie i ile masz pieniędzy.
-                </p>
+                </p> -->
                 <p>
-                    Stwórz odpowiedniki swoich kont bankowych, 
-                    stwórz wirtualne konto odpowiadające twojemu fizycznemu portfelowi 
+                    Kontroluj ile masz pieniędzy, korzystając z tworzenia kont bankowych!
+                    <!-- Stwórz odpowiedniki swoich kont bankowych,  -->
+                    Stwórz wirtualne konto odpowiadające twojemu fizycznemu portfelowi 
                     lub stwórz konto na którym będziesz śledził ilość swoich oszczędności.
                     Korzystaj jak chcesz!
                 </p>
+                <img src="{% static 'images/home/accounts.png' %}" />
             </span>
             <span class="element">
                 <h4>Waluty</h4>
@@ -29,6 +32,7 @@
                 <p>
                     Transakcje zostaną automatyznie przeliczone na walutę twojego konta według kursu z dnia transakcji.
                 </p>
+                <img src="{% static 'images/home/currency.png' %}" />
             </span>
             <span class="element">
                 <h4>Konta współdzielone</h4>
@@ -36,14 +40,18 @@
                     Zapraszaj znajomych do współdzielenia stworzonych przez siebie kont. 
                     Dzięki podziałowi na role, możesz ograniczyć wybranym użytkownikom dostęp do wybranych funkcji.
                 </p>
+                <img src="{% static 'images/home/share.png' %}" />
             </span>
             <span class="element">
                 <h4>Kategorie</h4>
                 <p>Dodawaj własne kategorie, aby w pełni dostosować aplikację do swojego użytku!</p>
+                <img src="{% static 'images/home/folders.png' %}" />
+                
             </span>
             <span class="element">
                 <h4>Podsumowania</h4>
                 <p>Sprawdź swoje wydatki i przychody z danego okresu i znajdź miejsce na nowe oszczędności!</p>
+                <img src="{% static 'images/home/sum-up.png' %}" />
             </span>
             {% comment %} <span class="element">
                 <h4>Budżet</h4>

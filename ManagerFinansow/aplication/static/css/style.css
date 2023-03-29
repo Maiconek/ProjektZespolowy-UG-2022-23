@@ -124,6 +124,11 @@ div.tiles{
     flex-wrap: wrap;
     justify-content: space-evenly;
 }
+
+.element img{
+    width: 100%;
+}
+
 span.element{
     width: 400px;
     display: flex;
