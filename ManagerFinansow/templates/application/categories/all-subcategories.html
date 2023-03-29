@@ -10,7 +10,7 @@
         <p class="buttons"><a class="button" href="{% url 'create-subcategory' category.id %}">Dodaj nową podkategorie</a></p>
         <ul id="cat-list">
             {% for sc in subcategory %}
-                <li id="category">
+                <li class="category">
                     {% if sc.id_category.scope == "INCOME" %}
                         <span class="bold income">{{sc.name}}</span>
                     {% else %}

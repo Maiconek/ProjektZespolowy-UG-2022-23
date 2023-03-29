@@ -7,6 +7,9 @@ function changeToDark(){
     var allExpenses = document.getElementsByClassName("expense");
     var selects = document.getElementsByTagName("select");
     var inputs = document.getElementsByTagName("input");
+    var textMuted = document.getElementsByClassName("text-muted");
+
+    var categories = document.getElementsByClassName("category");
 
     var lightBulb = document.getElementById("light-bulb");
 
@@ -32,6 +35,20 @@ function changeToDark(){
     
     button.classList.remove("dark-mode");
     button.classList.add("dark-mode");
+
+    if(textMuted != null){
+        for(var i = 0; i < textMuted.length; i++){
+            textMuted[i].classList.remove("dark-mode");
+            textMuted[i].classList.add("dark-mode");
+        }
+    }
+
+    if(categories != null){
+        for(var i = 0; i < categories.length; i++){
+            categories[i].classList.remove("dark-mode");
+            categories[i].classList.add("dark-mode");
+        }
+    }
 
     if(allAccounts != null){
         for(var i = 0; i < allAccounts.children.length; i++){
@@ -87,6 +104,10 @@ function changeToLight(){
     var selects = document.getElementsByTagName("select");
     var inputs = document.getElementsByTagName("input");
 
+    var textMuted = document.getElementsByClassName("text-muted");
+
+    var categories = document.getElementsByClassName("category");
+
     var lightBulb = document.getElementById("light-bulb");
 
     lightBulb.src = "/static/images/bulb_off.png";
@@ -107,6 +128,18 @@ function changeToLight(){
     content.classList.remove("dark-mode");
     
     button.classList.remove("dark-mode");
+
+    if(textMuted != null){
+        for(var i = 0; i < textMuted.length; i++){
+            textMuted[i].classList.remove("dark-mode");
+        }
+    }
+
+    if(categories != null){
+        for(var i = 0; i < categories.length; i++){
+            categories[i].classList.remove("dark-mode");
+        }
+    }
 
     if(allAccounts != null){
         for(var i = 0; i < allAccounts.children.length; i++){

@@ -12,7 +12,7 @@
         <ul id="cat-list">
             {% for dc in defaultCategory %}
                 {% if dc.scope == "INCOME" %}
-                    <li id="category">
+                    <li class="category">
                         <span class="bold income">{{dc.name}}</span></br>
                     </li>
                 {% endif %}
@@ -22,7 +22,7 @@
         <ul id="cat-list">
             {% for dc in defaultCategory %}
             {% if dc.scope == "EXPENSE" %}
-                <li id="category">
+                <li class="category">
                     <span class="bold expense">{{dc.name}}</span></br>
                 </li>
             {% endif %}
@@ -38,7 +38,7 @@
         <ul id="cat-list">
             {% for uc in userCategory %}
                 {% if uc.scope == "INCOME" %}
-                    <li id="category">
+                    <li class="category">
                         <span class="bold cat-income">{{uc.name}}</span>
                         <p class="buttons-close">
                             <a class="edit square-30px" href="{% url 'edit-category' uc.id %}" title="Edytuj"></a>
@@ -54,7 +54,7 @@
         <ul id="cat-list">
             {% for uc in userCategory %}
                 {% if uc.scope == "EXPENSE" %}
-                    <li id="category">
+                    <li class="category">
                         <span class="bold cat-expense">{{uc.name}}</span>
                         <p class="buttons-close">
                             <a class="edit square-30px" href="{% url 'edit-category' uc.id %}" title="Edytuj"></a>

@@ -1,0 +1,72 @@
+body.dark-mode{
+    background-color: #0b0f12;
+    color: #fff;
+}
+
+button.dark-mode{
+    color: #fff;
+}
+
+#all-accounts > .dark-mode .account-description{
+    color: rgba(255, 255, 255, 0.6);
+}
+
+#all-accounts > .dark-mode span{
+    color: white;
+}
+
+#site-content.dark-mode{
+    background-color: #212329;
+}
+
+#all-accounts > .dark-mode{
+    background-color: rgb(69, 19, 88);
+}
+
+.transaction.dark-mode{
+    background-color: #191b27;
+    border-color:#080c12;
+}
+
+.transaction.dark-mode > #transaction-description{
+    color:rgba(255, 255, 255, 0.6);
+}
+
+.transaction.dark-mode > #transaction-category > #transaction-subcategory{
+    color:rgba(216, 216, 216, 0.6);
+}
+
+.income.dark-mode{
+    /* color: #25a140c0; */
+    color: green;
+}
+
+.expense.dark-mode{
+    /* color: #c72020dd; */
+    color: red;
+}
+
+.purple.dark-mode, #tr-acc-link.dark-mode{
+    color: rgba(197, 39, 197, 0.8);
+}
+
+select.dark-mode{
+    background-color: hsl(217, 29%, 18%);
+    color: #fff;
+}
+
+input.dark-mode{
+    background-color: hsl(215, 31%, 20%);
+    color: #fff;
+}
+
+.category.dark-mode{
+    background-color: #041473;
+    border-color: #080c12;
+    /* color: aliceblue; */
+}
+
+.text-muted.dark-mode{
+    color: rgba(255, 255, 255) !important;
+    font-weight: 600;
+}
