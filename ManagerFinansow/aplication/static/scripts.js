@@ -143,7 +143,7 @@ function changeToLight(){
             elements[i].classList.remove("dark-mode");
         }
     }
-    
+
     if(textMuted != null){
         for(var i = 0; i < textMuted.length; i++){
             textMuted[i].classList.remove("dark-mode");
@@ -317,4 +317,19 @@ function darkMode() {
         }
     }
  }
+function filterBy(categoryName){
+    // display only transactions with selected category
+    var allTransactions = document.getElementsByClassName("transaction");
+    var allCategories = document.getElementsByClassName("category");
 
+    for (var i = 0; i < allTransactions.length; i++) {
+        allTransactions[i].style.display = "none";
+    }
+
+    for (var i = 0; i < allTransactions.length; i++) {
+        // if "data" attribute of transaction is equal to selected category
+        if(allTransactions[i].getAttribute("data") == categoryName){
+            allTransactions[i].style.display = "flex";
+        }
+    }
+}
