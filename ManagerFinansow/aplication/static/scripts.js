@@ -401,7 +401,9 @@ function filterBy(categoryNames){
     var allCategories = document.getElementsByClassName("category");
     
     for (var i = 0; i < allTransactions.length; i++) {
-        allTransactions[i].style.display = "none";
+        // allTransactions[i].style.display = "none";
+        //hide using jQueryui
+        $(allTransactions[i]).hide();
     }
 
     //hide all with class=date
@@ -414,7 +416,9 @@ function filterBy(categoryNames){
     for (var i = 0; i < allTransactions.length; i++) {
         // if "data" attribute of transaction is equal to selected category
         if(categoryNames.includes(allTransactions[i].getAttribute("data"))){
-            allTransactions[i].style.display = "flex";
+            // allTransactions[i].style.display = "flex";
+            //show using jQueryui in the same place as hide
+            $(allTransactions[i]).show("slow");
             //get the date element that is closest above the transaction
             var dateElement = allTransactions[i].previousElementSibling;
             //if the date element is not a date, get the next one
@@ -429,7 +433,9 @@ function filterBy(categoryNames){
     //if "Wszystkie kategorie" is selected, display all transactions
     if(categoryNames.includes("all") || categoryNames.length == 0){
         for (var i = 0; i < allTransactions.length; i++) {
-            allTransactions[i].style.display = "flex";
+            // allTransactions[i].style.display = "flex";
+            //show using jQueryui
+            $(allTransactions[i]).show("slow");
         }
         for (var i = 0; i < allDates.length; i++) {
             allDates[i].style.display = "flex";
@@ -505,8 +511,10 @@ function changeTotalTransactions(url) {
 
 $(document).ready(function () {
     $("#category-selector").chosen({
+        
         no_results_text: "Brak wyników",
         placeholder_text_multiple: "Wybierz kategorie",
+        
     });
     $("#category-selector").change(filterByCategories);
 });
@@ -520,3 +528,14 @@ function filterByCategories(){
     console.log(selected);
     filterBy(selected);
 }
+
+function hideTransaction(id){
+    var transaction = document.getElementById(id);
+    transaction.hide("fade", 500);
+}
+
+//slide in all accounts from left side of the screen
+$(document).ready(function () {
+    $(".account").hide().show("drop", 1000);
+
+});
