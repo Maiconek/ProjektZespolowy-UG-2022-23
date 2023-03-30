@@ -198,18 +198,18 @@ tr.transaction{
 tr.transaction > td{
     padding: 5px;
 }
-#transaction-subcategory{
+.transaction-subcategory{
     font-style: italic;
     color: rgba(0, 0, 0, 0.8);
 }
-#transaction-name{
+.transaction-name{
     font-weight: bold;
 }
-#transaction-description{
+.transaction-description{
     font-style: italic;
     color: rgba(0, 0, 0, 0.6);
 }
-#transaction-amount{
+.transaction-amount{
     text-align: end;
     font-weight: bold;
 }
@@ -228,7 +228,7 @@ tr.transaction > td{
 .cat-expense{
     color: red;
 }
-#tr-acc-link{
+.tr-acc-link{
     color: purple;
 }
 /* CATEGORIES */
@@ -525,7 +525,7 @@ td{
 
 }
 
-#transaction-description{
+.transaction-description{
     /* display: none;  */
     max-height: 30px;
     overflow: hidden;

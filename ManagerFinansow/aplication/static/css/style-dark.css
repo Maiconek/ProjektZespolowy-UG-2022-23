@@ -51,12 +51,12 @@ button.dark-mode{
 }
 
 select.dark-mode{
-    background-color: hsl(217, 29%, 18%);
+    background-color: hsl(217, 29%, 18%) !important;
     color: #fff;
 }
 
 input.dark-mode{
-    background-color: hsl(215, 31%, 20%);
+    background-color: hsl(215, 31%, 20%) !important;
     color: #fff;
 }
 
