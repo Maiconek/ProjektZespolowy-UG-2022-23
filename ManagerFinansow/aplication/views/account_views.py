@@ -8,6 +8,7 @@ from django.core.paginator import Paginator
 from django.views.generic.base import TemplateView
 from django.db.models import Q
 from django.db.models import Count
+from UsersApp.models import Category
 
 def error404(request, exception):
     return render(request, 'application/error/404.html')
@@ -20,6 +21,12 @@ class Home(TemplateView):
             return showAllTransactions(request)
         else:
             return render(request, self.template_name)
+        
+def save_total(request):
+    total = request.GET.get('total')
+    if total is not None:
+        request.user.profile.total_transactions = int(total)
+        request.user.profile.save()
 
 @login_required(login_url='login')
 def showAllTransactions(request):
@@ -27,10 +34,12 @@ def showAllTransactions(request):
     transactions = Transaction.objects.filter(id_user=request.user.profile).exclude(
         id_account__in=User_Account.objects.values('id_account').annotate(Count('id')).order_by().filter(id__count__gt=1).values_list('id_account'))
     page_number = request.GET.get('page')
-    prepared = prepareTransactions(transactions, request.user.profile.currency, page_number, 20)
+    save_total(request)
+    prepared = prepareTransactions(transactions, request.user.profile.currency, page_number, request.user.profile.total_transactions)
 
     context = {
         'profile': request.user.profile,
+        'categories': Category.objects.filter(Q(owner=None) | Q(owner=request.user.profile)),
         'daily': prepared[0],
         'balance': prepared[1],
         'future': prepared[2],
@@ -46,9 +55,11 @@ def showAccount(request, pk):
     updateTransactions(Transaction.objects.filter(Q(id_account=account) | Q(Transfer___account_to = account)))
     transactions = Transaction.objects.filter(Q(id_account=account) | Q(Transfer___account_to = account))
     page_number = request.GET.get('page')
-    prepared = prepareTransactions(transactions, account.currency, page_number, 20, account)
+    save_total(request)
+    prepared = prepareTransactions(transactions, account.currency, page_number, request.user.profile.total_transactions, account)
     context = {
         'account': account, 
+        'categories': Category.objects.filter(Q(owner=None) | Q(owner=request.user.profile)),
         'daily': prepared[0],  
         'balance': prepared[1],
         'future': prepared[2],

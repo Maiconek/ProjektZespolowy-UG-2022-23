@@ -697,6 +697,30 @@ tr.transaction > td{
     float: right;
 }
 
+#selectors {
+    margin: auto;
+    display:flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-content: space-between;
+    padding-left:1%;
+    padding-right:1%;
+    justify-content: space-between;
+    width:90%;
+}
+
+#selectors > select {
+    min-width: 0;
+    width: fit-content;
+    height: fit-content;
+    margin-bottom: 8px;
+}
+
+#total_transactions {
+    margin-right:auto;
+    margin-left:5px;
+}
+
 
 /* @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px)  { */
 
@@ -744,6 +768,15 @@ tr.transaction > td{
         min-width: fit-content;
         border: none;
     }
+
+    #total_transactions {
+        margin-right:0;
+    }
+
+    #selectors {
+        justify-content: center;
+    }
+    
 }
 
 /*Screen size 330px*/
@@ -802,14 +835,13 @@ tr.transaction > td{
         max-width: 100%;
     }
 
-    .clickable {
+    .clickable, #selectors {
         width:95%;
     }
 
     .right-text{
         float: none;
     }
-
 }
 
 
@@ -837,7 +869,6 @@ tr.transaction > td{
 
 .pagination > .page-item > a{
     color: #c83cc8;
-    background-color: #e7e7e7;
 }
 
 .pagination > .disabled > a{
@@ -870,3 +901,4 @@ p.invitation{
 .active-transaction, .transaction:hover {
     background-color: #ccc;
 }
+

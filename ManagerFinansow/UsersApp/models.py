@@ -14,6 +14,7 @@ class Profile(models.Model):
     # image = models.ImageField(null=True, blank=True, upload_to="images/", default="images/default-user.png")
     image = ThumbnailerImageField(null=True, blank=True, upload_to="images/", default="images/default-user.png")
     created = models.DateTimeField(auto_now_add=True)
+    total_transactions = models.IntegerField(null=True, blank=True, default=20)
     id = models.UUIDField(default=uuid.uuid4, unique=True, 
                             primary_key=True, editable=False)
 

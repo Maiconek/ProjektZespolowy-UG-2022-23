@@ -120,38 +120,54 @@
             }
         </script>
 
-        {% if page_obj.paginator.num_pages > 1 %}
-        <nav aria-label="...">
-            <ul class="pagination justify-content-center">
-                {% if page_obj.has_previous %}
-                <li class="page-item">
-                <a class="page-link" href="?page=1" tabindex="-1">&laquo;</a></li>
-                <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&lt;</a></li>
-                {% else %}
-                <li class="page-item disabled">
-                <a class="page-link" href="" tabindex="-1">&laquo;</a></li>
-                <li class="page-item disabled">
-                <a class="page-link" href="">&lt;</a></li>
-                {% endif %}
+        <div id="selectors">
+            <select class="form-select" id="category-selector">
+                <option value="all">Wszystkie kategorie</option>
+                {% for c in categories %}
+                    <option value="{{ c.name }}">{{ c.name }}</option>
+                {% endfor %}
+            </select>
 
-                <li class="page-item active">
-                <a class="page-link" href="">{{ page_obj.number }}/{{ page_obj.paginator.num_pages }}</a></li>
+            <select class="form-select" id="total_transactions" onchange="changeTotalTransactions('{{ request.get_full_path }}')">
+                <option value="20" {% if request.user.profile.total_transactions == 20 %}selected{% endif %}>20</option>
+                <option value="50" {% if request.user.profile.total_transactions == 50 %}selected{% endif %}>50</option>
+                <option value="100" {% if request.user.profile.total_transactions == 100 %}selected{% endif %}>100</option>
+                <option value="200" {% if request.user.profile.total_transactions == 200 %}selected{% endif %}>200</option>
+            </select>
 
-                {% if page_obj.has_next %}
-                <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.next_page_number }}">&gt;</a></li>
-                <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a></li> 
-                {% else %}
-                <li class="page-item disabled">
-                <a class="page-link" href="">&gt;</a></li> 
-                <li class="page-item disabled">
-                <a class="page-link" href="" tabindex="-1">&raquo;</a></li>
-                {% endif %}
-            </ul>
-        </nav>
-        {% endif %}
+            {% if page_obj.paginator.num_pages > 1 %}
+            <nav aria-label="...">
+                <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item">
+                    <a class="page-link" href="?page=1" tabindex="-1">&laquo;</a></li>
+                    <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&lt;</a></li>
+                    {% else %}
+                    <li class="page-item disabled">
+                    <a class="page-link" href="" tabindex="-1">&laquo;</a></li>
+                    <li class="page-item disabled">
+                    <a class="page-link" href="">&lt;</a></li>
+                    {% endif %}
+
+                    <li class="page-item active">
+                    <a class="page-link" href="">{{ page_obj.number }}/{{ page_obj.paginator.num_pages }}</a></li>
+
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">&gt;</a></li>
+                    <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a></li> 
+                    {% else %}
+                    <li class="page-item disabled">
+                    <a class="page-link" href="">&gt;</a></li> 
+                    <li class="page-item disabled">
+                    <a class="page-link" href="" tabindex="-1">&raquo;</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+        </div>
 
         <table class="table-in-account">
             {% for date, transactions, value in daily %}

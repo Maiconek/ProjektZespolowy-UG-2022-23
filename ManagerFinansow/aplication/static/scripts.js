@@ -333,3 +333,10 @@ function filterBy(categoryName){
         }
     }
 }
+
+function changeTotalTransactions(url) {
+    selector = document.getElementById('total_transactions');
+    selected = selector.options[selector.selectedIndex].value;
+    window.location.replace(url.includes('total') ? url.replace(/total=(\d+)/, `total=${selected}`) 
+    : url.concat(url.includes('?') ? `&total=${selected}` : `?total=${selected}`));
+}

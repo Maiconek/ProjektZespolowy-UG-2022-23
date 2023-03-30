@@ -77,3 +77,18 @@ input.dark-mode{
     background-color: #061256;
     color: #fff;
 }
+
+/*dla paginacji*/
+/* .pagination > .page-item > a{
+    color: #ffffff;
+    background-color: hsl(215, 31%, 20%);
+}
+
+.pagination > .disabled > a{
+    color: #afafaf;
+}
+
+.pagination > .active > a
+{
+    border: solid 1px #ffffff; 
+} */
