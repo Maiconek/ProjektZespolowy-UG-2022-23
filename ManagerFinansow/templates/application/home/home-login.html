@@ -19,56 +19,57 @@
         <div id="myDIV" style="display:none;">
         <table>
         {% for date, transactions, value in future %}
-            <tr id="date">
+            <tr class="date">
                 <td class="center" colspan="4">{{ date }}</td>
-                <td id="transaction-amount"{% if value > 0 %}class='income' {% elif value == 0 %}class='neutral' {% else %}class='expense' {% endif %}>{{ value }} {{ account.currency.sign }}</td>
+                <td class="transaction-amount"{% if value > 0 %}class='income' {% elif value == 0 %}class='neutral' {% else %}class='expense' {% endif %}>{{ value }} {{ account.currency.sign }}</td>
             </tr>
             {% for tr in transactions %}
-                <tr class="transaction"                 
+                <tr class="transaction"
+                data="{{ tr.id_category }}"                 
                 style="{% if not forloop.last %} border-bottom:none;{% endif %}
                 {% if forloop.last %} border-bottom-left-radius:10px;border-bottom-right-radius:10px;
                 {% endif %}
                 {% if forloop.first %} border-top-left-radius:10px;border-top-right-radius:10px;
                 {% endif %}">
-                    <!-- <td id="transaction-category" class="bold">{{ tr.id_category }}</td>
+                    <!-- <td class="transaction-category" class="bold">{{ tr.id_category }}</td>
                     {% if tr.id_subcategory %}
-                    <td id="transaction-subcategory">({{ tr.id_subcategory }})</td>
+                    <td class="transaction-subcategory">({{ tr.id_subcategory }})</td>
                     {% else %}
-                    <td id="transaction-subcategory"></td>
+                    <td class="transaction-subcategory"></td>
                     {% endif %}                  -->
-                    <td id="transaction-category" class="bold">
+                    <td class="transaction-category" class="bold">
                         {% if tr.account_from is not None %}
                         Przelew
                         {% else %}
                         {{ tr.id_category }}
                         {% endif %}
                         {% if tr.id_subcategory %}
-                        <span id="transaction-subcategory">({{ tr.id_subcategory }})</span>
+                        <span class="transaction-subcategory">({{ tr.id_subcategory }})</span>
                         {% else %}
-                        <span id="transaction-subcategory"></span>
+                        <span class="transaction-subcategory"></span>
                         {% endif %}
                     </td>
                     <!-- <td id="do-not-display"></td> -->
                     {% if tr.account_from is not None %}
-                        <td id="transaction-amount" class="neutral" style="font-weight:600;">{{ tr.amount }} {{ tr.currency.sign }}</td>
+                        <td class="transaction-amount" class="neutral" style="font-weight:600;">{{ tr.amount }} {{ tr.currency.sign }}</td>
                     {% else %}
                         {% if tr.amount >= 0 %}
-                            <td id="transaction-amount" class="income" style="font-weight:600;">{{ tr.amount }} {{ tr.currency.sign }}</td>
+                            <td class="transaction-amount" class="income" style="font-weight:600;">{{ tr.amount }} {{ tr.currency.sign }}</td>
                         {% else %}
-                            <td id="transaction-amount" class="expense" style="font-weight:600;">{{ tr.amount }} {{ tr.currency.sign }}</td>
+                            <td class="transaction-amount" class="expense" style="font-weight:600;">{{ tr.amount }} {{ tr.currency.sign }}</td>
                         {% endif %}
                     {% endif %}
                     <td class="last-in-one-row"><a class="purple" href="{% url 'showTransaction' tr.id 1 %}">Szczegóły</a></td>
-                    <td id="transaction-account" class="last-in-one-row">
+                    <td class="transaction-account" class="last-in-one-row">
                         <a id="tr-acc-link" class="purple" href="{% url 'account' pk=tr.id_account.id %}">{{ tr.id_account.name }}</a>
                     </td>
                     {% if tr.account_from is not None %}
-                    <td id="transaction-description">{{ tr.account_from }} &#8594; {{ tr.account_to }}</td>
+                    <td class="transaction-description">{{ tr.account_from }} &#8594; {{ tr.account_to }}</td>
                     {% endif %}
                     {% if tr.description %}
-                    <td id="transaction-description">{{ tr.description }}</td>
+                    <td class="transaction-description">{{ tr.description }}</td>
                     {% else %}
-                    <td id="transaction-description"></td>
+                    <td class="transaction-description"></td>
                     {% endif %}
                 </tr>
             {% endfor %}
@@ -98,7 +99,8 @@
         </script>
 
         <div id="selectors">
-            <select class="form-select" id="category-selector">
+            
+            <select class="form-select" id="category-selector" multiple="multiple" >
                 <option value="all">Wszystkie kategorie</option>
                 {% for c in categories %}
                     <option value="{{ c.name }}">{{ c.name }}</option>
@@ -148,57 +150,58 @@
 
         <table>
         {% for date, transactions, value in daily %}
-            <tr id="date">
+            <tr class="date">
                 <td class="center" colspan="4">{{ date }}</td>
-                <td id="transaction-amount"{% if value > 0 %}class='income' {% elif value == 0 %}class='neutral' {% else %}class='expense' {% endif %}>{{ value }} {{ profile.currency.sign }}</td>
+                <td class="transaction-amount"{% if value > 0 %}class='income' {% elif value == 0 %}class='neutral' {% else %}class='expense' {% endif %}>{{ value }} {{ profile.currency.sign }}</td>
             </tr>
             {% for tr in transactions %}
-                <tr class="transaction" 
+                <tr class="transaction"
+                data="{{ tr.id_category }}" 
                 style="{% if not forloop.last %} border-bottom:none;{% endif %}
                 {% if forloop.last %} border-bottom-left-radius:10px;border-bottom-right-radius:10px;
                 {% endif %}
                 {% if forloop.first %} border-top-left-radius:10px;border-top-right-radius:10px;
                 {% endif %}">
-                    <!-- <td id="transaction-category" class="bold">{{ tr.id_category }}</td>
+                    <!-- <td class="transaction-category" class="bold">{{ tr.id_category }}</td>
                     {% if tr.id_subcategory %}
-                    <td id="transaction-subcategory">({{ tr.id_subcategory }})</td>
+                    <td class="transaction-subcategory">({{ tr.id_subcategory }})</td>
                     {% else %}
-                    <td id="transaction-subcategory"></td>
+                    <td class="transaction-subcategory"></td>
                     {% endif %}                  -->
                     
-                    <td id="transaction-category" class="bold">
+                    <td class="transaction-category" class="bold">
                         {% if tr.account_from is not None %}
                         Przelew
                         {% else %}
                         {{ tr.id_category }}
                         {% endif %}
                         {% if tr.id_subcategory %}
-                        <span id="transaction-subcategory">({{ tr.id_subcategory }})</span>
+                        <span class="transaction-subcategory">({{ tr.id_subcategory }})</span>
                         {% else %}
-                        <span id="transaction-subcategory"></span>
+                        <span class="transaction-subcategory"></span>
                         {% endif %}
                     </td>
                     <!-- <td id="do-not-display"></td> -->
                     {% if tr.account_from is not None %}
-                        <td id="transaction-amount" class="neutral" style="font-weight:600;">{{ tr.amount }} {{ tr.currency.sign }}</td>
+                        <td class="transaction-amount" class="neutral" style="font-weight:600;">{{ tr.amount }} {{ tr.currency.sign }}</td>
                     {% else %}
                         {% if tr.amount >= 0 %}
-                            <td id="transaction-amount" class="income" style="font-weight:600;">{{ tr.amount }} {{ tr.currency.sign }}</td>
+                            <td class="transaction-amount" class="income" style="font-weight:600;">{{ tr.amount }} {{ tr.currency.sign }}</td>
                         {% else %}
-                            <td id="transaction-amount" class="expense" style="font-weight:600;">{{ tr.amount }} {{ tr.currency.sign }}</td>
+                            <td class="transaction-amount" class="expense" style="font-weight:600;">{{ tr.amount }} {{ tr.currency.sign }}</td>
                         {% endif %}
                     {% endif %}
                     <td class="last-in-one-row"><a class="purple" href="{% url 'showTransaction' tr.id 1 %}">Szczegóły</a></td>
-                    <td id="transaction-account" class="last-in-one-row">
+                    <td class="transaction-account" class="last-in-one-row">
                         <a id="tr-acc-link" class="purple" href="{% url 'account' pk=tr.id_account.id %}">{{ tr.id_account.name }}</a>
                     </td>
                     {% if tr.account_from is not None %}
-                    <td id="transaction-description">{{ tr.account_from }} &#8594; {{ tr.account_to }}</td>
+                    <td class="transaction-description">{{ tr.account_from }} &#8594; {{ tr.account_to }}</td>
                     {% endif %}
                     {% if tr.description %}
-                    <td id="transaction-description">{{ tr.description }}</td>
+                    <td class="transaction-description">{{ tr.description }}</td>
                     {% else %}
-                    <td id="transaction-description"></td>
+                    <td class="transaction-description"></td>
                     {% endif %}
                 </tr>
                 <tr class="transaction-panel">
