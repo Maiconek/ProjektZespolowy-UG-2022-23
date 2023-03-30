@@ -182,7 +182,7 @@ a.account-link > span.account-description{
     color: rgba(0, 0, 0, 0.6);
 }
     /* ACCOUNT */
-#date{
+.date{
     text-align: center;
     font-size:14pt;
 }
@@ -901,4 +901,3 @@ p.invitation{
 .active-transaction, .transaction:hover {
     background-color: #ccc;
 }
-

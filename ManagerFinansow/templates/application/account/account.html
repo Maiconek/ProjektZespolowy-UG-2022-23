@@ -9,7 +9,7 @@
     <div class="title" style="margin-bottom: 30px;">
         <h1 style="width: 88%;text-align: left;">{{ account }}&emsp;
         <span class="right-text">{{ balance }} {{ account.currency.sign }}</span></h1>
-        {% if account.secription %}
+        {% if account.description %}
             <h4>{{ account.description }}</h4>
         {% endif %}
     </div>
@@ -42,7 +42,7 @@
         <div id="myDIV" style="display:none">
         <table class="table-in-account">
             {% for date, transactions, value in future %}
-                <tr id="date">
+                <tr class="date">
                     <td colspan="4">{{ date }}</td>
                     <td id="transaction-amount"{% if value > 0 %}class='income' {% elif value == 0 %}class='neutral' {% else %}class='expense' {% endif %}>{{ value }} {{ account.currency.sign }}</td>
                 </tr>
@@ -121,13 +121,14 @@
         </script>
 
         <div id="selectors">
-            <select class="form-select" id="category-selector">
+            <select class="form-select" id="category-selector" multiple="multiple" >
                 <option value="all">Wszystkie kategorie</option>
                 {% for c in categories %}
                     <option value="{{ c.name }}">{{ c.name }}</option>
                 {% endfor %}
             </select>
 
+            Wyświetl na stronie:
             <select class="form-select" id="total_transactions" onchange="changeTotalTransactions('{{ request.get_full_path }}')">
                 <option value="20" {% if request.user.profile.total_transactions == 20 %}selected{% endif %}>20</option>
                 <option value="50" {% if request.user.profile.total_transactions == 50 %}selected{% endif %}>50</option>
@@ -171,7 +172,7 @@
 
         <table class="table-in-account">
             {% for date, transactions, value in daily %}
-                <tr id="date">
+                <tr class="date">
                     <td colspan="4">{{ date }}</td>
                     <td id="transaction-amount"{% if value > 0 %}class='income' {% elif value == 0 %}class='neutral' {% else %}class='expense' {% endif %}>{{ value }} {{ account.currency.sign }}</td>
                 </tr>
@@ -189,7 +190,7 @@
                             {% else %}
                             
                             
-                            <a onclick="filterBy('{{ tr.id_category }}')"> <i>Filtruj <span> </span> <span> </span> </i> </a>
+                            <!-- <a onclick="filterBy('{{ tr.id_category }}')"> <i>Filtruj <span> </span> <span> </span> </i> </a> -->
                             {{ tr.id_category }}
 
                             {% endif %}

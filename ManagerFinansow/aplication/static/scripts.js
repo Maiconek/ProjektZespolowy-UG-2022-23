@@ -9,6 +9,7 @@ function changeToDark(){
     var inputs = document.getElementsByTagName("input");
     var textMuted = document.getElementsByClassName("text-muted");
     var elements = document.getElementsByClassName("element");
+    var paginations = document.getElementsByClassName("pagination");
 
     var categories = document.getElementsByClassName("category");
 
@@ -36,6 +37,13 @@ function changeToDark(){
     
     button.classList.remove("dark-mode");
     button.classList.add("dark-mode");
+
+    if(paginations != null){
+        for(var i = 0; i < paginations.length; i++){
+            paginations[i].classList.remove("dark-mode");
+            paginations[i].classList.add("dark-mode");
+        }
+    }
 
     if(elements != null){
         for(var i = 0; i < elements.length; i++){
@@ -111,6 +119,7 @@ function changeToLight(){
     var allExpenses = document.getElementsByClassName("expense");
     var selects = document.getElementsByTagName("select");
     var inputs = document.getElementsByTagName("input");
+    var paginations = document.getElementsByClassName("pagination");
 
     var elements = document.getElementsByClassName("element");
     var textMuted = document.getElementsByClassName("text-muted");
@@ -137,6 +146,12 @@ function changeToLight(){
     content.classList.remove("dark-mode");
     
     button.classList.remove("dark-mode");
+
+    if(paginations != null){
+        for(var i = 0; i < paginations.length; i++){
+            paginations[i].classList.remove("dark-mode");
+        }
+    }
 
     if(elements != null){
         for(var i = 0; i < elements.length; i++){
@@ -317,21 +332,118 @@ function darkMode() {
         }
     }
  }
-function filterBy(categoryName){
+// function filterBy(categoryName){
+//     // display only transactions with selected category
+//     var allTransactions = document.getElementsByClassName("transaction");
+//     var allCategories = document.getElementsByClassName("category");
+
+//     for (var i = 0; i < allTransactions.length; i++) {
+//         allTransactions[i].style.display = "none";
+//     }
+
+//     for (var i = 0; i < allTransactions.length; i++) {
+//         // if "data" attribute of transaction is equal to selected category
+//         if(allTransactions[i].getAttribute("data") == categoryName){
+//             allTransactions[i].style.display = "flex";
+//         }
+//     }
+// }
+
+function filterBy(categoryNames){
     // display only transactions with selected category
     var allTransactions = document.getElementsByClassName("transaction");
     var allCategories = document.getElementsByClassName("category");
-
+    
     for (var i = 0; i < allTransactions.length; i++) {
         allTransactions[i].style.display = "none";
     }
 
+    //hide all with class=date
+    var allDates = document.getElementsByClassName("date");
+    for (var i = 0; i < allDates.length; i++) {
+        allDates[i].style.display = "none";
+    }
+
+
     for (var i = 0; i < allTransactions.length; i++) {
         // if "data" attribute of transaction is equal to selected category
-        if(allTransactions[i].getAttribute("data") == categoryName){
+        if(categoryNames.includes(allTransactions[i].getAttribute("data"))){
             allTransactions[i].style.display = "flex";
+            //get the date element that is closest above the transaction
+            var dateElement = allTransactions[i].previousElementSibling;
+            //if the date element is not a date, get the next one
+            while(dateElement.className != "date"){
+                dateElement = dateElement.previousElementSibling;
+            }
+            //display the date element
+            dateElement.style.display = "flex";
         }
     }
+
+    //if "Wszystkie kategorie" is selected, display all transactions
+    if(categoryNames.includes("all") || categoryNames.length == 0){
+        for (var i = 0; i < allTransactions.length; i++) {
+            allTransactions[i].style.display = "flex";
+        }
+        for (var i = 0; i < allDates.length; i++) {
+            allDates[i].style.display = "flex";
+        }
+    }
+    
+    
+    //make array of elements that have display:flex and are transactions
+    var visibleTransactions = [];
+    for (var i = 0; i < allTransactions.length; i++) {
+        if(allTransactions[i].style.display == "flex"){
+            visibleTransactions.push(allTransactions[i]);
+        }
+    }
+
+    //reset all border-radius
+    for (var i = 0; i < visibleTransactions.length; i++) {
+        visibleTransactions[i].style.borderRadius = "0px";
+    }
+
+    /*
+    //if visibleTransactions is after the date element, make border-top-radius: 10px 10px
+    for (var i = 0; i < visibleTransactions.length; i++) {
+        //get previous element that has display:flex
+        var previousElement = visibleTransactions[i].previousElementSibling;
+        while(previousElement.style.display != "flex"){
+            if(previousElement.previousElementSibling == null) break;
+            previousElement = previousElement.previousElementSibling;
+        }
+        //if previous element is a date, make border-top-radius: 10px 10px
+        if(previousElement.className == "date"){
+            visibleTransactions[i].style.borderTopLeftRadius = "10px";
+            visibleTransactions[i].style.borderTopRightRadius = "10px";
+        }
+
+        //get next element that has display:flex
+        var nextElement = visibleTransactions[i].nextElementSibling;
+        while(nextElement.style.display != "flex"){
+            if(nextElement.nextElementSibling == null) break;
+            nextElement = nextElement.nextElementSibling;
+        }
+        //if next element is a date, make border-bottom-radius: 10px 10px
+        if(nextElement.className == "date"){
+            visibleTransactions[i].style.borderBottomLeftRadius = "10px";
+            visibleTransactions[i].style.borderBottomRightRadius = "10px";
+        }
+    }
+*/
+    // visibleTransactions[0].style.borderRadius = "10px 10px 0px 0px";
+    // visibleTransactions[visibleTransactions.length - 1].style.borderRadius = "0px 0px 10px 10px";
+
+    // visibleTransactions[visibleTransactions.length - 1].style.borderBottom = "2px solid #e8dcb8";
+
+
+    // z jakiegoś powodu po odkomentowaniu tego co wyżej nie można usunąć ostatniego elementu z listy kategorii
+
+    
+
+
+
 }
 
 function changeTotalTransactions(url) {
@@ -339,4 +451,26 @@ function changeTotalTransactions(url) {
     selected = selector.options[selector.selectedIndex].value;
     window.location.replace(url.includes('total') ? url.replace(/total=(\d+)/, `total=${selected}`) 
     : url.concat(url.includes('?') ? `&total=${selected}` : `?total=${selected}`));
+}
+
+//function that takes things selected in select with multiple choices and uses them in function filterBy
+
+
+
+$(document).ready(function () {
+    $("#category-selector").chosen({
+        no_results_text: "Brak wyników",
+        placeholder_text_multiple: "Wybierz kategorie",
+    });
+    $("#category-selector").change(filterByCategories);
+});
+
+//function that takes things selected in #category-selector and uses them in function filterBy
+function filterByCategories(){
+    var selected = [];
+    $("#category-selector option:selected").each(function () {
+        selected.push($(this).val());
+    });
+    console.log(selected);
+    filterBy(selected);
 }

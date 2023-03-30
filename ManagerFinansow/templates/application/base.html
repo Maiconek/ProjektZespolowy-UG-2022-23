@@ -16,9 +16,17 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style-dark.css' %}">
     <title>{% block title %}Website{% endblock %} - Cointrol</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
+
     <script src="{% static 'scripts.js' %}"></script>
+
+    <!-- chosen -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css" rel='stylesheet' type='text/css'>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js" type='text/javascript'></script>
 </head>
 <body onload="checkColorMode()">
+    <!-- <script>$(function() { alert('hello') });</script> -->
+
     <nav class="nav" id="navigation">
         {% if user.is_authenticated %}
         <ul class="nav justify-content-start">

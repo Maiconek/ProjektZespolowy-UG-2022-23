@@ -79,16 +79,16 @@ input.dark-mode{
 }
 
 /*dla paginacji*/
-/* .pagination > .page-item > a{
+.pagination.dark-mode > .page-item > a{
     color: #ffffff;
     background-color: hsl(215, 31%, 20%);
 }
 
-.pagination > .disabled > a{
+.pagination.dark-mode > .disabled > a{
     color: #afafaf;
 }
 
-.pagination > .active > a
+.pagination.dark-mode > .active > a
 {
     border: solid 1px #ffffff; 
-} */
+} 

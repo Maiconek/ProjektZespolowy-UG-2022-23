@@ -57,15 +57,16 @@ def showAccount(request, pk):
     page_number = request.GET.get('page')
     save_total(request)
     prepared = prepareTransactions(transactions, account.currency, page_number, request.user.profile.total_transactions, account)
+    categories_alphabetical = Category.objects.filter(Q(owner=None) | Q(owner=request.user.profile)).order_by('name')
     context = {
         'account': account, 
-        'categories': Category.objects.filter(Q(owner=None) | Q(owner=request.user.profile)),
+        'categories': categories_alphabetical,
         'daily': prepared[0],  
         'balance': prepared[1],
         'future': prepared[2],
         'count': prepared[3],
         'page_obj': prepared[4],
-        'fullAccess': User_Account.objects.get(Q(id_account=account) & Q(id_user=request.user.profile)).access_level == 'FULL'
+        'fullAccess': User_Account.objects.get(Q(id_account=account) & Q(id_user=request.user.profile)).access_level == 'FULL',
     }
     return render(request, 'application/account/account.html', context)
 
