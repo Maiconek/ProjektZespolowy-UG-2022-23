@@ -92,3 +92,23 @@ input.dark-mode{
 {
     border: solid 1px #ffffff; 
 } 
+
+.form-select.dark-mode{
+    background-color: hsl(217, 29%, 18%) !important;
+    color: #fff;
+}
+
+.chosen-container-multi .chosen-choices li.search-field input[type="text"].dark-mode{
+    background-color: hsl(217, 29%, 18%) !important;
+    color: #fff;
+}
+
+.chosen-choices.dark-mode{
+    background-color: hsl(217, 29%, 18%) !important;
+    color: #fff;
+}
+
+.chosen-drop.dark-mode{
+    background-color: hsl(217, 29%, 18%) !important;
+    color: #fff;
+}

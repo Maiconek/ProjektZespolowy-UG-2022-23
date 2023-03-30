@@ -10,6 +10,9 @@ function changeToDark(){
     var textMuted = document.getElementsByClassName("text-muted");
     var elements = document.getElementsByClassName("element");
     var paginations = document.getElementsByClassName("pagination");
+    var formSelects = document.getElementsByClassName("form-select");
+    var chosenChoices = document.getElementsByClassName("chosen-choices");
+    var chosenDrop = document.getElementsByClassName("chosen-drop");
 
     var categories = document.getElementsByClassName("category");
 
@@ -37,6 +40,28 @@ function changeToDark(){
     
     button.classList.remove("dark-mode");
     button.classList.add("dark-mode");
+
+    if(chosenDrop != null){
+        for(var i = 0; i < chosenDrop.length; i++){
+            chosenDrop[i].classList.remove("dark-mode");
+            chosenDrop[i].classList.add("dark-mode");
+        }
+    }
+
+
+    if(chosenChoices != null){
+        for(var i = 0; i < chosenChoices.length; i++){
+            chosenChoices[i].classList.remove("dark-mode");
+            chosenChoices[i].classList.add("dark-mode");
+        }
+    }
+
+    if(formSelects != null){
+        for(var i = 0; i < formSelects.length; i++){
+            formSelects[i].classList.remove("dark-mode");
+            formSelects[i].classList.add("dark-mode");
+        }
+    }
 
     if(paginations != null){
         for(var i = 0; i < paginations.length; i++){
@@ -120,6 +145,9 @@ function changeToLight(){
     var selects = document.getElementsByTagName("select");
     var inputs = document.getElementsByTagName("input");
     var paginations = document.getElementsByClassName("pagination");
+    var formSelects = document.getElementsByClassName("form-select");
+    var chosenChoices = document.getElementsByClassName("chosen-choices");
+    var chosenDrop = document.getElementsByClassName("chosen-drop");
 
     var elements = document.getElementsByClassName("element");
     var textMuted = document.getElementsByClassName("text-muted");
@@ -146,6 +174,24 @@ function changeToLight(){
     content.classList.remove("dark-mode");
     
     button.classList.remove("dark-mode");
+
+    if(chosenDrop != null){
+        for(var i = 0; i < chosenDrop.length; i++){
+            chosenDrop[i].classList.remove("dark-mode");
+        }
+    }
+
+    if(chosenChoices != null){
+        for(var i = 0; i < chosenChoices.length; i++){
+            chosenChoices[i].classList.remove("dark-mode");
+        }
+    }
+
+    if(formSelects != null){
+        for(var i = 0; i < formSelects.length; i++){
+            formSelects[i].classList.remove("dark-mode");
+        }
+    }
 
     if(paginations != null){
         for(var i = 0; i < paginations.length; i++){
