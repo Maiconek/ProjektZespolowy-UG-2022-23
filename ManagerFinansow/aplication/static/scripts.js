@@ -26,6 +26,7 @@ function changeToDark(isChange){
     var linkButton = document.getElementsByClassName("button");
 
     if(isChange){
+        // animate using jQuery
         $(background).addClass("dark-mode", 1000);
         $(button).addClass("dark-mode", 1000);
         $(content).addClass("dark-mode", 1000);
@@ -37,9 +38,9 @@ function changeToDark(isChange){
         $(textMuted).addClass("dark-mode", 1000);
         $(elements).addClass("dark-mode", 1000);
         $(paginations).addClass("dark-mode", 1000);
-        $(formSelects).addClass("dark-mode", 1000);
-        $(chosenChoices).addClass("dark-mode", 1000);
-        $(chosenDrop).addClass("dark-mode", 1000);
+        $(formSelects).addClass("dark-mode", 50);
+        $(chosenChoices).addClass("dark-mode", 50);
+        $(chosenDrop).addClass("dark-mode", 50);
         $(categories).addClass("dark-mode", 1000);
         $(allTransactions).addClass("dark-mode", 1000);
         $(linkButton).addClass("dark-mode", 1000);
@@ -215,9 +216,9 @@ function changeToLight(){
     $(selects).removeClass("dark-mode", 1000);
     $(inputs).removeClass("dark-mode", 1000);
     $(paginations).removeClass("dark-mode", 1000);
-    $(formSelects).removeClass("dark-mode", 1000);
-    $(chosenChoices).removeClass("dark-mode", 1000);
-    $(chosenDrop).removeClass("dark-mode", 1000);
+    $(formSelects).removeClass("dark-mode",50);
+    $(chosenChoices).removeClass("dark-mode",50);
+    $(chosenDrop).removeClass("dark-mode",50);
     $(elements).removeClass("dark-mode", 1000);
     $(textMuted).removeClass("dark-mode", 1000);
     $(categories).removeClass("dark-mode", 1000);
@@ -340,13 +341,9 @@ function darkMode() {
 
     //ustawianie ciemnego motywu
     if (sessionStorage.getItem("darkmode") == "false" || sessionStorage.getItem("darkmode") == null) {
-        //animate backgroundusing jquery
-        $(background).animate({backgroundColor: "#0b0f12"}, 1000);
         changeToDark(true);
         sessionStorage.setItem("darkmode", "true");
     } else {    //ustawianie jasnego motywu
-        //animate backgroundusing jquery
-        $(background).animate({backgroundColor: "white"}, 1000);
         changeToLight(true);
 
         lightBulb.src = "/static/images/bulb_off.png";
@@ -605,3 +602,23 @@ $(document).ready(function () {
     $(".account").hide().show("drop", 1000);
 
 });
+
+
+//select few "transaction" using selectable and then delete them
+$(function() {
+    $(".selectable").selectable({
+      filter: ".transaction",
+      cancel: ".non-selectable",
+      selected: function(event, ui) {
+        $(ui.selected).addClass("selected");
+      },
+      unselected: function(event, ui) {
+        $(ui.unselected).removeClass("selected");
+      },
+      stop: function(event, ui) {
+        var selectedItems = $(".selectable .selected");
+        // do something with the selectedItems array, such as deleting the selected rows
+      }
+    });
+  });
+  

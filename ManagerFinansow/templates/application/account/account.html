@@ -171,9 +171,9 @@
             {% endif %}
         </div>
 
-        <table class="table-in-account">
+        <table class="table-in-account selectable">
             {% for date, transactions, value in daily %}
-                <tr class="date">
+                <tr class="date non-selectable">
                     <td colspan="4">{{ date }}</td>
                     <td class="transaction-amount {% if value > 0 %}income {% elif value == 0 %}neutral {% else %}expense {% endif %}">{{ value }} {{ account.currency.sign }}</td>
                 </tr>

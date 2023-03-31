@@ -901,3 +901,10 @@ p.invitation{
 .active-transaction, .transaction:hover {
     background-color: #ccc;
 }
+
+.selected{
+    /* darken color */
+    background-color: #ccc !important;
+}
+
+.ui-selecting { background: #FECA40 !important; }
