@@ -6,7 +6,7 @@
 {% block content %}
 {% comment %} Strona z informacjami o danym koncie {% endcomment %}
 
-    <div class="title" style="margin-bottom: 30px;">
+    <div class="title">
         <h1 style="width: 88%;text-align: left;">{{ account }}&emsp;
         <span class="right-text">{{ balance }} {{ account.currency.sign }}</span></h1>
         {% if account.description %}
@@ -43,7 +43,7 @@
         <table class="table-in-account">
             {% for date, transactions, value in future %}
                 <tr class="date">
-                    <td colspan="4">{{ date }}</td>
+                    <td colspan="4">{{ date|date:"d.m.Y" }}</td>
                     <td class="transaction-amount {% if value > 0 %}income {% elif value == 0 %}neutral {% else %}expense {% endif %}">{{ value }} {{ account.currency.sign }}</td>
                 </tr>
                 {% for tr in transactions %}
@@ -120,7 +120,7 @@
             }
         </script>
 
-        <div id="selectors">
+        <div class="selectors">
             <select class="form-select" id="category-selector" multiple="multiple" >
                 <option value="all">Wszystkie kategorie</option>
                 <option value="przelew">Przelewy</option>
@@ -174,7 +174,7 @@
         <table class="table-in-account selectable">
             {% for date, transactions, value in daily %}
                 <tr class="date non-selectable">
-                    <td colspan="4">{{ date }}</td>
+                    <td colspan="4">{{ date|date:"d.m.Y" }}</td>
                     <td class="transaction-amount {% if value > 0 %}income {% elif value == 0 %}neutral {% else %}expense {% endif %}">{{ value }} {{ account.currency.sign }}</td>
                 </tr>
                 {% for tr in transactions %}

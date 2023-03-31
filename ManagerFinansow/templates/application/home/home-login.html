@@ -20,7 +20,7 @@
         <table>
         {% for date, transactions, value in future %}
             <tr class="date">
-                <td class="center" colspan="4">{{ date }}</td>
+                <td class="center" colspan="4">{{ date|date:"d.m.Y" }}</td>
                 <td class="transaction-amount {% if value > 0 %}income {% elif value == 0 %}neutral {% else %}expense {% endif %}"">{{ value }} {{ account.currency.sign }}</td>
             </tr>
             {% for tr in transactions %}
@@ -42,7 +42,7 @@
                     {% else %}
                     <td class="transaction-subcategory"></td>
                     {% endif %}                  -->
-                    <td class="transaction-category" class="bold">
+                    <td class="transaction-category bold">
                         {% if tr.account_from is not None %}
                         Przelew
                         {% else %}
@@ -77,6 +77,9 @@
                     <td class="transaction-description"></td>
                     {% endif %}
                 </tr>
+                <tr class="transaction-panel">
+                    <td>aaaa</td>
+                </tr>
             {% endfor %}
         {% endfor %}
         </table>
@@ -85,7 +88,7 @@
         
         {% if count > 0 %}
 
-        <button onclick="myFunction()" class="clickable">
+        <button onclick="myFunction()" class=" tr-table clickable">
         Zaplanowanych transakcji w miesiącu: {{ count }} (rozwiń)
         </button>
         <br>
@@ -103,7 +106,7 @@
             }
         </script>
 
-        <div id="selectors">
+        <div class="tr-table selectors">
             
             <select class="form-select" id="category-selector" multiple="multiple" >
                 <option value="all">Wszystkie kategorie</option>
@@ -154,12 +157,15 @@
             {% endif %}
         </div>
 
-        <table>
+        
         {% for date, transactions, value in daily %}
-            <tr class="date">
-                <td class="center" colspan="4">{{ date }}</td>
-                <td class="transaction-amount {% if value > 0 %}income {% elif value == 0 %}neutral {% else %}expense {% endif %}">{{ value }} {{ profile.currency.sign }}</td>
-            </tr>
+            <table class="tr-table">
+                <tr class="date">
+                    <td class="center" colspan="4">{{ date|date:"d.m.Y" }}</td>
+                    <td class="transaction-amount {% if value > 0 %}income {% elif value == 0 %}neutral {% else %}expense {% endif %}">{{ value }} {{ profile.currency.sign }}</td>
+                </tr>
+            </table>
+            <table class="tr-table">
             {% for tr in transactions %}
                 <tr class="transaction"
                 
@@ -168,62 +174,75 @@
                 {% else %}
                     data="{{ tr.id_category }}"
                 {% endif %} 
-                style="{% if not forloop.last %} border-bottom:none;{% endif %}
+                style="flex-wrap:no-wrap;{% if not forloop.last %} border-bottom:none;{% endif %}
                 {% if forloop.last %} border-bottom-left-radius:10px;border-bottom-right-radius:10px;
                 {% endif %}
                 {% if forloop.first %} border-top-left-radius:10px;border-top-right-radius:10px;
                 {% endif %}">
-                    <!-- <td class="transaction-category" class="bold">{{ tr.id_category }}</td>
-                    {% if tr.id_subcategory %}
-                    <td class="transaction-subcategory">({{ tr.id_subcategory }})</td>
-                    {% else %}
-                    <td class="transaction-subcategory"></td>
-                    {% endif %}                  -->
-                    
                     <td class="transaction-category bold">
                         {% if tr.account_from is not None %}
-                        Przelew
+                        <div>Przelew</div>
+                        <div class="transaction-description">
+                            <a class="link-neutral" href="{% url 'account' pk=tr.id_account.id %}">{{ tr.account_from }}</a> &#8594;
+                             <a class="link-neutral" href="{% url 'account' pk=tr.id_account.id %}">{{ tr.account_to }}</a>
+                        </div>
                         {% else %}
-                        {{ tr.id_category }}
-                        {% endif %}
-                        {% if tr.id_subcategory %}
-                        <span class="transaction-subcategory">({{ tr.id_subcategory }})</span>
-                        {% else %}
-                        <span class="transaction-subcategory"></span>
+                        <div>
+                            {{ tr.id_category }}
+                                {% if tr.id_subcategory %}
+                                <span class="transaction-subcategory">({{ tr.id_subcategory }})</span>
+                                {% else %}
+                                <span class="transaction-subcategory"></span>
+                                {% endif %}
+                        </div>
+                        <div class="transaction-description">
+                            <a class="link-neutral" href="{% url 'account' pk=tr.id_account.id %}">{{ tr.id_account.name }}</a>
+                        </div>
                         {% endif %}
                     </td>
                     <!-- <td id="do-not-display"></td> -->
-                    {% if tr.account_from is not None %}
-                        <td class="transaction-amount neutral" style="font-weight:600;">{{ tr.amount }} {{ tr.currency.sign }}</td>
-                    {% else %}
-                        {% if tr.amount >= 0 %}
-                            <td class="transaction-amount income" style="font-weight:600;">{{ tr.amount }} {{ tr.currency.sign }}</td>
-                        {% else %}
-                            <td class="transaction-amount expense" style="font-weight:600;">{{ tr.amount }} {{ tr.currency.sign }}</td>
-                        {% endif %}
-                    {% endif %}
-                    <td class="last-in-one-row"><a class="purple" href="{% url 'showTransaction' tr.id 1 %}">Szczegóły</a></td>
-                    <td class="transaction-account last-in-one-row">
-                        <a class="tr-acc-link purple" href="{% url 'account' pk=tr.id_account.id %}">{{ tr.id_account.name }}</a>
+                    <td class="transaction-buttons">
+                        <div class="buttons">
+                            <a class="edit square-30px" href="{% url 'editTransaction' tr.id 1 %}" title="Edytuj"></a>
+                            <a class="copy square-30px" href="{% url 'duplicateTransaction' tr.id 1 %}" title="Duplikuj"></a>
+                            <a class="delete square-30px" href="{% url 'delTransaction' tr.id 1 %}" title="Usuń" onclick=
+                                "return confirm('Czy napewno chcesz usunąć tę transakcję?')"></a>
+                        </div>
                     </td>
                     {% if tr.account_from is not None %}
-                    <td class="transaction-description">{{ tr.account_from }} &#8594; {{ tr.account_to }}</td>
-                    {% endif %}
-                    {% if tr.description %}
-                    <td class="transaction-description">{{ tr.description }}</td>
+                        <td class="transaction-amount neutral amount" style="flex:0;">{{ tr.amount }} {{ tr.currency.sign }}</td>
                     {% else %}
-                    <td class="transaction-description"></td>
+                        {% if tr.amount >= 0 %}
+                            <td class="transaction-amount income amount" style="flex:0;">{{ tr.amount }} {{ tr.currency.sign }}</td>
+                        {% else %}
+                            <td class="transaction-amount expense amount" style="flex:0;">{{ tr.amount }} {{ tr.currency.sign }}</td>
+                        {% endif %}
                     {% endif %}
                 </tr>
                 <tr class="transaction-panel">
                     {% comment %} zawartość rozwiniętej transakcji {% endcomment %}
-                    <td colspan="5">
-                        <p>Lorem ipsum...</p>
+                    <td>{% if tr.id_category.scope == "EXPENSE" and tr.amount > 0 or tr.id_category.scope == "INCOME" and tr.amount < 0 %}
+                    Zwrot Pieniędzy
+                    {% else %}
+                        {% if tr.id_category.scope == "EXPENSE" %}
+                        Wydatek
+                        {% elif tr.id_category.scope == "INCOME" %}
+                        Przychód
+                        {% endif %}
+                    {% endif %}</td>
+                    {% if tr.description %}
+                    <td style="justify-content:flex-start;" class="transaction-description">{{ tr.description }}</td>
+                    {% endif %}
+                    <td class="buttons mobile-buttons">
+                        <a class="edit square-30px" href="{% url 'editTransaction' tr.id 1 %}" title="Edytuj"></a>
+                        <a class="copy square-30px" href="{% url 'duplicateTransaction' tr.id 1 %}" title="Duplikuj"></a>
+                        <a class="delete square-30px" href="{% url 'delTransaction' tr.id 1 %}" title="Usuń" onclick=
+                            "return confirm('Czy napewno chcesz usunąć tę transakcję?')"></a>
                     </td>
                 </tr>
             {% endfor %}
-        {% endfor %}
-        </table>
+            </table>
+        {% endfor %}    
     </div>
     <br>
     {% if page_obj.paginator.num_pages > 1 %}
