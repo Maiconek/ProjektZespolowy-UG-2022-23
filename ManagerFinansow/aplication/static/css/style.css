@@ -80,7 +80,7 @@ nav.nav{
     padding-right: 1vw;
     padding-top: 1vh;
     padding-bottom: 1vh;
-    width:73%;
+    width:70%;
     margin:auto;
     margin-top: calc(60px + 4vh);
     margin-bottom: 4vh;
@@ -147,8 +147,8 @@ span.element{
 div.account{
     margin-top: 1vh;
     margin-bottom: 2vh;
-    margin-left: 2vw;
-    margin-right: 2vw;
+    margin-left: 1vw;
+    margin-right: 1vw;
     padding: 5px;
     border: 2px solid purple;
     border-radius: 5px;
@@ -683,6 +683,7 @@ tr.transaction > td{
     color: white;
     width:88%;
     margin:0 auto;
+    margin-bottom:15px;
     display:block;
     background-color:#9a279a;
     text-align:center;
@@ -692,10 +693,6 @@ tr.transaction > td{
 }
 .clickable:hover {
     background-color:#b000b0;
-}
-
-.right-text{
-    float: right;
 }
 
 .selectors {
@@ -735,7 +732,7 @@ tr.transaction:hover > td.transaction-buttons{
 }
 
 .tr-table {
-    width:70%;
+    width:73%;
 }
 
 /* @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px)  { */
@@ -788,10 +785,6 @@ tr.transaction:hover > td.transaction-buttons{
     #total_transactions {
         margin-right:0;
     }
-
-    .selectors {
-        justify-content: center;
-    }
     
 }
 
@@ -810,6 +803,7 @@ tr.transaction:hover > td.transaction-buttons{
         align-items: center;
         height: auto;
         padding: 0;
+        padding-bottom: 3px;
     }
 
     #logo-li{
@@ -855,10 +849,6 @@ tr.transaction:hover > td.transaction-buttons{
         width:95%;
     }
 
-    .right-text{
-        float: none;
-    }
-
     tr.transaction:hover > td.transaction-buttons{
         display:none;
     }
@@ -866,7 +856,18 @@ tr.transaction:hover > td.transaction-buttons{
     .mobile-buttons {
         display:block;
     }
+
+    div.title {
+        padding-top: 2vh;
+    }
     
+    div.content-pc{
+        margin-top: 0;
+    }
+
+    div.title h1 {
+        font-size:34px;
+    }
 }
 
 

@@ -5,16 +5,15 @@
 
 {% block content %}
 {% comment %} Strona z informacjami o danym koncie {% endcomment %}
-
     <div class="title">
-        <h1 style="width: 88%;text-align: left;">{{ account }}&emsp;
-        <span class="right-text">{{ balance }} {{ account.currency.sign }}</span></h1>
+        <h1 class="tr-table" style="text-align: left;display:flex;justify-content: space-between;flex-wrap:wrap;"><div>{{ account }}</div>
+        <div>{{ balance }} {{ account.currency.sign }}</div></h1>
         {% if account.description %}
-            <h4>{{ account.description }}</h4>
+            <h6 class='tr-table'>{{ account.description }}</h6>
         {% endif %}
     </div>
-    
     <div class="content-pc">
+
         <p class="buttons">
             <a href="{% url 'add' account.id 'income' %}"><img id="plus-icon" src="{% static 'images/icons/plus.png' %}"/></a>
             <a href="{% url 'add' account.id 'transfer' %}"><img id="transfer-icon" src="{% static 'images/icons/arrows.png' %}"/></a>
@@ -97,15 +96,15 @@
                 {% endfor %}
             {% endfor %}
         </table>
+        <br>
         </div>
         
-        <br>
+
         {% if count > 0 %}
 
         <button onclick="myFunction()" class="clickable">
-        Zaplanowanych transakcji w miesiącu: {{ count }} (rozwiń)
+        Zaplanowanych transakcji w miesiącu: {{ count }}
         </button>
-        <br>
         {% endif %}
 
         <script>
@@ -129,7 +128,6 @@
                 {% endfor %}
             </select>
 
-            Wyświetl na stronie:
             <select class="form-select" id="total_transactions" onchange="changeTotalTransactions('{{ request.get_full_path }}')">
                 <option value="20" {% if request.user.profile.total_transactions == 20 %}selected{% endif %}>20</option>
                 <option value="50" {% if request.user.profile.total_transactions == 50 %}selected{% endif %}>50</option>

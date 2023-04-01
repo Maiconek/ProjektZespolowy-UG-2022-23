@@ -83,15 +83,14 @@
             {% endfor %}
         {% endfor %}
         </table>
-        </div>
         <br>
+        </div>
         
         {% if count > 0 %}
 
         <button onclick="myFunction()" class=" tr-table clickable">
-        Zaplanowanych transakcji w miesiącu: {{ count }} (rozwiń)
+        Zaplanowanych transakcji w miesiącu: {{ count }}
         </button>
-        <br>
         {% endif %}
 
         <script>
@@ -183,8 +182,8 @@
                         {% if tr.account_from is not None %}
                         <div>Przelew</div>
                         <div class="transaction-description">
-                            <a class="link-neutral" href="{% url 'account' pk=tr.id_account.id %}">{{ tr.account_from }}</a> &#8594;
-                             <a class="link-neutral" href="{% url 'account' pk=tr.id_account.id %}">{{ tr.account_to }}</a>
+                            <a class="link-neutral" href="{% url 'account' pk=tr.account_from.id %}">{{ tr.account_from }}</a> &#8594;
+                             <a class="link-neutral" href="{% url 'account' pk=tr.account_to.id %}">{{ tr.account_to }}</a>
                         </div>
                         {% else %}
                         <div>
@@ -219,7 +218,9 @@
                         {% endif %}
                     {% endif %}
                 </tr>
-                <tr class="transaction-panel">
+                <tr class="transaction-panel"
+                style="{% if forloop.last %} border-bottom: 2px solid #e8dcb8;  border-bottom-left-radius:10px;border-bottom-right-radius:10px;
+                {% endif %}">
                     {% comment %} zawartość rozwiniętej transakcji {% endcomment %}
                     <td>{% if tr.id_category.scope == "EXPENSE" and tr.amount > 0 or tr.id_category.scope == "INCOME" and tr.amount < 0 %}
                     Zwrot Pieniędzy
