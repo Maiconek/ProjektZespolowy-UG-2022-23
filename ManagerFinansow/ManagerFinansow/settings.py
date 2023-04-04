@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'aplication',
     'UsersApp.apps.UsersappConfig',
     'easy_thumbnails',
-    #'rest_framework'
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -151,7 +151,7 @@ PASSWORD_RESET_TIMEOUT = 14400
 STATIC_URL = '/static/'
 MEDIA_ROOT = '/media/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 

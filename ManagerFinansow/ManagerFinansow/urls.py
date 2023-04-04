@@ -27,6 +27,7 @@ urlpatterns = [
     
     path('', include('aplication.urls')),
     path('', include('UsersApp.urls')),
+    path('api/', include('api.urls')),
     
     path('reset_password/', auth_views.PasswordResetView.as_view(template_name="registration/reset-password.html"), 
     name="reset_password"),
@@ -36,7 +37,10 @@ urlpatterns = [
     name='password_reset_confirm'),
     path('reset_password_complete', auth_views.PasswordResetCompleteView.as_view(template_name="registration/reset_password_complete.html"), 
     name='password_reset_complete')
-    #path('api/', include('api.urls'))
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    
+]#+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 handler404 = 'aplication.views.error404'

@@ -37,4 +37,7 @@ urlpatterns = [
     views.editSubcategory, name='edit-subcategory'),
     path('profile/categories/subcategories/<uuid:pk>/delete-subcategory/<uuid:pk2>', 
     views.deleteSubcategory, name='delete-subcategory')
+
+    # path('api/', views.getRoutes),
+    # path('api/profiles/', views.getProfiles)
 ]
