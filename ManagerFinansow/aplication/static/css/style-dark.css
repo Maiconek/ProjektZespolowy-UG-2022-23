@@ -28,13 +28,17 @@ button.dark-mode{
     border-color:#080c12;
 }
 
-.transaction.dark-mode > #transaction-description{
+.transaction.dark-mode  .transaction-description{
     color:rgba(255, 255, 255, 0.6);
 }
 
-.transaction.dark-mode > #transaction-category > #transaction-subcategory{
+.transaction.dark-mode  .transaction-category  .transaction-subcategory{
     color:rgba(216, 216, 216, 0.6);
 }
+
+.transaction.dark-mode a.link-neutral{
+    color: #b6b6b6;
+} 
 
 .income.dark-mode{
     /* color: #25a140c0; */

@@ -28,6 +28,7 @@
         <span> 
             <h5>Zaproszenia:</h5>
             {% comment %} if nie ma powiedz że nie ma {% endcomment %}
+
         {% for m in mes %}
             {% if profile == m.userTo %}
                 <p class="invitation">
