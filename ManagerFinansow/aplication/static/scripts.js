@@ -615,7 +615,13 @@ $(function() {
       stop: function(event, ui) {
         var selectedItems = $(".selectable .selected");
         // do something with the selectedItems array, such as deleting the selected rows
-      }
+      },
+        cancel: "a"
+
+
+
     });
   });
   
+
+  //function get all users from api/profiles/ and make search bar
