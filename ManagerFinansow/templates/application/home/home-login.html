@@ -163,8 +163,8 @@
                     <td class="center" colspan="4">{{ date|date:"d.m.Y" }}</td>
                     <td class="transaction-amount {% if value > 0 %}income {% elif value == 0 %}neutral {% else %}expense {% endif %}">{{ value }} {{ profile.currency.sign }}</td>
                 </tr>
-            </table>
-            <table class="tr-table">
+            <!-- </table> -->
+            <!-- <table class="tr-table"> -->
             {% for tr in transactions %}
                 <tr class="transaction"
                 

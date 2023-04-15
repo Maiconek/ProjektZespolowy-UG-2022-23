@@ -460,8 +460,9 @@ function darkMode() {
 
 function filterBy(categoryNames){
     // display only transactions with selected category
-    var allTransactions = document.getElementsByClassName("transaction");
-    var allCategories = document.getElementsByClassName("category");
+    
+    //get all transactions using jQueryui
+    var allTransactions = $(".transaction");
     
     for (var i = 0; i < allTransactions.length; i++) {
         // allTransactions[i].style.display = "none";
@@ -469,39 +470,35 @@ function filterBy(categoryNames){
         $(allTransactions[i]).hide();
     }
 
+    console.log("length: "+allTransactions.length);
     //hide all with class=date
     var allDates = document.getElementsByClassName("date");
     for (var i = 0; i < allDates.length; i++) {
-        allDates[i].style.display = "none";
+        // allDates[i].style.display = "none";
+        $(allDates[i]).hide();
     }
 
 
     for (var i = 0; i < allTransactions.length; i++) {
         // if "data" attribute of transaction is equal to selected category
         if(categoryNames.includes(allTransactions[i].getAttribute("data"))){
-            // allTransactions[i].style.display = "flex";
-            //show using jQueryui in the same place as hide
             $(allTransactions[i]).show("slow");
-            //get the date element that is closest above the transaction
-            var dateElement = allTransactions[i].previousElementSibling;
-            //if the date element is not a date, get the next one
-            while(dateElement.className != "date"){
-                dateElement = dateElement.previousElementSibling;
-            }
-            //display the date element
-            dateElement.style.display = "flex";
+
+            //find first element with class=date that is above the transaction and display it
+            var dateElement = $(allTransactions[i]).prevAll(".date:first");
+            $(dateElement).show("slow");
+
+
         }
     }
 
     //if "Wszystkie kategorie" is selected, display all transactions
     if(categoryNames.includes("all") || categoryNames.length == 0){
         for (var i = 0; i < allTransactions.length; i++) {
-            // allTransactions[i].style.display = "flex";
-            //show using jQueryui
             $(allTransactions[i]).show("slow");
         }
         for (var i = 0; i < allDates.length; i++) {
-            allDates[i].style.display = "flex";
+            $(allDates[i]).show("slow");
         }
     }
     
