@@ -1,0 +1,6 @@
+django
+django-polymorphic
+djangorestframework
+currencyconverter
+python-dateutil
+easy_thumbnails
